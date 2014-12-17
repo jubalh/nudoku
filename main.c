@@ -41,6 +41,7 @@ $ gcc -lncurses -o nsudoku nsudoku.c
 
 /* GLOBALS */
 bool g_useColor = true;
+WINDOW *grid, *infobox;
 
 /* FUNCTIONS */
 void print_version(void)
@@ -103,6 +104,8 @@ void init_curses(void)
 		if(has_colors())
 		{
 			start_color();
+			init_pair(1, COLOR_YELLOW, COLOR_GREEN);
+			init_pair(2, COLOR_RED, COLOR_BLUE);
 		}
 		else
 		{
@@ -113,12 +116,31 @@ void init_curses(void)
 	}
 }
 
+void init_windows(void)
+{
+	grid = newwin(25, 37, 0, 0);
+	infobox = newwin(25, 10, 0, 40);
+
+	if (g_useColor)
+	{
+		wbkgd(grid, COLOR_PAIR(1));
+		wbkgd(infobox, COLOR_PAIR(2));
+	}
+
+	wprintw(grid, "hi");
+	wprintw(infobox, "hi");
+}
+
 int main(int argc, char *argv[])
 {
 	parse_arguments(argc, argv);
 	init_curses();
 
+	init_windows();
+
 	refresh();
+	wrefresh(grid);
+	wrefresh(infobox);
 	getch();
 
 	return EXIT_SUCCESS;
