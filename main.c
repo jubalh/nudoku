@@ -45,7 +45,10 @@ bool g_useColor = true;
 /* FUNCTIONS */
 void print_version(void)
 {
-	printf("nudoku version " VERSION "\n");
+	printf("nudoku version " VERSION "\n\n\
+Copyright (C) Michael Vetter 2014\n\
+License GPLv3+: GNU GPL version 3 or later.\n\
+This is free software, you are free to modify and redistribute it.\n");
 }
 
 void print_usage(void)
