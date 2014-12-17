@@ -87,12 +87,16 @@ void parse_arguments(int argc, char *argv[])
 	}
 }
 
-int main(int argc, char *argv[])
+void cleanup(void)
 {
-	parse_arguments(argc, argv);
+	endwin();
+}
 
+void init_curses(void)
+{
 	initscr();
 	clear();
+	atexit(cleanup);
 
 	if(g_useColor)
 	{
@@ -107,10 +111,15 @@ int main(int argc, char *argv[])
 			exit(EXIT_FAILURE);
 		}
 	}
+}
+
+int main(int argc, char *argv[])
+{
+	parse_arguments(argc, argv);
+	init_curses();
 
 	refresh();
 	getch();
-	endwin();
 
 	return EXIT_SUCCESS;
 }
