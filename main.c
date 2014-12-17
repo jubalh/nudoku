@@ -27,6 +27,7 @@ $ gcc -lncurses -o nsudoku nsudoku.c
  * use vi keybindings (and arrows) -> nsudoku.c
  * use nice grid -> nsuds.c
  * two windows, one sudoku grind, one with description of keys
+ * save to file not as CSV but the actual grid
  */
 
 /* INCLUDES */
@@ -39,6 +40,7 @@ $ gcc -lncurses -o nsudoku nsudoku.c
 #define VERSION "0.1"
 
 /* GLOBALS */
+bool g_useColor = true;
 
 /* FUNCTIONS */
 void print_version(void)
@@ -59,18 +61,21 @@ void print_usage(void)
 void parse_arguments(int argc, char *argv[])
 {
 	int opt;
-	while ((opt = getopt(argc, argv, "vhnl:")) != -1)
+	while ((opt = getopt(argc, argv, "hvcl:")) != -1)
 	{
 		switch (opt)
 		{
-			case 'v':
-				print_version();
-				break;
 			case 'h':
 				print_usage();
+				exit(EXIT_SUCCESS);
+			case 'v':
+				print_version();
+				exit(EXIT_SUCCESS);
+			case 'c':
+				g_useColor = false;
 				break;
 			case 'l':
-				printf("not yet implemented");
+				printf("not yet implemented\n");
 				break;
 			default:
 				print_usage();
@@ -82,7 +87,28 @@ void parse_arguments(int argc, char *argv[])
 int main(int argc, char *argv[])
 {
 	parse_arguments(argc, argv);
-	printf("\n");
+
+	initscr();
+	clear();
+
+	if(g_useColor)
+	{
+		if(has_colors())
+		{
+			start_color();
+		}
+		else
+		{
+			printw( "Your terminal doesn't support colors.\nTry the nocolor (-c) option.\n");
+			getch();
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	refresh();
+	getch();
+	endwin();
+
 	return EXIT_SUCCESS;
 }
 
