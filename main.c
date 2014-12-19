@@ -37,7 +37,15 @@ $ gcc -lncurses -o nsudoku nsudoku.c
 #include <ncurses.h>
 
 /* DEFINES */
-#define VERSION "0.1"
+#define VERSION		"0.1"
+#define GRID_LINES	19
+#define GRID_COLS	37
+#define GRID_Y		3
+#define GRID_X		3
+#define INFO_LINES	25
+#define INFO_COLS	10
+#define INFO_Y		0
+#define INFO_X		GRID_X + GRID_COLS + 5
 
 /* GLOBALS */
 bool g_useColor = true;
@@ -116,19 +124,61 @@ void init_curses(void)
 	}
 }
 
+void _draw_grid()
+{
+	int i, j;
+
+	grid = newwin(GRID_LINES, GRID_COLS, GRID_Y, GRID_X);
+
+	for(i = 0;i < 10;i++)
+	{
+		for(j = 0;j < 10;j++)
+		{
+			if (g_useColor)
+			{
+				if(i % 3 == 0)
+					wattron(grid, A_BOLD|COLOR_PAIR(2));
+				if(j % 3 == 0)
+					wattron(grid, A_BOLD|COLOR_PAIR(2));
+			}
+			wprintw(grid, "+");
+			if(g_useColor && (j % 3 == 0) && (i % 3 != 0))
+			{
+				wattron(grid, A_BOLD|COLOR_PAIR(1));
+			}
+			if(j < 9)
+				wprintw(grid, "---");
+			if(g_useColor && (i % 3 == 0))
+			{
+				wattron(grid, A_BOLD|COLOR_PAIR(1));
+			}
+		}
+		for(j = 0;j < 10 && i < 9;j++)
+		{
+			if(g_useColor && (j % 3 == 0))
+				wattron(grid, A_BOLD|COLOR_PAIR(2));
+			if(j > 0)
+				wprintw(grid, "   |");
+			else
+				wprintw(grid, "|");
+			if(g_useColor && (j % 3 == 0))
+			{
+				wattron(grid, A_BOLD|COLOR_PAIR(1));
+			}
+		}
+	}
+}
+
 void init_windows(void)
 {
-	grid = newwin(25, 37, 0, 0);
-	infobox = newwin(25, 10, 0, 40);
-
+	_draw_grid();
+	infobox = newwin(INFO_LINES, INFO_COLS, INFO_Y, INFO_X);
 	if (g_useColor)
 	{
-		wbkgd(grid, COLOR_PAIR(1));
 		wbkgd(infobox, COLOR_PAIR(2));
 	}
 
-	wprintw(grid, "hi");
-	wprintw(infobox, "hi");
+	wprintw(infobox, "info");
 }
 
 int main(int argc, char *argv[])
@@ -137,12 +187,12 @@ int main(int argc, char *argv[])
 	init_curses();
 
 	init_windows();
-
 	refresh();
 	wrefresh(grid);
 	wrefresh(infobox);
 	getch();
 
+	endwin();
 	return EXIT_SUCCESS;
 }
 
