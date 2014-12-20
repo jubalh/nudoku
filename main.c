@@ -204,16 +204,22 @@ void init_windows(void)
 	wprintw(infobox, " k - Move up\n");
 }
 
-void init_board(char *stream)
+/*TODO: so far just ignoring longer stream. maybe check for 81*/
+bool init_board(char *stream)
 {
 	int row, col;
+
 	for(row=0; row < 9; row++)
 	{
 		for(col=0; col < 9; col++)
 		{
-			board[row][col] = *(stream++);
+			char *p = stream++;
+			if(!((*p >= 49 && *p <= 57) || *p == '.' ))
+				return false;
+			board[row][col] = *p;
 		}
 	}
+	return true;
 }
 
 void fill_grid(void)
