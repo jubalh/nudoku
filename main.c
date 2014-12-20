@@ -173,6 +173,7 @@ void _draw_grid()
 
 void init_windows(void)
 {
+	keypad(stdscr, true);
 	_draw_grid();
 	infobox = newwin(INFO_LINES, INFO_COLS, INFO_Y, INFO_X);
 	if (g_useColor)
@@ -213,6 +214,7 @@ int main(int argc, char *argv[])
 		switch(key)
 		{
 			case 'h':
+			case KEY_LEFT:
 				if(x>5)
 					x -= 4;
 				break;
@@ -222,14 +224,17 @@ int main(int argc, char *argv[])
 					x += 4;
 				break;
 			case 'k':
+			case KEY_UP:
 				if(y>2)
 					y -= 2;
 				break;
 			case 'j':
+			case KEY_DOWN:
 				if(y<17)
 					y += 2;
 				break;
 			case 'q':
+			case 27:
 				run = false;
 				break;
 			case 'r':
