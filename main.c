@@ -43,7 +43,7 @@ $ gcc -lncurses -o nsudoku nsudoku.c
 #define GRID_Y		3
 #define GRID_X		3
 #define INFO_LINES	25
-#define INFO_COLS	10
+#define INFO_COLS	20
 #define INFO_Y		0
 #define INFO_X		GRID_X + GRID_COLS + 5
 
@@ -180,7 +180,13 @@ void init_windows(void)
 		wbkgd(infobox, COLOR_PAIR(2));
 	}
 
-	wprintw(infobox, "info");
+	wprintw(infobox, "Commands\n");
+	wprintw(infobox, " q - Quit\n");
+	wprintw(infobox, " r - Redraw\n");
+	wprintw(infobox, " h - Move left\n");
+	wprintw(infobox, " l - Move right\n");
+	wprintw(infobox, " j - Move down\n");
+	wprintw(infobox, " k - Move up\n");
 }
 
 int main(int argc, char *argv[])
@@ -223,7 +229,7 @@ int main(int argc, char *argv[])
 				if(y<17)
 					y += 2;
 				break;
-			case 27:
+			case 'q':
 				run = false;
 				break;
 			case 'r':
