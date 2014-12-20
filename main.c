@@ -226,6 +226,10 @@ int main(int argc, char *argv[])
 			case 27:
 				run = false;
 				break;
+			case 'r':
+				redrawwin(grid);
+				redrawwin(infobox);
+				break;
 		}
 		wmove(grid, y,x);
 		refresh();
