@@ -30,6 +30,12 @@ $ gcc -lncurses -o nsudoku nsudoku.c
  * save to file not as CSV but the actual grid
  */
 
+/*
+ * Conventions:
+ * board is the model of the sudoku. a two dimensional array.
+ * grid is the visual represantation of the sudoku.
+ */
+
 /* INCLUDES */
 #include <stdio.h>
 #include <stdlib.h>
@@ -37,19 +43,26 @@ $ gcc -lncurses -o nsudoku nsudoku.c
 #include <ncurses.h>
 
 /* DEFINES */
-#define VERSION		"0.1"
-#define GRID_LINES	19
-#define GRID_COLS	37
-#define GRID_Y		3
-#define GRID_X		3
-#define INFO_LINES	25
-#define INFO_COLS	20
-#define INFO_Y		0
-#define INFO_X		GRID_X + GRID_COLS + 5
+#define VERSION				"0.1"
+#define GRID_LINES			19
+#define GRID_COLS			37
+#define GRID_Y				3
+#define GRID_X				3
+#define INFO_LINES			25
+#define INFO_COLS			20
+#define INFO_Y				0
+#define INFO_X				GRID_X + GRID_COLS + 5
+#define GRID_NUMBER_START_Y 1
+#define GRID_NUMBER_START_X 2
+#define GRID_LINE_DELTA		4
+#define GRID_COL_DELTA		2
+
+#define EXAMPLE_STREAM "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......"
 
 /* GLOBALS */
 bool g_useColor = true;
 WINDOW *grid, *infobox;
+char board[9][9];
 
 /* FUNCTIONS */
 void print_version(void)
@@ -130,8 +143,6 @@ void _draw_grid()
 {
 	int i, j;
 
-	grid = newwin(GRID_LINES, GRID_COLS, GRID_Y, GRID_X);
-
 	for(i = 0;i < 10;i++)
 	{
 		for(j = 0;j < 10;j++)
@@ -174,7 +185,10 @@ void _draw_grid()
 void init_windows(void)
 {
 	keypad(stdscr, true);
+
+	grid = newwin(GRID_LINES, GRID_COLS, GRID_Y, GRID_X);
 	_draw_grid();
+
 	infobox = newwin(INFO_LINES, INFO_COLS, INFO_Y, INFO_X);
 	if (g_useColor)
 	{
@@ -190,6 +204,39 @@ void init_windows(void)
 	wprintw(infobox, " k - Move up\n");
 }
 
+void init_board(char *stream)
+{
+	int row, col;
+	for(row=0; row < 9; row++)
+	{
+		for(col=0; col < 9; col++)
+		{
+			board[row][col] = *(stream++);
+		}
+	}
+}
+
+void fill_grid(void)
+{
+	int row, col, x, y;
+	char c;
+
+	y = GRID_NUMBER_START_Y;
+	for(row=0; row < 9; row++)
+	{
+		x = GRID_NUMBER_START_X;
+		for(col=0; col < 9; col++)
+		{
+			c = board[row][col];
+			if(c == '.')
+				c = ' ';
+			mvwprintw(grid, y, x, "%c", c);
+			x += GRID_LINE_DELTA;
+		}
+		y += GRID_COL_DELTA;
+	}
+}
+
 int main(int argc, char *argv[])
 {
 	bool run = true;
@@ -199,11 +246,16 @@ int main(int argc, char *argv[])
 	init_curses();
 
 	init_windows();
+
+	init_board(EXAMPLE_STREAM);
+	fill_grid();
+
 	refresh();
 	wrefresh(grid);
 	wrefresh(infobox);
 
-	y = 1; x = 2;
+	y = GRID_NUMBER_START_Y;
+	x = GRID_NUMBER_START_X;
 	wmove(grid, y, x);
 	while(run)
 	{
@@ -216,22 +268,22 @@ int main(int argc, char *argv[])
 			case 'h':
 			case KEY_LEFT:
 				if(x>5)
-					x -= 4;
+					x -= GRID_LINE_DELTA;
 				break;
 			case 'l':
 			case KEY_RIGHT:
 				if(x<34)
-					x += 4;
+					x += GRID_LINE_DELTA;
 				break;
 			case 'k':
 			case KEY_UP:
 				if(y>2)
-					y -= 2;
+					y -= GRID_COL_DELTA;
 				break;
 			case 'j':
 			case KEY_DOWN:
 				if(y<17)
-					y += 2;
+					y += GRID_COL_DELTA;
 				break;
 			case 'q':
 			case 27:
