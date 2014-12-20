@@ -106,6 +106,8 @@ void init_curses(void)
 	initscr();
 	clear();
 	atexit(cleanup);
+	cbreak();
+	noecho();
 
 	if(g_useColor)
 	{
@@ -183,6 +185,9 @@ void init_windows(void)
 
 int main(int argc, char *argv[])
 {
+	bool run = true;
+	int key, x, y;
+
 	parse_arguments(argc, argv);
 	init_curses();
 
@@ -190,7 +195,43 @@ int main(int argc, char *argv[])
 	refresh();
 	wrefresh(grid);
 	wrefresh(infobox);
-	getch();
+
+	y = 1; x = 2;
+	wmove(grid, y, x);
+	while(run)
+	{
+		//mvprintw(0, 0, "y: %d x: %d", y, x);
+		refresh();
+		wrefresh(grid);
+		key = getch();
+		switch(key)
+		{
+			case 'h':
+				if(x>5)
+					x -= 4;
+				break;
+			case 'l':
+			case KEY_RIGHT:
+				if(x<34)
+					x += 4;
+				break;
+			case 'k':
+				if(y>2)
+					y -= 2;
+				break;
+			case 'j':
+				if(y<17)
+					y += 2;
+				break;
+			case 27:
+				run = false;
+				break;
+		}
+		wmove(grid, y,x);
+		refresh();
+		wrefresh(grid);
+		wrefresh(infobox);
+	}
 
 	endwin();
 	return EXIT_SUCCESS;
