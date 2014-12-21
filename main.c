@@ -265,7 +265,7 @@ int main(int argc, char *argv[])
 	wmove(grid, y, x);
 	while(run)
 	{
-		//mvprintw(0, 0, "y: %d x: %d", y, x);
+		//mvprintw(0, 0, "y: %.2d x: %.2d", y, x);
 		refresh();
 		wrefresh(grid);
 		key = getch();
@@ -299,6 +299,16 @@ int main(int argc, char *argv[])
 				redrawwin(grid);
 				redrawwin(infobox);
 				break;
+		}
+		/*if user inputs a number*/
+		if(key >= 49 && key <= 57)
+		{
+			/*if on empty position*/
+			if(board[(y-GRID_NUMBER_START_Y)/GRID_COL_DELTA][(x-GRID_NUMBER_START_X)/GRID_LINE_DELTA] == '.')
+			{
+				/*add inputted number to grid*/
+				wprintw(grid, "%c", key);
+			}
 		}
 		wmove(grid, y,x);
 		refresh();
