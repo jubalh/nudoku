@@ -60,7 +60,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 /* GLOBALS */
 bool g_useColor = true;
 WINDOW *grid, *infobox;
-char board[9][9];
+int plain_board[9][9];
+int user_board[9][9];
 
 /* FUNCTIONS */
 void print_version(void)
@@ -203,7 +204,7 @@ void init_windows(void)
 }
 
 /*TODO: so far just ignoring longer stream. maybe check for 81*/
-bool init_board(char *stream)
+bool init_board(int board[][9], char *stream)
 {
 	int row, col;
 
@@ -214,16 +215,20 @@ bool init_board(char *stream)
 			char *p = stream++;
 			if(!((*p >= 49 && *p <= 57) || *p == '.' ))
 				return false;
-			board[row][col] = *p;
+			if (*p == '.')
+				board[row][col] = 0;
+			else
+				board[row][col] = *p - 48;
 		}
 	}
 	return true;
 }
 
-void fill_grid(void)
+void fill_grid(int board[][9])
 {
 	int row, col, x, y;
-	char c;
+	int n;
+	int c;
 
 	y = GRID_NUMBER_START_Y;
 	for(row=0; row < 9; row++)
@@ -231,9 +236,11 @@ void fill_grid(void)
 		x = GRID_NUMBER_START_X;
 		for(col=0; col < 9; col++)
 		{
-			c = board[row][col];
-			if(c == '.')
+			n = board[row][col];
+			if(n == 0)
 				c = ' ';
+			else 
+				c = n + 48;
 			mvwprintw(grid, y, x, "%c", c);
 			x += GRID_LINE_DELTA;
 		}
@@ -251,8 +258,9 @@ int main(int argc, char *argv[])
 
 	init_windows();
 
-	init_board(EXAMPLE_STREAM);
-	fill_grid();
+	init_board(plain_board, EXAMPLE_STREAM);
+	init_board(user_board, EXAMPLE_STREAM);
+	fill_grid(plain_board);
 
 	refresh();
 	wrefresh(grid);
@@ -301,11 +309,14 @@ int main(int argc, char *argv[])
 		/*if user inputs a number*/
 		if(key >= 49 && key <= 57)
 		{
-			/*if on empty position*/
-			if(board[(y-GRID_NUMBER_START_Y)/GRID_COL_DELTA][(x-GRID_NUMBER_START_X)/GRID_LINE_DELTA] == '.')
+			int posy = (y-GRID_NUMBER_START_Y)/GRID_COL_DELTA;
+			int posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
+			// if on empty position
+			if(user_board[posy][posx] == 0)
 			{
-				/*add inputted number to grid*/
+				// add inputted number to grid
 				wprintw(grid, "%c", key);
+				user_board[posy][posx] = key - 48;
 			}
 		}
 		wmove(grid, y,x);
