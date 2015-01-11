@@ -1,2 +1,2 @@
 output: main.c
-	gcc -o output main.c -lncurses -Wall -Wextra -pedantic
+	gcc -o output main.c sudoku.c -lncurses -Wall -Wextra -pedantic

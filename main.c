@@ -39,6 +39,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <stdlib.h>
 #include <unistd.h> /* getopt */
 #include <ncurses.h>
+#include "sudoku.h"
 
 /* DEFINES */
 #define VERSION				"0.1"
@@ -304,6 +305,12 @@ int main(int argc, char *argv[])
 			case 'r':
 				redrawwin(grid);
 				redrawwin(infobox);
+				break;
+			case 'S':
+				solve_sudoku(plain_board);
+				fill_grid(plain_board);
+				break;
+			default:
 				break;
 		}
 		/*if user inputs a number*/
