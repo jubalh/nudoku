@@ -17,15 +17,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 /* INCLUDES */
-#include <stdbool.h>
-#include <stdlib.h>
-#include <time.h>
-#include <string.h>
-
-#include <stdio.h>
+#include <stdbool.h>	/* bool */
+#include <stdlib.h>		/* rand, malloc */
+#include <time.h>		/* time */
+#include <string.h>		/* strdup */
 
 /* FUNCTIONS */
-
 void board_to_stream(int board[9][9], char *stream)
 {
 	int i, j, n=0;
@@ -111,10 +108,9 @@ int solve(int puzzle[9][9], int row, int col)
 
 /* GENERATOR */
 /* Generator code is influenced by: http://rubyquiz.strd6.com/quizzes/182-sudoku-generator */
-
 static int rand_int(int n) {
-	int limit = RAND_MAX - RAND_MAX % n;
 	int rnd;
+	int limit = RAND_MAX - RAND_MAX % n;
 
 	do {
 		rnd = rand();

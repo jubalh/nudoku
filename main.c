@@ -17,29 +17,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 /*
- * TODO:
- * read sudoku from CSV
- * save to CSV
- * hint (solve one number)
- * solve wholte sudoku
- * use vi keybindings (and arrows) -> nsudoku.c
- * use nice grid -> nsuds.c
- * two windows, one sudoku grind, one with description of keys
- * save to file not as CSV but the actual grid
- */
-
-/*
  * Conventions:
  * board is the model of the sudoku. a two dimensional array.
  * grid is the visual represantation of the sudoku.
  */
 
 /* INCLUDES */
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h> /* getopt */
-#include <ncurses.h>
-#include <time.h>
+#include <stdlib.h>		/* rand, srand */
+#include <unistd.h>		/* getopt */
+#include <ncurses.h>	/* ncurses */
+#include <time.h>		/* time */
 #include "sudoku.h"
 
 /* DEFINES */
