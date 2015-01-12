@@ -43,12 +43,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define GRID_NUMBER_START_X 2
 #define GRID_LINE_DELTA		4
 #define GRID_COL_DELTA		2
+#define STATUS_LINES		1
+#define STATUS_COLS			GRID_COLS + INFO_COLS
+#define STATUS_Y			1
+#define STATUS_X			GRID_X
 
 #define EXAMPLE_STREAM "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......"
 
 /* GLOBALS */
 bool g_useColor = true;
-WINDOW *grid, *infobox;
+WINDOW *grid, *infobox, *status;
 int plain_board[9][9];
 int user_board[9][9];
 
@@ -176,6 +180,8 @@ void init_windows(void)
 {
 	keypad(stdscr, true);
 
+	status = newwin(STATUS_LINES, STATUS_COLS, STATUS_Y, STATUS_X);
+
 	grid = newwin(GRID_LINES, GRID_COLS, GRID_Y, GRID_X);
 	_draw_grid();
 
@@ -288,11 +294,22 @@ int main(int argc, char *argv[])
 				redrawwin(infobox);
 				break;
 			case 'S':
+				werase(status);
+				mvwprintw(status, 0, 0, "Solving puzzle...");
+				refresh();
+				wrefresh(status);
 				solve_sudoku(plain_board);
 				fill_grid(plain_board);
+				werase(status);
+				mvwprintw(status, 0, 0, "Solved!");
 				break;
 			case 'N':
+				werase(status);
+				mvwprintw(status, 0, 0, "Generating puzzle...");
+				refresh();
+				wrefresh(status);
 				new_puzzle();
+				werase(status);
 				break;
 			default:
 				break;
@@ -313,6 +330,7 @@ int main(int argc, char *argv[])
 		}
 		wmove(grid, y,x);
 		refresh();
+		wrefresh(status);
 		wrefresh(grid);
 		wrefresh(infobox);
 	}
