@@ -210,7 +210,7 @@ char* generate_puzzle(void)
 	init_board(board, stream);
 	solve(board, 0, 0);
 	board_to_stream(board, stream);
-	punch_holes(stream, 5);
+	punch_holes(stream, 40);
 	return stream;
 }
 
