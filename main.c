@@ -48,7 +48,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define STATUS_Y			1
 #define STATUS_X			GRID_X
 
+#ifdef DEBUG
 #define EXAMPLE_STREAM "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......"
+#endif // DEBUG
 
 /* GLOBALS */
 bool g_useColor = true;
@@ -64,6 +66,9 @@ void print_version(void)
 Copyright (C) Michael Vetter 2014\n\
 License GPLv3+: GNU GPL version 3 or later.\n\
 This is free software, you are free to modify and redistribute it.\n");
+#ifdef DEBUG
+	printf("Debug enabled\n");
+#endif // DEBUG
 }
 
 void print_usage(void)
@@ -261,10 +266,14 @@ int main(int argc, char *argv[])
 	init_windows();
 	srand(time(NULL));
 
+#ifdef DEBUG
+	init_board(plain_board, EXAMPLE_STREAM);
+	init_board(user_board, EXAMPLE_STREAM);
+	fill_grid(plain_board);
+	g_playing = true;
+#else
 	new_puzzle();
-	/*init_board(plain_board, EXAMPLE_STREAM);*/
-	/*init_board(user_board, EXAMPLE_STREAM);*/
-	/*fill_grid(plain_board);*/
+#endif // DEBUG
 
 	refresh();
 	wrefresh(grid);
@@ -275,7 +284,9 @@ int main(int argc, char *argv[])
 	wmove(grid, y, x);
 	while(run)
 	{
-		//mvprintw(0, 0, "y: %.2d x: %.2d", y, x);
+#ifdef DEBUG
+	mvprintw(0, 0, "y: %.2d x: %.2d", y, x);
+#endif // DEBUG
 		refresh();
 		wrefresh(grid);
 		key = getch();
