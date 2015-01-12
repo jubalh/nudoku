@@ -39,6 +39,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <stdlib.h>
 #include <unistd.h> /* getopt */
 #include <ncurses.h>
+#include <time.h>
 #include "sudoku.h"
 
 /* DEFINES */
@@ -202,27 +203,8 @@ void init_windows(void)
 	wprintw(infobox, " l - Move right\n");
 	wprintw(infobox, " j - Move down\n");
 	wprintw(infobox, " k - Move up\n");
-}
-
-/*TODO: so far just ignoring longer stream. maybe check for 81*/
-bool init_board(int board[][9], char *stream)
-{
-	int row, col;
-
-	for(row=0; row < 9; row++)
-	{
-		for(col=0; col < 9; col++)
-		{
-			char *p = stream++;
-			if(!((*p >= 49 && *p <= 57) || *p == '.' ))
-				return false;
-			if (*p == '.')
-				board[row][col] = 0;
-			else
-				board[row][col] = *p - 48;
-		}
-	}
-	return true;
+	wprintw(infobox, " N - new puzzle\n");
+	wprintw(infobox, " S - solve puzzle\n");
 }
 
 void fill_grid(int board[][9])
@@ -249,6 +231,16 @@ void fill_grid(int board[][9])
 	}
 }
 
+void new_puzzle(void)
+{
+	char* stream = generate_puzzle();
+
+	init_board(plain_board, stream);
+	init_board(user_board, stream);
+	free(stream);
+	fill_grid(plain_board);
+}
+
 int main(int argc, char *argv[])
 {
 	bool run = true;
@@ -256,8 +248,8 @@ int main(int argc, char *argv[])
 
 	parse_arguments(argc, argv);
 	init_curses();
-
 	init_windows();
+	srand(time(NULL));
 
 	init_board(plain_board, EXAMPLE_STREAM);
 	init_board(user_board, EXAMPLE_STREAM);
@@ -309,6 +301,9 @@ int main(int argc, char *argv[])
 			case 'S':
 				solve_sudoku(plain_board);
 				fill_grid(plain_board);
+				break;
+			case 'N':
+				new_puzzle();
 				break;
 			default:
 				break;
