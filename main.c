@@ -209,6 +209,7 @@ void fill_grid(int board[][9])
 	int n;
 	int c;
 
+	wstandend(grid);
 	y = GRID_NUMBER_START_Y;
 	for(row=0; row < 9; row++)
 	{
@@ -331,6 +332,7 @@ int main(int argc, char *argv[])
 				// add inputted number to grid
 				wattron(grid, COLOR_PAIR(3));
 				wprintw(grid, "%c", key);
+				wattroff(grid, COLOR_PAIR(3));
 				user_board[posy][posx] = key - 48;
 			}
 		}
