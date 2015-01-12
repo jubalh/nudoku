@@ -52,6 +52,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* GLOBALS */
 bool g_useColor = true;
+bool g_playing = false;
 WINDOW *grid, *infobox, *status;
 int plain_board[9][9];
 int user_board[9][9];
@@ -234,6 +235,8 @@ void new_puzzle(void)
 	init_board(user_board, stream);
 	free(stream);
 	fill_grid(plain_board);
+
+	g_playing = true;
 }
 
 int main(int argc, char *argv[])
@@ -246,9 +249,10 @@ int main(int argc, char *argv[])
 	init_windows();
 	srand(time(NULL));
 
-	init_board(plain_board, EXAMPLE_STREAM);
-	init_board(user_board, EXAMPLE_STREAM);
-	fill_grid(plain_board);
+	new_puzzle();
+	/*init_board(plain_board, EXAMPLE_STREAM);*/
+	/*init_board(user_board, EXAMPLE_STREAM);*/
+	/*fill_grid(plain_board);*/
 
 	refresh();
 	wrefresh(grid);
@@ -302,6 +306,7 @@ int main(int argc, char *argv[])
 				fill_grid(plain_board);
 				werase(status);
 				mvwprintw(status, 0, 0, "Solved!");
+				g_playing = false;
 				break;
 			case 'N':
 				werase(status);
@@ -310,12 +315,13 @@ int main(int argc, char *argv[])
 				wrefresh(status);
 				new_puzzle();
 				werase(status);
+				g_playing = true;
 				break;
 			default:
 				break;
 		}
 		/*if user inputs a number*/
-		if(key >= 49 && key <= 57)
+		if(key >= 49 && key <= 57 && g_playing)
 		{
 			int posy = (y-GRID_NUMBER_START_Y)/GRID_COL_DELTA;
 			int posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
