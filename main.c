@@ -48,9 +48,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define GRID_COLS			37
 #define GRID_Y				3
 #define GRID_X				3
-#define INFO_LINES			25
+#define INFO_LINES			19
 #define INFO_COLS			20
-#define INFO_Y				0
+#define INFO_Y				3
 #define INFO_X				GRID_X + GRID_COLS + 5
 #define GRID_NUMBER_START_Y 1
 #define GRID_NUMBER_START_X 2
@@ -128,8 +128,10 @@ void init_curses(void)
 		if(has_colors())
 		{
 			start_color();
-			init_pair(1, COLOR_YELLOW, COLOR_GREEN);
-			init_pair(2, COLOR_RED, COLOR_BLUE);
+			init_pair(1, COLOR_GREEN, COLOR_BLACK);
+			init_pair(2, COLOR_BLUE, COLOR_BLACK);
+			// user input color
+			init_pair(3, COLOR_CYAN, COLOR_BLACK);
 		}
 		else
 		{
@@ -317,6 +319,7 @@ int main(int argc, char *argv[])
 			if(user_board[posy][posx] == 0)
 			{
 				// add inputted number to grid
+				wattron(grid, COLOR_PAIR(3));
 				wprintw(grid, "%c", key);
 				user_board[posy][posx] = key - 48;
 			}
