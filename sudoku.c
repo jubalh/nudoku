@@ -54,6 +54,34 @@ bool init_board(int board[9][9], char *stream)
 	return true;
 }
 
+void copy_board(int dst[9][9], int src[9][9])
+{
+	int row, col;
+
+	for (row = 0; row < 9; row++)
+	{
+		for (col = 0; col < 9; col ++)
+		{
+			dst[row][col] = src[row][col];
+		}
+	}
+}
+
+bool compare_boards(int one[9][9], int two[9][9])
+{
+	int row, col;
+
+	for (row = 0; row < 9; row++)
+	{
+		for (col = 0; col < 9; col ++)
+		{
+			if (one[row][col] != two[row][col])
+				return false;
+		}
+	}
+	return true;
+}
+
 /* SOLVER */
 /* Solver code has been taken from sb0rg: https://codereview.stackexchange.com/questions/37430/sudoku-solver-in-c */
 int isAvailable(int puzzle[9][9], int row, int col, int num)

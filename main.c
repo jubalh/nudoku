@@ -199,8 +199,9 @@ void init_windows(void)
 	wprintw(infobox, " l - Move right\n");
 	wprintw(infobox, " j - Move down\n");
 	wprintw(infobox, " k - Move up\n");
-	wprintw(infobox, " N - new puzzle\n");
-	wprintw(infobox, " S - solve puzzle\n");
+	wprintw(infobox, " c - Check solution\n");
+	wprintw(infobox, " N - New puzzle\n");
+	wprintw(infobox, " S - Solve puzzle\n");
 }
 
 void fill_grid(int board[][9])
@@ -238,6 +239,16 @@ void new_puzzle(void)
 	fill_grid(plain_board);
 
 	g_playing = true;
+}
+
+bool compare(void)
+{
+	int tmp_board[9][9];
+
+	copy_board(tmp_board, plain_board);
+	solve_sudoku(tmp_board);
+
+	return compare_boards(tmp_board, user_board);
 }
 
 int main(int argc, char *argv[])
@@ -317,6 +328,21 @@ int main(int argc, char *argv[])
 				new_puzzle();
 				werase(status);
 				g_playing = true;
+				break;
+			case 'c':
+				if(g_playing)
+				{
+					werase(status);
+					if(compare())
+					{
+						mvwprintw(status, 0, 0, "Correct!");
+						g_playing = false;
+					}
+					else
+					{
+						mvwprintw(status, 0, 0, "Not correct");
+					}
+				}
 				break;
 			default:
 				break;
