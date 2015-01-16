@@ -30,7 +30,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "sudoku.h"
 
 /* DEFINES */
-#define VERSION				"0.1"
+//#define VERSION				"0.1" gets set via autotools
 #define GRID_LINES			19
 #define GRID_COLS			37
 #define GRID_Y				3
