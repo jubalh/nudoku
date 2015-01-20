@@ -259,7 +259,7 @@ bool compare(void)
 int main(int argc, char *argv[])
 {
 	bool run = true;
-	int key, x, y;
+	int key, x, y, posx, posy;
 
 	parse_arguments(argc, argv);
 	init_curses();
@@ -355,14 +355,25 @@ int main(int argc, char *argv[])
 					}
 				}
 				break;
+			// delete
+			case 127:
+				posy = (y-GRID_NUMBER_START_Y)/GRID_COL_DELTA;
+				posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
+				// if on empty position
+				if(plain_board[posy][posx] == 0)
+				{
+					user_board[posy][posx] = 0;
+					wprintw(grid, " ");
+				}
+				break;
 			default:
 				break;
 		}
 		/*if user inputs a number*/
 		if(key >= 49 && key <= 57 && g_playing)
 		{
-			int posy = (y-GRID_NUMBER_START_Y)/GRID_COL_DELTA;
-			int posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
+			posy = (y-GRID_NUMBER_START_Y)/GRID_COL_DELTA;
+			posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
 			// if on empty position
 			if(plain_board[posy][posx] == 0)
 			{
