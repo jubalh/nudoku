@@ -364,7 +364,7 @@ int main(int argc, char *argv[])
 			int posy = (y-GRID_NUMBER_START_Y)/GRID_COL_DELTA;
 			int posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
 			// if on empty position
-			if(user_board[posy][posx] == 0)
+			if(plain_board[posy][posx] == 0)
 			{
 				// add inputted number to grid
 				wattron(grid, COLOR_PAIR(3));
