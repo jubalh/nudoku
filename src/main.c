@@ -197,6 +197,14 @@ void init_windows(void)
 		wbkgd(infobox, COLOR_PAIR(2));
 	}
 
+	if (g_useColor)
+		wattron(infobox, A_BOLD|COLOR_PAIR(2));
+	wprintw(infobox, "nudoku %s\n\n", VERSION);
+	if (g_useColor)
+	{
+		wattroff(infobox, A_BOLD|COLOR_PAIR(2));
+		wattron(infobox, COLOR_PAIR(1));
+	}
 	wprintw(infobox, "Commands\n");
 	wprintw(infobox, " q - Quit\n");
 	wprintw(infobox, " r - Redraw\n");
@@ -207,6 +215,8 @@ void init_windows(void)
 	wprintw(infobox, " c - Check solution\n");
 	wprintw(infobox, " N - New puzzle\n");
 	wprintw(infobox, " S - Solve puzzle\n");
+	if (g_useColor)
+		wattroff(infobox, COLOR_PAIR(1));
 }
 
 void fill_grid(int board[][9])
