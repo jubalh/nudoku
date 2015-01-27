@@ -18,7 +18,7 @@ make
 For the git version you will have to do:
 
 ```
-git clone https://github.com/jubalh/nudoku`
+git clone https://github.com/jubalh/nudoku
 cd nudoku
 autoreconf -i
 ./configure
