@@ -358,15 +358,18 @@ int main(int argc, char *argv[])
 				redrawwin(infobox);
 				break;
 			case 'S':
-				werase(status);
-				mvwprintw(status, 0, 0, "Solving puzzle...");
-				refresh();
-				wrefresh(status);
-				solve_sudoku(plain_board);
-				fill_grid(plain_board);
-				werase(status);
-				mvwprintw(status, 0, 0, "Solved!");
-				g_playing = false;
+				if(g_playing)
+				{
+					werase(status);
+					mvwprintw(status, 0, 0, "Solving puzzle...");
+					refresh();
+					wrefresh(status);
+					solve_sudoku(plain_board);
+					fill_grid(plain_board);
+					werase(status);
+					mvwprintw(status, 0, 0, "Solved!");
+					g_playing = false;
+				}
 				break;
 			case 'N':
 				werase(status);
@@ -404,7 +407,7 @@ int main(int argc, char *argv[])
 				}
 				break;
 			case 'H':
-				if (hint())
+				if (g_playing && hint())
 				{
 					fill_grid(user_board);
 					werase(status);
