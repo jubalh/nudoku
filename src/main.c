@@ -76,7 +76,7 @@ void print_usage(void)
 {
 	printf("nudoku [option]\n\n");
 	printf("Options:\n");
-	printf("-h help:\t\t\tPrint this help\n");
+	printf("-h help:\t\tPrint this help\n");
 	printf("-v version:\t\tPrint version\n");
 	printf("-c nocolor:\t\tDo not use colors\n");
 	printf("-l load filename:\tLoad sudoku from file\n");
@@ -100,6 +100,7 @@ void parse_arguments(int argc, char *argv[])
 				break;
 			case 'l':
 				printf("not yet implemented\n");
+				exit(EXIT_SUCCESS);
 				break;
 			default:
 				print_usage();
