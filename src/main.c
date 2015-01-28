@@ -27,7 +27,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <unistd.h>		/* getopt */
 #include <ncurses.h>	/* ncurses */
 #include <time.h>		/* time */
-#include "sudoku.h"
+#include <string.h>		/* strcmp */
+#include "sudoku.h"		/* sudoku functions */
 
 /* DEFINES */
 //#define VERSION				"0.1" gets set via autotools
@@ -56,6 +57,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 /* GLOBALS */
 bool g_useColor = true;
 bool g_playing = false;
+DIFFICULTY g_level = D_EASY;
 WINDOW *grid, *infobox, *status;
 int plain_board[9][9];
 int user_board[9][9];
@@ -80,12 +82,13 @@ void print_usage(void)
 	printf("-v version:\t\tPrint version\n");
 	printf("-c nocolor:\t\tDo not use colors\n");
 	printf("-l load filename:\tLoad sudoku from file\n");
+	printf("-d difficulty:\t\tChoose between: easy, normal, hard\n");
 }
 
 void parse_arguments(int argc, char *argv[])
 {
 	int opt;
-	while ((opt = getopt(argc, argv, "hvcl:")) != -1)
+	while ((opt = getopt(argc, argv, "hvcld:")) != -1)
 	{
 		switch (opt)
 		{
@@ -101,6 +104,19 @@ void parse_arguments(int argc, char *argv[])
 			case 'l':
 				printf("not yet implemented\n");
 				exit(EXIT_SUCCESS);
+				break;
+			case 'd':
+				if (strcmp(optarg, "easy") == 0)
+					g_level = D_EASY;
+				else if (strcmp(optarg, "normal") == 0)
+					g_level = D_NORMAL;
+				else if (strcmp(optarg, "hard") == 0)
+					g_level = D_HARD;
+				else
+				{
+					print_usage();
+					exit(EXIT_FAILURE);
+				}
 				break;
 			default:
 				print_usage();
@@ -201,7 +217,8 @@ void init_windows(void)
 
 	if (g_useColor)
 		wattron(infobox, A_BOLD|COLOR_PAIR(2));
-	wprintw(infobox, "nudoku %s\n\n", VERSION);
+	wprintw(infobox, "nudoku %s\n", VERSION);
+	wprintw(infobox, "level: %s\n\n", difficulty_to_str(g_level) );
 	if (g_useColor)
 	{
 		wattroff(infobox, A_BOLD|COLOR_PAIR(2));
@@ -249,7 +266,8 @@ void fill_grid(int board[][9])
 
 void new_puzzle(void)
 {
-	char* stream = generate_puzzle();
+	int holes = get_holes(g_level);
+	char* stream = generate_puzzle(holes);
 
 	init_board(plain_board, stream);
 	init_board(user_board, stream);

@@ -21,6 +21,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <stdlib.h>		/* rand, malloc */
 #include <time.h>		/* time */
 #include <string.h>		/* strdup */
+#include "sudoku.h"		/* enum */
 
 /* FUNCTIONS */
 void board_to_stream(int board[9][9], char *stream)
@@ -229,7 +230,41 @@ void punch_holes(char *stream, int count)
 	}
 }
 
-char* generate_puzzle(void)
+char* difficulty_to_str(DIFFICULTY level)
+{
+	switch(level)
+	{
+		case D_HARD:
+			return "hard";
+		case D_NORMAL:
+			return "normal";
+		case D_EASY:
+		default:
+			return "easy";
+	}
+}
+
+int get_holes(DIFFICULTY level)
+{
+	int holes;
+	switch (level)
+	{
+		case D_HARD:
+			/*holes = rand() % 60 + 30;*/
+			holes = 50;
+			break;
+		case D_NORMAL:
+			holes = 40;
+			break;
+		case D_EASY:
+		default:
+			holes = 30;
+			break;
+	}
+	return holes;
+}
+
+char* generate_puzzle(int holes)
 {
 	char* stream;
 	int board[9][9];
@@ -238,7 +273,7 @@ char* generate_puzzle(void)
 	init_board(board, stream);
 	solve(board, 0, 0);
 	board_to_stream(board, stream);
-	punch_holes(stream, 40);
+	punch_holes(stream, holes);
 	return stream;
 }
 
