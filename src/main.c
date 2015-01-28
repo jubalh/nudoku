@@ -47,6 +47,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define STATUS_COLS			GRID_COLS + INFO_COLS
 #define STATUS_Y			1
 #define STATUS_X			GRID_X
+#define MAX_HINT_RANDOM_TRY	20
 
 #ifdef DEBUG
 #define EXAMPLE_STREAM "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......"
@@ -215,6 +216,7 @@ void init_windows(void)
 	wprintw(infobox, " c - Check solution\n");
 	wprintw(infobox, " N - New puzzle\n");
 	wprintw(infobox, " S - Solve puzzle\n");
+	wprintw(infobox, " H - Give a hint\n");
 	if (g_useColor)
 		wattroff(infobox, COLOR_PAIR(1));
 }
@@ -266,6 +268,28 @@ bool compare(void)
 	return compare_boards(tmp_board, user_board);
 }
 
+bool hint(void)
+{
+	int tmp_board[9][9];
+	int i, j, try = 0;
+
+	copy_board(tmp_board, plain_board);
+	solve_sudoku(tmp_board);
+
+	do
+	{
+		i = rand() % 8 + 1;
+		j = rand() % 8 + 1;
+		try++;
+		if ( user_board[i][j] == 0)
+		{
+			user_board[i][j] = tmp_board[i][j];
+			return true;
+		}
+	} while (try < MAX_HINT_RANDOM_TRY);
+	return false;
+}
+
 int main(int argc, char *argv[])
 {
 	bool run = true;
@@ -300,6 +324,8 @@ int main(int argc, char *argv[])
 		refresh();
 		wrefresh(grid);
 		key = getch();
+		// clear status window
+		werase(status);
 		switch(key)
 		{
 			case 'h':
@@ -374,6 +400,14 @@ int main(int argc, char *argv[])
 				{
 					user_board[posy][posx] = 0;
 					wprintw(grid, " ");
+				}
+				break;
+			case 'H':
+				if (hint())
+				{
+					fill_grid(user_board);
+					werase(status);
+					mvwprintw(status, 0, 0, "Provided hint");
 				}
 				break;
 			default:
