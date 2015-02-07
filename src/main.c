@@ -414,6 +414,8 @@ int main(int argc, char *argv[])
 				}
 				break;
 			// delete
+			case KEY_DC:
+			case KEY_BACKSPACE:
 			case 127:
 				posy = (y-GRID_NUMBER_START_Y)/GRID_COL_DELTA;
 				posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
