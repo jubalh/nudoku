@@ -22,6 +22,7 @@ AC_CHECK_HEADER_STDBOOL
 # Checks for library functions.
 AC_FUNC_MALLOC
 AC_CHECK_FUNCS([atexit strdup])
+AC_CHECK_LIB(ncurses, initscr)
 
 #AC_OUTPUT
 AC_OUTPUT(Makefile src/Makefile)
