@@ -16,6 +16,15 @@ emerge --sync
 emerge nudoku -a
 ```
 
+### openSUSE ###
+
+Add my OBS repository and install nudoku via zypper:
+
+```
+zypper ar -f http://download.opensuse.org/repositories/home:/jubalh/openSUSE_13.2/home:jubalh.repo
+zypper in nudoku
+```
+
 ### From Source ###
 
 Get the lastest [release](https://github.com/jubalh/nudoku/releases) and extract it.
