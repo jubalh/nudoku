@@ -44,6 +44,8 @@ bool init_board(int board[9][9], char *stream)
 		for(col=0; col < 9; col++)
 		{
 			char *p = stream++;
+			// In the stream there should only be numbers or
+			// empty field (.)
 			if(!((*p >= 49 && *p <= 57) || *p == '.' ))
 				return false;
 			if (*p == '.')
@@ -68,7 +70,7 @@ void copy_board(int dst[9][9], int src[9][9])
 	}
 }
 
-bool compare_boards(int one[9][9], int two[9][9])
+bool board_is_equal(int one[9][9], int two[9][9])
 {
 	int row, col;
 
@@ -85,7 +87,7 @@ bool compare_boards(int one[9][9], int two[9][9])
 
 /* SOLVER */
 /* Solver code has been taken from sb0rg: https://codereview.stackexchange.com/questions/37430/sudoku-solver-in-c */
-int isAvailable(int puzzle[9][9], int row, int col, int num)
+bool isAvailable(int puzzle[9][9], int row, int col, int num)
 {
 	int i;
 	int rowStart = (row/3) * 3;
@@ -93,11 +95,11 @@ int isAvailable(int puzzle[9][9], int row, int col, int num)
 
 	for(i=0; i<9; ++i)
 	{
-		if (puzzle[row][i] == num) return 0;
-		if (puzzle[i][col] == num) return 0;
-		if (puzzle[rowStart + (i%3)][colStart + (i/3)] == num) return 0;
+		if (puzzle[row][i] == num) return false;
+		if (puzzle[i][col] == num) return false;
+		if (puzzle[rowStart + (i%3)][colStart + (i/3)] == num) return false;
 	}
-	return 1;
+	return true;
 }
 
 int solve(int puzzle[9][9], int row, int col)

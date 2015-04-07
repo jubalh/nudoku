@@ -284,7 +284,7 @@ bool compare(void)
 	copy_board(tmp_board, plain_board);
 	solve_sudoku(tmp_board);
 
-	return compare_boards(tmp_board, user_board);
+	return board_is_equal(tmp_board, user_board);
 }
 
 bool hint(void)
