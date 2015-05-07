@@ -18,10 +18,10 @@ emerge nudoku -a
 
 ### openSUSE ###
 
-Add my OBS repository and install nudoku via zypper:
+Add the games repository and install nudoku via zypper. For 13.2 this can be done via:
 
 ```
-zypper ar -f http://download.opensuse.org/repositories/home:/jubalh/openSUSE_13.2/home:jubalh.repo
+zypper ar http://download.opensuse.org/repositories/games/openSUSE_13.2/ games
 zypper in nudoku
 ```
 
