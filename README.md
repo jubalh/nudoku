@@ -44,7 +44,7 @@ cd nudoku
 autoreconf -i
 ./configure
 make
-./nudoku
+./src/nudoku
 ```
 
 Add `-DDEBUG` to `make` to have some debug output.
