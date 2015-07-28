@@ -1,7 +1,7 @@
 /*
-nudoku 0.1
+nudoku
 
-Copyright (C) 2014 Michael "jubalh" Vetter - g.bluehut _a-t_ gmail.com
+Copyright (C) 2014 Michael "jubalh" Vetter - jubalh _a-t_ openmailbox.org
 
 LICENCE:
 This program is free software: you can redistribute it and/or modify
