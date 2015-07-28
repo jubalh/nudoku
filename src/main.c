@@ -27,7 +27,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <unistd.h>		/* getopt */
 #include <ncurses.h>	/* ncurses */
 #include <time.h>		/* time */
-#include <string.h>		/* strcmp */
+#include <string.h>		/* strcmp, strlen */
 #include "sudoku.h"		/* sudoku functions */
 
 /* DEFINES */
@@ -49,6 +49,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define STATUS_Y			1
 #define STATUS_X			GRID_X
 #define MAX_HINT_RANDOM_TRY	20
+#define STREAM_LENGTH		81
 
 #ifdef DEBUG
 #define EXAMPLE_STREAM "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......"
@@ -57,6 +58,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 /* GLOBALS */
 bool g_useColor = true;
 bool g_playing = false;
+char *g_provided_stream; /* in case of -s flag the user provides the sudoku stream */
 DIFFICULTY g_level = D_EASY;
 WINDOW *grid, *infobox, *status;
 int plain_board[9][9];
@@ -83,12 +85,39 @@ void print_usage(void)
 	printf("-c nocolor:\t\tDo not use colors\n");
 	printf("-l load filename:\tLoad sudoku from file\n");
 	printf("-d difficulty:\t\tChoose between: easy, normal, hard\n");
+	printf("-s stream:\t\tUser provided sudoku stream\n");
+}
+
+bool valide_stream(char *s)
+{
+	char *p = s;
+	short n = 0;
+	while ((*p) != '\0')
+	{
+		if (n++ > STREAM_LENGTH)
+			break;
+
+		if(!((*p >= 49 && *p <= 57) || *p == '.' ))
+		{
+			printf("Character %c at position %d is not allowed.\n", *p, n);
+			return false;
+		}
+		p++;
+	}
+
+	if (n != STREAM_LENGTH)
+	{
+		printf("Stream has to be %d characters long.\n", STREAM_LENGTH);
+		return false;
+	}
+
+	return true;
 }
 
 void parse_arguments(int argc, char *argv[])
 {
 	int opt;
-	while ((opt = getopt(argc, argv, "hvcld:")) != -1)
+	while ((opt = getopt(argc, argv, "hvcls:d:")) != -1)
 	{
 		switch (opt)
 		{
@@ -104,6 +133,11 @@ void parse_arguments(int argc, char *argv[])
 			case 'l':
 				printf("not yet implemented\n");
 				exit(EXIT_SUCCESS);
+				break;
+			case 's':
+				if (!valide_stream(optarg))
+					exit(EXIT_FAILURE);
+				g_provided_stream = strdup(optarg);
 				break;
 			case 'd':
 				if (strcmp(optarg, "easy") == 0)
@@ -217,8 +251,14 @@ void init_windows(void)
 
 	if (g_useColor)
 		wattron(infobox, A_BOLD|COLOR_PAIR(2));
+
 	wprintw(infobox, "nudoku %s\n", VERSION);
-	wprintw(infobox, "level: %s\n\n", difficulty_to_str(g_level) );
+
+	if (!g_provided_stream)
+		wprintw(infobox, "level: %s\n\n", difficulty_to_str(g_level) );
+	else
+		wprintw(infobox, "\n\n");
+
 	if (g_useColor)
 	{
 		wattroff(infobox, A_BOLD|COLOR_PAIR(2));
@@ -267,14 +307,23 @@ void fill_grid(int board[][9])
 void new_puzzle(void)
 {
 	int holes = get_holes(g_level);
-	char* stream = generate_puzzle(holes);
+	char* stream;
+
+	if (g_provided_stream)
+		stream = g_provided_stream;
+	else
+		stream = generate_puzzle(holes);
 
 	init_board(plain_board, stream);
 	init_board(user_board, stream);
-	free(stream);
+
+	if (!g_provided_stream)
+		free(stream);
+
 	fill_grid(plain_board);
 
 	g_playing = true;
+
 }
 
 bool compare(void)
@@ -313,6 +362,8 @@ int main(int argc, char *argv[])
 {
 	bool run = true;
 	int key, x, y, posx, posy;
+
+	g_provided_stream = NULL;
 
 	parse_arguments(argc, argv);
 	init_curses();
@@ -397,6 +448,12 @@ int main(int argc, char *argv[])
 				new_puzzle();
 				werase(status);
 				g_playing = true;
+
+				if (g_provided_stream)
+				{
+					free(g_provided_stream);
+					g_provided_stream = NULL;
+				}
 				break;
 			case 'c':
 				if(g_playing)
@@ -458,6 +515,9 @@ int main(int argc, char *argv[])
 		wrefresh(grid);
 		wrefresh(infobox);
 	}
+
+	if (g_provided_stream)
+		free(g_provided_stream);
 
 	endwin();
 	return EXIT_SUCCESS;
