@@ -16,12 +16,6 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-/*
- * Conventions:
- * board is the model of the sudoku. a two dimensional array.
- * grid is the visual represantation of the sudoku.
- */
-
 /* INCLUDES */
 #include <stdlib.h>		/* rand, srand */
 #include <unistd.h>		/* getopt */
@@ -61,8 +55,8 @@ bool g_playing = false;
 char *g_provided_stream; /* in case of -s flag the user provides the sudoku stream */
 DIFFICULTY g_level = D_EASY;
 WINDOW *grid, *infobox, *status;
-int plain_board[9][9];
-int user_board[9][9];
+char plain_board[82];
+char user_board[82];
 
 /* FUNCTIONS */
 void print_version(void)
@@ -279,7 +273,7 @@ void init_windows(void)
 		wattroff(infobox, COLOR_PAIR(1));
 }
 
-void fill_grid(int board[][9])
+void fill_grid(char *board)
 {
 	int row, col, x, y;
 	int n;
@@ -292,11 +286,11 @@ void fill_grid(int board[][9])
 		x = GRID_NUMBER_START_X;
 		for(col=0; col < 9; col++)
 		{
-			n = board[row][col];
-			if(n == 0)
+			n = board[row*9+col];
+			if(n == '.')
 				c = ' ';
 			else 
-				c = n + 48;
+				c = n;
 			mvwprintw(grid, y, x, "%c", c);
 			x += GRID_LINE_DELTA;
 		}
@@ -314,8 +308,9 @@ void new_puzzle(void)
 	else
 		stream = generate_puzzle(holes);
 
-	init_board(plain_board, stream);
-	init_board(user_board, stream);
+	//todo
+	strcpy(plain_board, stream);
+	strcpy(user_board, stream);
 
 	if (!g_provided_stream)
 		free(stream);
@@ -328,20 +323,20 @@ void new_puzzle(void)
 
 bool compare(void)
 {
-	int tmp_board[9][9];
+	char tmp_board[82];
 
-	copy_board(tmp_board, plain_board);
+	strcpy(tmp_board, plain_board);
 	solve_sudoku(tmp_board);
 
-	return board_is_equal(tmp_board, user_board);
+	return (strcmp(tmp_board, user_board) == 0);
 }
 
 bool hint(void)
 {
-	int tmp_board[9][9];
+	char tmp_board[82];
 	int i, j, try = 0;
 
-	copy_board(tmp_board, plain_board);
+	strcpy(tmp_board, plain_board);
 	solve_sudoku(tmp_board);
 
 	do
@@ -349,9 +344,9 @@ bool hint(void)
 		i = rand() % 8 + 1;
 		j = rand() % 8 + 1;
 		try++;
-		if ( user_board[i][j] == 0)
+		if ( user_board[i*9+j] == '.')
 		{
-			user_board[i][j] = tmp_board[i][j];
+			user_board[i*9+j] = tmp_board[i*9+j];
 			return true;
 		}
 	} while (try < MAX_HINT_RANDOM_TRY);
@@ -371,8 +366,8 @@ int main(int argc, char *argv[])
 	srand(time(NULL));
 
 #ifdef DEBUG
-	init_board(plain_board, EXAMPLE_STREAM);
-	init_board(user_board, EXAMPLE_STREAM);
+	strcpy(plain_board, EXAMPLE_STREAM);
+	strcpy(user_board, EXAMPLE_STREAM);
 	fill_grid(plain_board);
 	g_playing = true;
 #else
@@ -477,9 +472,9 @@ int main(int argc, char *argv[])
 				posy = (y-GRID_NUMBER_START_Y)/GRID_COL_DELTA;
 				posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
 				// if on empty position
-				if(plain_board[posy][posx] == 0)
+				if(plain_board[posy*9+posx] == '.')
 				{
-					user_board[posy][posx] = 0;
+					user_board[posy*9+posx] = '.';
 					wprintw(grid, " ");
 				}
 				break;
@@ -500,13 +495,13 @@ int main(int argc, char *argv[])
 			posy = (y-GRID_NUMBER_START_Y)/GRID_COL_DELTA;
 			posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
 			// if on empty position
-			if(plain_board[posy][posx] == 0)
+			if(plain_board[posy*9+posx] == '.')
 			{
 				// add inputted number to grid
 				wattron(grid, COLOR_PAIR(3));
 				wprintw(grid, "%c", key);
 				wattroff(grid, COLOR_PAIR(3));
-				user_board[posy][posx] = key - 48;
+				user_board[posy*9+posx] = key;
 			}
 		}
 		wmove(grid, y,x);

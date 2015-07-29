@@ -24,70 +24,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "sudoku.h"		/* enum */
 
 /* FUNCTIONS */
-void board_to_stream(int board[9][9], char *stream)
-{
-	int i, j, n=0;
-	for (i = 0; i<9; i++)
-	{
-		for (j = 0; j<9; j++)
-			stream[n++] = board[i][j]+48;
-	}
-}
-
-/*TODO: so far just ignoring longer stream. maybe check for 81*/
-bool init_board(int board[9][9], char *stream)
-{
-	int row, col;
-
-	for(row=0; row < 9; row++)
-	{
-		for(col=0; col < 9; col++)
-		{
-			char *p = stream++;
-			// In the stream there should only be numbers or
-			// empty field (.)
-			if(!((*p >= 49 && *p <= 57) || *p == '.' ))
-				return false;
-			if (*p == '.')
-				board[row][col] = 0;
-			else
-				board[row][col] = *p - 48;
-		}
-	}
-	return true;
-}
-
-void copy_board(int dst[9][9], int src[9][9])
-{
-	int row, col;
-
-	for (row = 0; row < 9; row++)
-	{
-		for (col = 0; col < 9; col ++)
-		{
-			dst[row][col] = src[row][col];
-		}
-	}
-}
-
-bool board_is_equal(int one[9][9], int two[9][9])
-{
-	int row, col;
-
-	for (row = 0; row < 9; row++)
-	{
-		for (col = 0; col < 9; col ++)
-		{
-			if (one[row][col] != two[row][col])
-				return false;
-		}
-	}
-	return true;
-}
 
 /* SOLVER */
 /* Solver code has been taken from sb0rg: https://codereview.stackexchange.com/questions/37430/sudoku-solver-in-c */
-bool isAvailable(int puzzle[9][9], int row, int col, int num)
+bool isAvailable(char puzzle[82], int row, int col, int num)
 {
 	int i;
 	int rowStart = (row/3) * 3;
@@ -95,24 +35,24 @@ bool isAvailable(int puzzle[9][9], int row, int col, int num)
 
 	for(i=0; i<9; ++i)
 	{
-		if (puzzle[row][i] == num) return false;
-		if (puzzle[i][col] == num) return false;
-		if (puzzle[rowStart + (i%3)][colStart + (i/3)] == num) return false;
+		if (puzzle[row * 9 + i] - 48 == num) return false;
+		if (puzzle[i * 9 + col] - 48 == num) return false;
+		if (puzzle[(rowStart + (i % 3)) * 9 + (colStart + (i / 3))] - 48 == num) return false;
 	}
 	return true;
 }
 
-int solve(int puzzle[9][9], int row, int col)
+int solve(char puzzle[82], int row, int col)
 {
 	int i;
 	if(row<9 && col<9)
 	{
-		if(puzzle[row][col] != 0)
+		if(puzzle[row * 9 + col] != '.')
 		{
-			if((col+1)<9)
-				return solve(puzzle, row, col+1);
-			else if((row+1)<9)
-				return solve(puzzle, row+1, 0);
+			if((col + 1) < 9)
+				return solve(puzzle, row, col + 1);
+			else if((row + 1) < 9)
+				return solve(puzzle, row + 1, 0);
 			else
 				return 1;
 		}
@@ -122,12 +62,12 @@ int solve(int puzzle[9][9], int row, int col)
 			{
 				if(isAvailable(puzzle, row, col, i+1))
 				{
-					puzzle[row][col] = i+1;
+					puzzle[row * 9 + col] = i + 1 + 48;
 
 					if(solve(puzzle, row, col))
 						return 1;
 					else
-						puzzle[row][col] = 0;
+						puzzle[row * 9 + col] = '.';
 				}
 			}
 		}
@@ -211,6 +151,8 @@ char* generate_seed()
 			stream[index++] = upperleft[iSquare++];
 	}
 
+	stream[81] = '\0';
+
 	free(upperleft);
 	free(center);
 	free(lowerright);
@@ -269,12 +211,9 @@ int get_holes(DIFFICULTY level)
 char* generate_puzzle(int holes)
 {
 	char* stream;
-	int board[9][9];
 
 	stream = generate_seed();
-	init_board(board, stream);
-	solve(board, 0, 0);
-	board_to_stream(board, stream);
+	solve(stream, 0, 0);
 	punch_holes(stream, holes);
 	return stream;
 }
