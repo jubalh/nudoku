@@ -271,13 +271,13 @@ int get_holes(DIFFICULTY level)
 char* generate_puzzle(int holes)
 {
 	char* stream;
-	int board[9][9];
+	/*int board[9][9];*/
 
 	stream = generate_seed();
-	init_board(board, stream);
+	/*init_board(board, stream);*/
 	/*solve(board, 0, 0);*/
 	solve(stream, 0, 0);
-	board_to_stream(board, stream);
+	/*board_to_stream(board, stream);*/
 	punch_holes(stream, holes);
 	return stream;
 }
