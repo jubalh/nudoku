@@ -96,11 +96,11 @@ bool isAvailable(char puzzle[82], int row, int col, int num)
 	for(i=0; i<9; ++i)
 	{
 		//[row*9+i] = puzzle [row][i]
-		if (puzzle[row*9+i] == num) return false;
-		if (puzzle[i*9+col] == num) return false;
+		if (puzzle[row*9+i] -48 == num) return false;
+		if (puzzle[i*9+col] -48 == num) return false;
 
 
-		if (puzzle[(rowStart + (i%3))*9 + (colStart + (i/3))] == num) return false;
+		if (puzzle[(rowStart + (i%3))*9 + (colStart + (i/3))] -48 == num) return false;
 
 		/*if (puzzle[rowStart + (i%3)][colStart + (i/3)] == num) return false;*/
 	}
@@ -112,7 +112,7 @@ int solve(char puzzle[82], int row, int col)
 	int i;
 	if(row<9 && col<9)
 	{
-		if(puzzle[row*9+col] != 0)
+		if(puzzle[row*9+col] != '.')
 		{
 			if((col+1)<9)
 				return solve(puzzle, row, col+1);
@@ -127,12 +127,12 @@ int solve(char puzzle[82], int row, int col)
 			{
 				if(isAvailable(puzzle, row, col, i+1))
 				{
-					puzzle[row*9+col] = i+1;
+					puzzle[row*9+col] = i+1 + 48;
 
 					if(solve(puzzle, row, col))
 						return 1;
 					else
-						puzzle[row*9+col] = 0;
+						puzzle[row*9+col] = '.';
 				}
 			}
 		}

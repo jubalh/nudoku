@@ -293,10 +293,10 @@ void fill_grid(char *board)
 		for(col=0; col < 9; col++)
 		{
 			n = board[row*9+col];
-			if(n == 0)
+			if(n == '.')
 				c = ' ';
 			else 
-				c = n + 48;
+				c = n;
 			mvwprintw(grid, y, x, "%c", c);
 			x += GRID_LINE_DELTA;
 		}
@@ -354,7 +354,7 @@ bool hint(void)
 		i = rand() % 8 + 1;
 		j = rand() % 8 + 1;
 		try++;
-		if ( user_board[i*9+j] == 0)
+		if ( user_board[i*9+j] == '.')
 		{
 			user_board[i*9+j] = tmp_board[i*9+j];
 			return true;
@@ -482,9 +482,9 @@ int main(int argc, char *argv[])
 				posy = (y-GRID_NUMBER_START_Y)/GRID_COL_DELTA;
 				posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
 				// if on empty position
-				if(plain_board[posy*9+posx] == 0)
+				if(plain_board[posy*9+posx] == '.')
 				{
-					user_board[posy*9+posx] = 0;
+					user_board[posy*9+posx] = '.';
 					wprintw(grid, " ");
 				}
 				break;
@@ -505,13 +505,13 @@ int main(int argc, char *argv[])
 			posy = (y-GRID_NUMBER_START_Y)/GRID_COL_DELTA;
 			posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
 			// if on empty position
-			if(plain_board[posy*9+posx] == 0)
+			if(plain_board[posy*9+posx] == '.')
 			{
 				// add inputted number to grid
 				wattron(grid, COLOR_PAIR(3));
 				wprintw(grid, "%c", key);
 				wattroff(grid, COLOR_PAIR(3));
-				user_board[posy*9+posx] = key - 48;
+				user_board[posy*9+posx] = key;
 			}
 		}
 		wmove(grid, y,x);
