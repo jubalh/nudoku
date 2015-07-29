@@ -57,18 +57,18 @@ bool init_board(int board[9][9], char *stream)
 	return true;
 }
 
-void copy_board(int dst[9][9], int src[9][9])
-{
-	int row, col;
+/*void copy_board(int dst[9][9], int src[9][9])*/
+/*{*/
+	/*int row, col;*/
 
-	for (row = 0; row < 9; row++)
-	{
-		for (col = 0; col < 9; col ++)
-		{
-			dst[row][col] = src[row][col];
-		}
-	}
-}
+	/*for (row = 0; row < 9; row++)*/
+	/*{*/
+		/*for (col = 0; col < 9; col ++)*/
+		/*{*/
+			/*dst[row][col] = src[row][col];*/
+		/*}*/
+	/*}*/
+/*}*/
 
 bool board_is_equal(int one[9][9], int two[9][9])
 {
@@ -87,7 +87,7 @@ bool board_is_equal(int one[9][9], int two[9][9])
 
 /* SOLVER */
 /* Solver code has been taken from sb0rg: https://codereview.stackexchange.com/questions/37430/sudoku-solver-in-c */
-bool isAvailable(int puzzle[9][9], int row, int col, int num)
+bool isAvailable(char *puzzle, int row, int col, int num)
 {
 	int i;
 	int rowStart = (row/3) * 3;
@@ -95,19 +95,21 @@ bool isAvailable(int puzzle[9][9], int row, int col, int num)
 
 	for(i=0; i<9; ++i)
 	{
-		if (puzzle[row][i] == num) return false;
-		if (puzzle[i][col] == num) return false;
-		if (puzzle[rowStart + (i%3)][colStart + (i/3)] == num) return false;
+		//[row*9+i] = puzzle [row][i]
+		if (puzzle[row*9+i] == num) return false;
+		if (puzzle[i*9+col] == num) return false;
+		if (puzzle[rowStart*9 + (i%3) + (colStart + (i/3))] == num) return false;
+		/*if (puzzle[rowStart + (i%3)][colStart + (i/3)] == num) return false;*/
 	}
 	return true;
 }
 
-int solve(int puzzle[9][9], int row, int col)
+int solve(char *puzzle, int row, int col)
 {
 	int i;
 	if(row<9 && col<9)
 	{
-		if(puzzle[row][col] != 0)
+		if(puzzle[row*9+col] != 0)
 		{
 			if((col+1)<9)
 				return solve(puzzle, row, col+1);
@@ -122,12 +124,12 @@ int solve(int puzzle[9][9], int row, int col)
 			{
 				if(isAvailable(puzzle, row, col, i+1))
 				{
-					puzzle[row][col] = i+1;
+					puzzle[row*9+col] = i+1;
 
 					if(solve(puzzle, row, col))
 						return 1;
 					else
-						puzzle[row][col] = 0;
+						puzzle[row*9+col] = 0;
 				}
 			}
 		}
@@ -273,7 +275,8 @@ char* generate_puzzle(int holes)
 
 	stream = generate_seed();
 	init_board(board, stream);
-	solve(board, 0, 0);
+	/*solve(board, 0, 0);*/
+	solve(stream, 0, 0);
 	board_to_stream(board, stream);
 	punch_holes(stream, holes);
 	return stream;
