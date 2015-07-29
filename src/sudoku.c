@@ -177,65 +177,77 @@ bool is_fresh_number(int n, int *tried)
 	return true;
 }
 
+int punch_hole_maintain_unique(char *stream, int position, int i)
+{
+	if (stream[position] != '.')
+	{
+		int solutions = 1;
+		if (i>2)
+		{
+			solutions = 0;
+			//put in all numbers so we can test how many solutions
+			for (int j=49; j<58; j++)
+			{
+				char tmp_board[82];
+
+				strcpy(tmp_board, stream);
+
+				/*printf("chage %d to %d at position %d\n", tmp_board[random], j, random);*/
+				tmp_board[position] = j;
+
+				if (solve(tmp_board, 0, 0) == 0)
+				{
+					solutions++;
+				}
+			}
+			/*if (solutions != 0)*/
+			/*printf("solutions %d\n", solutions);*/
+		}
+		if (solutions == 1)
+		{
+			//when unique solution then we can use it
+			stream[position] = '.';
+			i++;
+		}
+	}
+	return i;
+}
+
+int get_random_punch_position(int *tried)
+{
+	int random;
+	int random_rounds=0;
+
+	//check if already tried
+	do {
+		random = rand() % 80 + 1;
+
+		if(!is_fresh_number(random, tried))
+		{
+			if (random > STREAM_LENGTH)
+				random--;
+			else
+				random++;
+		}
+		random_rounds++;
+	} while(!is_fresh_number(random, tried) && random_rounds < MAX_RANDOM_TRIES);
+	return random;
+}
+
 void punch_holes(char *stream, int count)
 {
-	int i=0;
-	int punch_rounds=0;
 	int tried[STREAM_LENGTH];
+	int punch_rounds=0;
+	int i=0;
 
 	memset((void*)tried, -1, STREAM_LENGTH);
 
 	/*int c;*/
 	while(i<count && punch_rounds < MAX_PUNCH_TRIES )
 	{
-		int random;
-		int random_rounds=0;
+		int random = get_random_punch_position(tried);
 
-		//check if already tried
-		do {
-			random = rand() % 80 + 1;
-
-			if(!is_fresh_number(random, tried))
-			{
-				if (random > STREAM_LENGTH)
-					random--;
-				else
-					random++;
-			}
-			random_rounds++;
-		} while(!is_fresh_number(random, tried) && random_rounds < MAX_RANDOM_TRIES);
-
-		if (stream[random] != '.')
-		{
-			int solutions = 1;
-			if (i>2)
-			{
-				solutions = 0;
-				//put in all numbers so we can test how many solutions
-				for (int j=49; j<58; j++)
-				{
-					char tmp_board[82];
-
-					strcpy(tmp_board, stream);
-
-					/*printf("chage %d to %d at position %d\n", tmp_board[random], j, random);*/
-					tmp_board[random] = j;
-
-					if (solve(tmp_board, 0, 0) == 0)
-					{
-						solutions++;
-					}
-				}
-				/*if (solutions != 0)*/
-					/*printf("solutions %d\n", solutions);*/
-			}
-			if (solutions == 1)
-			{
-				//when unique solution then we can use it
-				stream[random] = '.';
-				i++;
-			}
-		}
+		i = punch_hole_maintain_unique(stream, random, i);
 		punch_rounds++;
 	}
 	/*printf("stream %s\n", stream);*/
