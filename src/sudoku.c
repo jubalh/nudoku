@@ -23,6 +23,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <string.h>		/* strdup */
 #include "sudoku.h"		/* enum */
 
+/*#include <stdio.h>*/
+/*#include <unistd.h>*/
+
 /* FUNCTIONS */
 
 /* SOLVER */
@@ -163,15 +166,47 @@ char* generate_seed()
 void punch_holes(char *stream, int count)
 {
 	int i=0;
-	while(i<count)
+	int rounds=0;
+	/*int c;*/
+#define MAX_PUNCH_TRIES 50000
+	while(i<count && rounds < MAX_PUNCH_TRIES )
 	{
 		int random = rand() % 80 + 1;
 		if (stream[random] != '.')
 		{
-			stream[random] = '.';
-			i++;
+			int solutions = 1;
+			if (i>2)
+			{
+				solutions = 0;
+				//put in all numbers so we can test how many solutions
+				for (int j=49; j<58; j++)
+				{
+					char tmp_board[82];
+
+					strcpy(tmp_board, stream);
+
+					/*printf("chage %d to %d at position %d\n", tmp_board[random], j, random);*/
+					tmp_board[random] = j;
+
+					if (solve(tmp_board, 0, 0) == 0)
+					{
+						solutions++;
+					}
+				}
+				/*if (solutions != 0)*/
+					/*printf("solutions %d\n", solutions);*/
+			}
+			if (solutions == 1)
+			{
+				//when unique solution then we can use it
+				stream[random] = '.';
+				i++;
+			}
 		}
+		rounds++;
 	}
+	/*printf("stream %s\n", stream);*/
+	/*c = getchar();*/
 }
 
 char* difficulty_to_str(DIFFICULTY level)
