@@ -163,15 +163,48 @@ char* generate_seed()
 	return stream;
 }
 
+#define MAX_PUNCH_TRIES 1000
+#define MAX_RANDOM_TRIES 5
+bool is_fresh_number(int n, int *tried)
+{
+	int i=-1;
+	while(tried[++i] != -1 && i < MAX_PUNCH_TRIES)
+	{
+		if(n==tried[i])
+			return false;
+	}
+	tried[i] = n;
+	return true;
+}
+
 void punch_holes(char *stream, int count)
 {
 	int i=0;
-	int rounds=0;
+	int punch_rounds=0;
+	int tried[MAX_PUNCH_TRIES];
+
+	memset((void*)tried, -1, MAX_PUNCH_TRIES);
+
 	/*int c;*/
-#define MAX_PUNCH_TRIES 50000
-	while(i<count && rounds < MAX_PUNCH_TRIES )
+	while(i<count && punch_rounds < MAX_PUNCH_TRIES )
 	{
-		int random = rand() % 80 + 1;
+		int random;
+		int random_rounds=0;
+
+		//check if already tried
+		do {
+			random = rand() % 80 + 1;
+
+			if(!is_fresh_number(random, tried))
+			{
+				if (random > 81)
+					random--;
+				else
+					random++;
+			}
+			random_rounds++;
+		} while(!is_fresh_number(random, tried) && random_rounds < MAX_RANDOM_TRIES);
+
 		if (stream[random] != '.')
 		{
 			int solutions = 1;
@@ -203,7 +236,7 @@ void punch_holes(char *stream, int count)
 				i++;
 			}
 		}
-		rounds++;
+		punch_rounds++;
 	}
 	/*printf("stream %s\n", stream);*/
 	/*c = getchar();*/
