@@ -11,4 +11,6 @@ int		solve(char puzzle[82], int row, int col);
 
 #define solve_sudoku(board) solve(board, 0, 0);
 
+#define STREAM_LENGTH 81
+
 #endif // SUDOKU_H

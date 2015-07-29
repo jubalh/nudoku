@@ -43,7 +43,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define STATUS_Y			1
 #define STATUS_X			GRID_X
 #define MAX_HINT_RANDOM_TRY	20
-#define STREAM_LENGTH		81
 
 #ifdef DEBUG
 #define EXAMPLE_STREAM "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......"

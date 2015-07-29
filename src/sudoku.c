@@ -154,7 +154,7 @@ char* generate_seed()
 			stream[index++] = upperleft[iSquare++];
 	}
 
-	stream[81] = '\0';
+	stream[STREAM_LENGTH] = '\0';
 
 	free(upperleft);
 	free(center);
@@ -181,9 +181,9 @@ void punch_holes(char *stream, int count)
 {
 	int i=0;
 	int punch_rounds=0;
-	int tried[MAX_PUNCH_TRIES];
+	int tried[STREAM_LENGTH];
 
-	memset((void*)tried, -1, MAX_PUNCH_TRIES);
+	memset((void*)tried, -1, STREAM_LENGTH);
 
 	/*int c;*/
 	while(i<count && punch_rounds < MAX_PUNCH_TRIES )
@@ -197,7 +197,7 @@ void punch_holes(char *stream, int count)
 
 			if(!is_fresh_number(random, tried))
 			{
-				if (random > 81)
+				if (random > STREAM_LENGTH)
 					random--;
 				else
 					random++;
