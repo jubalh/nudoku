@@ -87,7 +87,7 @@ bool board_is_equal(int one[9][9], int two[9][9])
 
 /* SOLVER */
 /* Solver code has been taken from sb0rg: https://codereview.stackexchange.com/questions/37430/sudoku-solver-in-c */
-bool isAvailable(char *puzzle, int row, int col, int num)
+bool isAvailable(char puzzle[82], int row, int col, int num)
 {
 	int i;
 	int rowStart = (row/3) * 3;
@@ -98,13 +98,16 @@ bool isAvailable(char *puzzle, int row, int col, int num)
 		//[row*9+i] = puzzle [row][i]
 		if (puzzle[row*9+i] == num) return false;
 		if (puzzle[i*9+col] == num) return false;
-		if (puzzle[rowStart*9 + (i%3) + (colStart + (i/3))] == num) return false;
+
+
+		if (puzzle[(rowStart + (i%3))*9 + (colStart + (i/3))] == num) return false;
+
 		/*if (puzzle[rowStart + (i%3)][colStart + (i/3)] == num) return false;*/
 	}
 	return true;
 }
 
-int solve(char *puzzle, int row, int col)
+int solve(char puzzle[82], int row, int col)
 {
 	int i;
 	if(row<9 && col<9)
