@@ -9,6 +9,6 @@ bool	board_is_equal(int one[9][9], int two[9][9]);
 char*	generate_puzzle(int holes);
 int		solve(char puzzle[82], int row, int col);
 
-#define solve_sudoku(board) solve(board, 0, 0);
+#define solve_sudoku(board) solve(board, 0, 0)
 
 #endif // SUDOKU_H
