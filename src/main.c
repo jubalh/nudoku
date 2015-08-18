@@ -25,7 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "sudoku.h"		/* sudoku functions */
 
 /* DEFINES */
-//#define VERSION				"0.1" gets set via autotools
+//#define VERSION				"0.1" //gets set via autotools
 #define GRID_LINES			19
 #define GRID_COLS			37
 #define GRID_Y				3
@@ -318,7 +318,6 @@ void new_puzzle(void)
 	fill_grid(plain_board);
 
 	g_playing = true;
-
 }
 
 bool compare(void)
@@ -336,20 +335,22 @@ bool hint(void)
 	char tmp_board[82];
 	int i, j, try = 0;
 
-	strcpy(tmp_board, plain_board);
-	solve_sudoku(tmp_board);
-
-	do
+	strcpy(tmp_board, user_board);
+	int solved = solve_sudoku(tmp_board);
+	if (solved != 0)
 	{
-		i = rand() % 8 + 1;
-		j = rand() % 8 + 1;
-		try++;
-		if ( user_board[i*9+j] == '.')
+		do
 		{
-			user_board[i*9+j] = tmp_board[i*9+j];
-			return true;
-		}
-	} while (try < MAX_HINT_RANDOM_TRY);
+			i = rand() % 8 + 1;
+			j = rand() % 8 + 1;
+			try++;
+			if ( user_board[i*9+j] == '.')
+			{
+				user_board[i*9+j] = tmp_board[i*9+j];
+				return true;
+			}
+		} while (try < MAX_HINT_RANDOM_TRY);
+	}
 	return false;
 }
 
