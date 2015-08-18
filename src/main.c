@@ -77,7 +77,6 @@ void print_usage(void)
 	printf("-h help:\t\tPrint this help\n");
 	printf("-v version:\t\tPrint version\n");
 	printf("-c nocolor:\t\tDo not use colors\n");
-	printf("-l load filename:\tLoad sudoku from file\n");
 	printf("-d difficulty:\t\tChoose between: easy, normal, hard\n");
 	printf("-s stream:\t\tUser provided sudoku stream\n");
 }
@@ -111,7 +110,7 @@ bool valide_stream(char *s)
 void parse_arguments(int argc, char *argv[])
 {
 	int opt;
-	while ((opt = getopt(argc, argv, "hvcls:d:")) != -1)
+	while ((opt = getopt(argc, argv, "hvcs:d:")) != -1)
 	{
 		switch (opt)
 		{
@@ -123,10 +122,6 @@ void parse_arguments(int argc, char *argv[])
 				exit(EXIT_SUCCESS);
 			case 'c':
 				g_useColor = false;
-				break;
-			case 'l':
-				printf("not yet implemented\n");
-				exit(EXIT_SUCCESS);
 				break;
 			case 's':
 				if (!valide_stream(optarg))
@@ -454,15 +449,29 @@ int main(int argc, char *argv[])
 			case 'c':
 				if(g_playing)
 				{
-					werase(status);
-					if(compare())
+                    int solvable;
+                    char tmp_board[82];
+
+                    werase(status);
+
+                    strcpy(tmp_board, user_board);
+                    solvable= solve_sudoku(tmp_board);
+
+					if(solvable == 0)
 					{
-						mvwprintw(status, 0, 0, "Correct!");
-						g_playing = false;
+						mvwprintw(status, 0, 0, "Not correct");
 					}
 					else
 					{
-						mvwprintw(status, 0, 0, "Not correct");
+                        if (strchr(user_board, '.') == NULL)
+                        {
+                            mvwprintw(status, 0, 0, "Solved!");
+                            g_playing = false;
+                        }
+                        else
+                        {
+                            mvwprintw(status, 0, 0, "Correct so far");
+                        }
 					}
 				}
 				break;
