@@ -26,8 +26,41 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 /* FUNCTIONS */
 
 /* SOLVER */
+bool is_valid(char puzzle[82])
+{
+	int rowEntry, colEntry, squareEntry;
+
+	int rowEntryCounter[9] = {0};
+	int colEntryCounter[9] = {0};
+	int squareEntryCounter[9] = {0};
+
+	for(int row=0; row<9; ++row)
+	{
+		// count occurrences of digits in each row, column and square
+		for (int col=0; col<9; ++col)
+		{
+			rowEntry = puzzle[row * 9 + col];
+			colEntry = puzzle[col * 9 + row];
+			squareEntry = puzzle[(((row % 3) + (row / 3) * 9) * 3 ) + (col % 3 + (col / 3) * 9)];
+			if (rowEntry != '.') rowEntryCounter[rowEntry - 48]++;
+			if (colEntry!= '.') colEntryCounter[colEntry - 48]++;
+			if (squareEntry != '.') squareEntryCounter[squareEntry - 48]++;
+		}
+		// check if any digit occurs more than once per row, column or square
+		for (int i=0;i<9; ++i)
+		{
+			if (rowEntryCounter[i] > 1 || colEntryCounter[i] > 1 || squareEntryCounter[i] > 1)
+				return false;
+			rowEntryCounter[i] = 0;
+			colEntryCounter[i] = 0;
+			squareEntryCounter[i] = 0;
+		}
+	}
+	return true;
+}
+
 /* Solver code has been taken from sb0rg: https://codereview.stackexchange.com/questions/37430/sudoku-solver-in-c */
-bool isAvailable(char puzzle[82], int row, int col, int num)
+bool is_available(char puzzle[82], int row, int col, int num)
 {
 	int i;
 	int rowStart = (row/3) * 3;
@@ -42,7 +75,7 @@ bool isAvailable(char puzzle[82], int row, int col, int num)
 	return true;
 }
 
-int solve(char puzzle[82], int row, int col)
+int solve_recursively(char puzzle[82], int row, int col)
 {
 	int i;
 	if(row<9 && col<9)
@@ -50,9 +83,9 @@ int solve(char puzzle[82], int row, int col)
 		if(puzzle[row * 9 + col] != '.')
 		{
 			if((col + 1) < 9)
-				return solve(puzzle, row, col + 1);
+				return solve_recursively(puzzle, row, col + 1);
 			else if((row + 1) < 9)
-				return solve(puzzle, row + 1, 0);
+				return solve_recursively(puzzle, row + 1, 0);
 			else
 				return 1;
 		}
@@ -60,11 +93,11 @@ int solve(char puzzle[82], int row, int col)
 		{
 			for(i=0; i<9; ++i)
 			{
-				if(isAvailable(puzzle, row, col, i+1))
+				if(is_available(puzzle, row, col, i+1))
 				{
 					puzzle[row * 9 + col] = i + 1 + 48;
 
-					if(solve(puzzle, row, col))
+					if(solve_recursively(puzzle, row, col))
 						return 1;
 					else
 						puzzle[row * 9 + col] = '.';
@@ -75,6 +108,14 @@ int solve(char puzzle[82], int row, int col)
 	}
 	else
 		return 1;
+}
+
+int solve(char puzzle[82])
+{
+	if (!is_valid(puzzle))
+		return 0;
+	else
+		return solve_recursively(puzzle, 0, 0);
 }
 
 /* GENERATOR */
@@ -213,8 +254,7 @@ char* generate_puzzle(int holes)
 	char* stream;
 
 	stream = generate_seed();
-	solve(stream, 0, 0);
+	solve(stream);
 	punch_holes(stream, holes);
 	return stream;
 }
-
