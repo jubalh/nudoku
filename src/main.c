@@ -380,7 +380,7 @@ int main(int argc, char *argv[])
 	while(run)
 	{
 #ifdef DEBUG
-	mvprintw(0, 0, "y: %.2d x: %.2d", y, x);
+		mvprintw(0, 0, "y: %.2d x: %.2d", y, x);
 #endif // DEBUG
 		refresh();
 		wrefresh(grid);
@@ -449,13 +449,13 @@ int main(int argc, char *argv[])
 			case 'c':
 				if(g_playing)
 				{
-                    int solvable;
-                    char tmp_board[82];
+					int solvable;
+					char tmp_board[82];
 
-                    werase(status);
+					werase(status);
 
-                    strcpy(tmp_board, user_board);
-                    solvable= solve_sudoku(tmp_board);
+					strcpy(tmp_board, user_board);
+					solvable= solve_sudoku(tmp_board);
 
 					if(solvable == 0)
 					{
@@ -463,15 +463,15 @@ int main(int argc, char *argv[])
 					}
 					else
 					{
-                        if (strchr(user_board, '.') == NULL)
-                        {
-                            mvwprintw(status, 0, 0, "Solved!");
-                            g_playing = false;
-                        }
-                        else
-                        {
-                            mvwprintw(status, 0, 0, "Correct so far");
-                        }
+						if (strchr(user_board, '.') == NULL)
+						{
+							mvwprintw(status, 0, 0, "Solved!");
+							g_playing = false;
+						}
+						else
+						{
+							mvwprintw(status, 0, 0, "Correct so far");
+						}
 					}
 				}
 				break;
@@ -479,15 +479,19 @@ int main(int argc, char *argv[])
 			case KEY_DC:
 			case KEY_BACKSPACE:
 			case 127:
-				posy = (y-GRID_NUMBER_START_Y)/GRID_COL_DELTA;
-				posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
-				// if on empty position
-				if(plain_board[posy*9+posx] == '.')
+			case 'x':
+				if(g_playing)
 				{
-					user_board[posy*9+posx] = '.';
-					wprintw(grid, " ");
+					posy = (y-GRID_NUMBER_START_Y)/GRID_COL_DELTA;
+					posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
+					// if on empty position
+					if(plain_board[posy*9+posx] == '.')
+					{
+						user_board[posy*9+posx] = '.';
+						wprintw(grid, " ");
+					}
+					break;
 				}
-				break;
 			case 'H':
 				if (g_playing && hint())
 				{
