@@ -26,7 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 /* FUNCTIONS */
 
 /* SOLVER */
-bool is_valid(char puzzle[82])
+bool is_valid_puzzle(char puzzle[STREAM_LENGTH])
 {
 	int rowEntry, colEntry, squareEntry;
 
@@ -59,8 +59,8 @@ bool is_valid(char puzzle[82])
 	return true;
 }
 
-/* Solver code has been taken from sb0rg: https://codereview.stackexchange.com/questions/37430/sudoku-solver-in-c */
-bool is_available(char puzzle[82], int row, int col, int num)
+/* solver code is influenced by sb0rg: https://codereview.stackexchange.com/questions/37430/sudoku-solver-in-c */
+bool is_available(char puzzle[STREAM_LENGTH], int row, int col, int num)
 {
 	int i;
 	int rowStart = (row/3) * 3;
@@ -75,7 +75,7 @@ bool is_available(char puzzle[82], int row, int col, int num)
 	return true;
 }
 
-int solve_recursively(char puzzle[82], int row, int col)
+int solve_recursively(char puzzle[STREAM_LENGTH], int row, int col)
 {
 	int i;
 	if(row<9 && col<9)
@@ -93,7 +93,7 @@ int solve_recursively(char puzzle[82], int row, int col)
 		{
 			for(i=0; i<9; ++i)
 			{
-				if(is_available(puzzle, row, col, i+1))
+				if(is_available(puzzle, row, col, i + 1))
 				{
 					puzzle[row * 9 + col] = i + 1 + 48;
 
@@ -110,12 +110,12 @@ int solve_recursively(char puzzle[82], int row, int col)
 		return 1;
 }
 
-int solve(char puzzle[82])
+int solve(char puzzle[STREAM_LENGTH])
 {
-	if (!is_valid(puzzle))
-		return 0;
-	else
+	if (is_valid_puzzle(puzzle))
 		return solve_recursively(puzzle, 0, 0);
+	else
+		return 0;
 }
 
 /* GENERATOR */
@@ -152,7 +152,9 @@ char* create_random_numbers()
 
 char* generate_seed()
 {
-	char *stream = (char*)malloc(82);
+	char *stream = (char*)malloc(STREAM_LENGTH);
+	int index = 0;
+	int iSquare = 0;
 
 	srand(time(NULL));
 
@@ -160,35 +162,32 @@ char* generate_seed()
 	char* center = create_random_numbers();
 	char* lowerright = create_random_numbers();
 
-	int index=0;
-	int iSquare = 0;
-
 	//first three rows
-	for (int i=0; i<3; i++)
+	for (int i = 0; i < 3; i++)
 	{
-		for(int j=0; j<3; j++)
+		for(int j = 0; j < 3; j++)
 			stream[index++] = upperleft[iSquare++];
-		for(int j=0; j < 6 ; j++)
+		for(int j = 0; j < 6 ; j++)
 			stream[index++] = '.';
 	}
 	iSquare = 0;
 	//second three rows
-	for (int i=0; i<3; i++)
+	for (int i = 0; i < 3; i++)
 	{
-		for(int j=0; j < 3 ; j++)
+		for(int j = 0; j < 3 ; j++)
 			stream[index++] = '.';
-		for(int j=0; j<3; j++)
+		for(int j = 0; j < 3; j++)
 			stream[index++] = center[iSquare++];
-		for(int j=0; j < 3 ; j++)
+		for(int j = 0; j < 3 ; j++)
 			stream[index++] = '.';
 	}
 	iSquare = 0;
 	//third three rows
-	for (int i=0; i<3; i++)
+	for (int i = 0; i < 3; i++)
 	{
-		for(int j=0; j < 6 ; j++)
+		for(int j = 0; j < 6 ; j++)
 			stream[index++] = '.';
-		for(int j=0; j<3; j++)
+		for(int j = 0; j < 3; j++)
 			stream[index++] = upperleft[iSquare++];
 	}
 
@@ -203,8 +202,8 @@ char* generate_seed()
 
 void punch_holes(char *stream, int count)
 {
-	int i=0;
-	while(i<count)
+	int i = 0;
+	while(i < count)
 	{
 		int random = rand() % 80 + 1;
 		if (stream[random] != '.')

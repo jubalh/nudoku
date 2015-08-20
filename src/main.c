@@ -43,7 +43,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define STATUS_Y			1
 #define STATUS_X			GRID_X
 #define MAX_HINT_RANDOM_TRY	20
-#define STREAM_LENGTH		81
+#define SUDOKU_LENGTH		STREAM_LENGTH - 1
 
 #ifdef DEBUG
 #define EXAMPLE_STREAM "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......"
@@ -52,11 +52,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 /* GLOBALS */
 bool g_useColor = true;
 bool g_playing = false;
-char *g_provided_stream; /* in case of -s flag the user provides the sudoku stream */
+char* g_provided_stream; /* in case of -s flag the user provides the sudoku stream */
+char plain_board[STREAM_LENGTH];
+char user_board[STREAM_LENGTH];
 DIFFICULTY g_level = D_EASY;
 WINDOW *grid, *infobox, *status;
-char plain_board[82];
-char user_board[82];
 
 /* FUNCTIONS */
 void print_version(void)
@@ -81,13 +81,13 @@ void print_usage(void)
 	printf("-s stream:\t\tUser provided sudoku stream\n");
 }
 
-bool valide_stream(char *s)
+bool is_valid_stream(char *s)
 {
 	char *p = s;
 	short n = 0;
 	while ((*p) != '\0')
 	{
-		if (n++ > STREAM_LENGTH)
+		if (n++ > SUDOKU_LENGTH)
 			break;
 
 		if(!((*p >= 49 && *p <= 57) || *p == '.' ))
@@ -98,9 +98,15 @@ bool valide_stream(char *s)
 		p++;
 	}
 
-	if (n != STREAM_LENGTH)
+	if (n != SUDOKU_LENGTH )
 	{
-		printf("Stream has to be %d characters long.\n", STREAM_LENGTH);
+		printf("Stream has to be %d characters long.\n", SUDOKU_LENGTH);
+		return false;
+	}
+
+	if (!is_valid_puzzle(s))
+	{
+		printf("Stream does not represent a valid sudoku puzzle.\n");
 		return false;
 	}
 
@@ -124,7 +130,7 @@ void parse_arguments(int argc, char *argv[])
 				g_useColor = false;
 				break;
 			case 's':
-				if (!valide_stream(optarg))
+				if (!is_valid_stream(optarg))
 					exit(EXIT_FAILURE);
 				g_provided_stream = strdup(optarg);
 				break;
@@ -254,7 +260,7 @@ void init_windows(void)
 		wattron(infobox, COLOR_PAIR(1));
 	}
 	wprintw(infobox, "Commands\n");
-	wprintw(infobox, " q - Quit\n");
+	wprintw(infobox, " Q - Quit\n");
 	wprintw(infobox, " r - Redraw\n");
 	wprintw(infobox, " h - Move left\n");
 	wprintw(infobox, " l - Move right\n");
@@ -284,7 +290,7 @@ void fill_grid(char *board)
 			n = board[row*9+col];
 			if(n == '.')
 				c = ' ';
-			else 
+			else
 				c = n;
 			mvwprintw(grid, y, x, "%c", c);
 			x += GRID_LINE_DELTA;
@@ -315,23 +321,13 @@ void new_puzzle(void)
 	g_playing = true;
 }
 
-bool compare(void)
-{
-	char tmp_board[82];
-
-	strcpy(tmp_board, plain_board);
-	solve_sudoku(tmp_board);
-
-	return (strcmp(tmp_board, user_board) == 0);
-}
-
 bool hint(void)
 {
-	char tmp_board[82];
-	int i, j, try = 0;
+	char tmp_board[STREAM_LENGTH];
+	int i, j, solved, try = 0;
 
 	strcpy(tmp_board, user_board);
-	int solved = solve_sudoku(tmp_board);
+	solved = solve(tmp_board);
 	if (solved != 0)
 	{
 		do
@@ -409,7 +405,7 @@ int main(int argc, char *argv[])
 				if(y<17)
 					y += GRID_COL_DELTA;
 				break;
-			case 'q':
+			case 'Q':
 			case 27:
 				run = false;
 				break;
@@ -424,7 +420,7 @@ int main(int argc, char *argv[])
 					mvwprintw(status, 0, 0, "Solving puzzle...");
 					refresh();
 					wrefresh(status);
-					solve_sudoku(plain_board);
+					solve(plain_board);
 					fill_grid(plain_board);
 					werase(status);
 					mvwprintw(status, 0, 0, "Solved!");
@@ -450,12 +446,12 @@ int main(int argc, char *argv[])
 				if(g_playing)
 				{
 					int solvable;
-					char tmp_board[82];
+					char tmp_board[STREAM_LENGTH];
 
 					werase(status);
 
 					strcpy(tmp_board, user_board);
-					solvable= solve_sudoku(tmp_board);
+					solvable= solve(tmp_board);
 
 					if(solvable == 0)
 					{
