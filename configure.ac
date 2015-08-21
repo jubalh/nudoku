@@ -23,5 +23,8 @@ AC_CHECK_HEADER_STDBOOL
 AC_FUNC_MALLOC
 AC_CHECK_FUNCS([atexit strdup])
 
+# Set config files
+AC_CONFIG_FILES(Makefile src/Makefile)
+
 #AC_OUTPUT
-AC_OUTPUT(Makefile src/Makefile)
+AC_OUTPUT()
