@@ -1,3 +1,3 @@
 AUTOMAKE_OPTIONS = foreign
 SUBDIRS = src
-man_MANS = nudoku.1
+dist_man_MANS = man/nudoku.1
