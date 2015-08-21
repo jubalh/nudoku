@@ -1,4 +1,4 @@
-AM_CFLAGS = --pedantic -Wall
+#AM_CFLAGS = --pedantic -Wall
 #-DDEBUG
 
 LDADD = -lncurses
