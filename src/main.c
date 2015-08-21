@@ -50,16 +50,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #endif // DEBUG
 
 /* GLOBALS */
-bool g_useColor = true;
-bool g_playing = false;
-char* g_provided_stream; /* in case of -s flag the user provides the sudoku stream */
-char plain_board[STREAM_LENGTH];
-char user_board[STREAM_LENGTH];
-DIFFICULTY g_level = D_EASY;
-WINDOW *grid, *infobox, *status;
+static bool g_useColor = true;
+static bool g_playing = false;
+static char* g_provided_stream; /* in case of -s flag the user provides the sudoku stream */
+static char plain_board[STREAM_LENGTH];
+static char user_board[STREAM_LENGTH];
+static DIFFICULTY g_level = D_EASY;
+static WINDOW *grid, *infobox, *status;
 
 /* FUNCTIONS */
-void print_version(void)
+static void print_version(void)
 {
 	printf("nudoku version " VERSION "\n\n\
 Copyright (C) Michael Vetter 2014\n\
@@ -70,7 +70,7 @@ This is free software, you are free to modify and redistribute it.\n");
 #endif // DEBUG
 }
 
-void print_usage(void)
+static void print_usage(void)
 {
 	printf("nudoku [option]\n\n");
 	printf("Options:\n");
@@ -81,7 +81,7 @@ void print_usage(void)
 	printf("-s stream:\t\tUser provided sudoku stream\n");
 }
 
-bool is_valid_stream(char *s)
+static bool is_valid_stream(char *s)
 {
 	char *p = s;
 	short n = 0;
@@ -113,7 +113,7 @@ bool is_valid_stream(char *s)
 	return true;
 }
 
-void parse_arguments(int argc, char *argv[])
+static void parse_arguments(int argc, char *argv[])
 {
 	int opt;
 	while ((opt = getopt(argc, argv, "hvcs:d:")) != -1)
@@ -154,12 +154,12 @@ void parse_arguments(int argc, char *argv[])
 	}
 }
 
-void cleanup(void)
+static void cleanup(void)
 {
 	endwin();
 }
 
-void init_curses(void)
+static void init_curses(void)
 {
 	initscr();
 	clear();
@@ -186,7 +186,7 @@ void init_curses(void)
 	}
 }
 
-void _draw_grid()
+static void _draw_grid()
 {
 	int i, j;
 
@@ -229,7 +229,7 @@ void _draw_grid()
 	}
 }
 
-void init_windows(void)
+static void init_windows(void)
 {
 	keypad(stdscr, true);
 
@@ -274,7 +274,7 @@ void init_windows(void)
 		wattroff(infobox, COLOR_PAIR(1));
 }
 
-void fill_grid(char *board)
+static void fill_grid(char *board)
 {
 	int row, col, x, y;
 	int n;
@@ -299,7 +299,7 @@ void fill_grid(char *board)
 	}
 }
 
-void new_puzzle(void)
+static void new_puzzle(void)
 {
 	int holes = get_holes(g_level);
 	char* stream;
@@ -321,7 +321,7 @@ void new_puzzle(void)
 	g_playing = true;
 }
 
-bool hint(void)
+static bool hint(void)
 {
 	char tmp_board[STREAM_LENGTH];
 	int i, j, solved, try = 0;

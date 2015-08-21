@@ -60,7 +60,7 @@ bool is_valid_puzzle(char puzzle[STREAM_LENGTH])
 }
 
 /* solver code is influenced by sb0rg: https://codereview.stackexchange.com/questions/37430/sudoku-solver-in-c */
-bool is_available(char puzzle[STREAM_LENGTH], int row, int col, int num)
+static bool is_available(char puzzle[STREAM_LENGTH], int row, int col, int num)
 {
 	int i;
 	int rowStart = (row/3) * 3;
@@ -75,7 +75,7 @@ bool is_available(char puzzle[STREAM_LENGTH], int row, int col, int num)
 	return true;
 }
 
-int solve_recursively(char puzzle[STREAM_LENGTH], int row, int col)
+static int solve_recursively(char puzzle[STREAM_LENGTH], int row, int col)
 {
 	int i;
 	if(row<9 && col<9)
@@ -130,7 +130,7 @@ static int rand_int(int n) {
 	return (rnd % n);
 }
 
-void shuffle(char *array, int n) {
+static void shuffle(char *array, int n) {
 	int i, j;
 	char tmp;
 
@@ -143,14 +143,14 @@ void shuffle(char *array, int n) {
 	}
 }
 
-char* create_random_numbers()
+static char* create_random_numbers()
 {
 	char numbers[10] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
 	shuffle(numbers, 9);
 	return strdup(numbers);
 }
 
-char* generate_seed()
+static char* generate_seed()
 {
 	char *stream = (char*)malloc(STREAM_LENGTH);
 	int index = 0;
@@ -200,7 +200,7 @@ char* generate_seed()
 	return stream;
 }
 
-void punch_holes(char *stream, int count)
+static void punch_holes(char *stream, int count)
 {
 	int i = 0;
 	while(i < count)
