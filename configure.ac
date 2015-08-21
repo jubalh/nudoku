@@ -4,7 +4,7 @@
 AC_PREREQ([2.69])
 AC_INIT([nudoku], [0.2.2], [jubalh@openmailbox.org])
 AC_CONFIG_SRCDIR([src/main.c])
-AM_INIT_AUTOMAKE()
+AM_INIT_AUTOMAKE([foreign])
 
 # Checks for programs.
 AC_PROG_CC
