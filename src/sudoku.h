@@ -1,6 +1,8 @@
 #ifndef SUDOKU_H
 #define SUDOKU_H
 
+#include <stdbool.h>	/* bool */
+
 #define STREAM_LENGTH 82
 
 typedef enum { D_EASY, D_NORMAL, D_HARD } DIFFICULTY;

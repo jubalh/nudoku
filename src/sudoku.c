@@ -17,7 +17,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 /* INCLUDES */
-#include <stdbool.h>	/* bool */
 #include <stdlib.h>		/* rand, malloc */
 #include <time.h>		/* time */
 #include <string.h>		/* strdup */
