@@ -266,6 +266,7 @@ static void init_windows(void)
 	wprintw(infobox, " l - Move right\n");
 	wprintw(infobox, " j - Move down\n");
 	wprintw(infobox, " k - Move up\n");
+	wprintw(infobox, " x - Delete number\n");
 	wprintw(infobox, " c - Check solution\n");
 	wprintw(infobox, " N - New puzzle\n");
 	wprintw(infobox, " S - Solve puzzle\n");
@@ -410,6 +411,7 @@ int main(int argc, char *argv[])
 				run = false;
 				break;
 			case 'r':
+			case KEY_RESIZE:
 				redrawwin(grid);
 				redrawwin(infobox);
 				break;
