@@ -27,6 +27,11 @@ zypper in nudoku
 
 ### From Source ###
 
+#### Dependency ####
+- ncurses
+
+#### Compilation ####
+
 Get the lastest .tar.xz [release](https://github.com/jubalh/nudoku/releases) and extract it.
 Then run:
 
