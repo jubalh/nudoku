@@ -33,20 +33,33 @@ bool is_valid_puzzle(char puzzle[STREAM_LENGTH])
 	int colEntryCounter[9] = {0};
 	int squareEntryCounter[9] = {0};
 
-	for(int row=0; row<9; ++row)
+	for(int row=0; row<9; row++)
 	{
 		// count occurrences of digits in each row, column and square
-		for (int col=0; col<9; ++col)
+		for (int col=0; col<9; col++)
 		{
+			// get the entries for one row, col and the whole square
 			rowEntry = puzzle[row * 9 + col];
 			colEntry = puzzle[col * 9 + row];
 			squareEntry = puzzle[(((row % 3) + (row / 3) * 9) * 3 ) + (col % 3 + (col / 3) * 9)];
-			if (rowEntry != '.') rowEntryCounter[rowEntry - 48]++;
-			if (colEntry!= '.') colEntryCounter[colEntry - 48]++;
-			if (squareEntry != '.') squareEntryCounter[squareEntry - 48]++;
+			// if its not an empty field
+			// count occurence
+			// -48 (ASCII to number) - 1 (array index starts at 0)
+			if (rowEntry != '.')
+			{
+				rowEntryCounter[rowEntry - 49]++;
+			}
+			if (colEntry!= '.')
+			{
+				colEntryCounter[colEntry - 49]++;
+			}
+			if (squareEntry != '.')
+			{
+				squareEntryCounter[squareEntry - 49]++;
+			}
 		}
 		// check if any digit occurs more than once per row, column or square
-		for (int i=0;i<9; ++i)
+		for (int i = 0; i < 9; i++)
 		{
 			if (rowEntryCounter[i] > 1 || colEntryCounter[i] > 1 || squareEntryCounter[i] > 1)
 				return false;
@@ -65,32 +78,34 @@ static bool is_available(char puzzle[STREAM_LENGTH], int row, int col, int num)
 	int rowStart = (row/3) * 3;
 	int colStart = (col/3) * 3;
 
-	for(i=0; i<9; ++i)
+	for (i=0; i<9; i++)
 	{
-		if (puzzle[row * 9 + i] - 48 == num) return false;
-		if (puzzle[i * 9 + col] - 48 == num) return false;
-		if (puzzle[(rowStart + (i % 3)) * 9 + (colStart + (i / 3))] - 48 == num) return false;
+		if (puzzle[row * 9 + i] - 48 == num)
+			return false;
+		if (puzzle[i * 9 + col] - 48 == num)
+			return false;
+		if (puzzle[(rowStart + (i % 3)) * 9 + (colStart + (i / 3))] - 48 == num)
+			return false;
 	}
 	return true;
 }
 
 static int solve_recursively(char puzzle[STREAM_LENGTH], int row, int col)
 {
-	int i;
-	if(row<9 && col<9)
+	if (row < 9 && col < 9)
 	{
-		if(puzzle[row * 9 + col] != '.')
+		if (puzzle[row * 9 + col] != '.')
 		{
-			if((col + 1) < 9)
+			if ((col + 1) < 9)
 				return solve_recursively(puzzle, row, col + 1);
-			else if((row + 1) < 9)
+			else if ((row + 1) < 9)
 				return solve_recursively(puzzle, row + 1, 0);
 			else
 				return 1;
 		}
 		else
 		{
-			for(i=0; i<9; ++i)
+			for (int i = 0; i < 9; i++)
 			{
 				if(is_available(puzzle, row, col, i + 1))
 				{
