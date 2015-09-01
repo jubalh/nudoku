@@ -6,6 +6,9 @@ nudoku is a ncurses based sudoku game.
 
 ### Using package manager ###
 
+#### Arch Linux ####
+I heard rumors of nudoku being in the [AUR](https://aur.archlinux.org/packages/nudoku-git/).
+
 #### Funtoo/Gentoo ####
 Add [strangeland-overlay](https://github.com/jubalh/strangeland-overlay).
 
