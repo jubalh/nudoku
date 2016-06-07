@@ -21,8 +21,9 @@ emerge nudoku -a
 
 ### openSUSE ###
 
-For Leap 42.1 and Tumbleweed nudoku is in the official repositories.
-On 13.2 you need to add the the games repository and install nudoku via zypper.
+Since openSUSE Leap 42.1 (and Tumbleweed) you can find nudoku in the official repository.
+For others you need to add the `games` repo.
+On openSUSE 13.2 for example, you can do it like this:
 
 ```
 zypper ar http://download.opensuse.org/repositories/games/openSUSE_13.2/ games

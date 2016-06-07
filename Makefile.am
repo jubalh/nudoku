@@ -1,2 +1,2 @@
 SUBDIRS = src
-dist_man_MANS = man/nudoku.1
+dist_man_MANS = man/nudoku.6
