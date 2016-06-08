@@ -9,6 +9,20 @@ nudoku is a ncurses based sudoku game.
 #### Arch Linux ####
 I heard rumors of nudoku being in the [AUR](https://aur.archlinux.org/packages/nudoku-git/).
 
+#### EL 7 (CentOS/Oracle Linux/Scientific Linux/RedHat ####
+Since nudoku is in the EPEL repository, you just need to enable the EPEL repository and run:
+
+```
+yum install nudoku
+```
+  
+#### Fedora ####
+Since nudoku is in the official Fedora repository, you just need to run:
+
+```
+dnf install nudoku
+```
+
 #### Funtoo/Gentoo ####
 Add [strangeland-overlay](https://github.com/jubalh/strangeland-overlay).
 
