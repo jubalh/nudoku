@@ -71,7 +71,7 @@ make
 ./src/nudoku
 ```
 
-Add `-DDEBUG` to `make` to have some debug output.
+Add `-DEBUG` to `make` to have some debug output.
 
 ## Bugtracker ##
 
