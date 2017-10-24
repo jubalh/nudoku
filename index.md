@@ -14,8 +14,11 @@ As a bonus you will even learn the basic **vi** movement commands.
 
 If you run openSUSE just copy the following into your terminal (yes! the terminal, whoohoo.):
 
-`zypper ar http://download.opensuse.org/repositories/games/openSUSE_13.2/ games`
-
 `zypper in nudoku`
 
-If you don't, well, go read the [readme](https://github.com/jubalh/nudoku/blob/master/README.md).
+As of now nudoku is also available in the official repositores of:
+>> Debian (since stretch)
+>> Ubuntu (based on Debian stretch)
+>> Fedora
+
+If you don't run any of these, well, go read the [readme](https://github.com/jubalh/nudoku/blob/master/README.md).
