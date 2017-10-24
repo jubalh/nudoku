@@ -16,9 +16,9 @@ If you run openSUSE just copy the following into your terminal (yes! the termina
 
 `zypper in nudoku`
 
-As of now nudoku is also available in the official repositores of:
->> Debian (since stretch)
->> Ubuntu (based on Debian stretch)
->> Fedora
+As of now nudoku is also the official repositores of:
+* Debian (since stretch)
+* Ubuntu (based on Debian stretch)
+* Fedora
 
 If you don't run any of these, well, go read the [readme](https://github.com/jubalh/nudoku/blob/master/README.md).
