@@ -1,0 +1,8 @@
+title: Nudoku
+description: ncurses based sudoku game
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-hacker
+
+gems:
+  - jekyll-mentions
