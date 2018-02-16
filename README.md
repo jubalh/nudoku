@@ -9,6 +9,14 @@ nudoku is a ncurses based sudoku game.
 #### Arch Linux ####
 I heard rumors of nudoku being in the [AUR](https://aur.archlinux.org/packages/nudoku-git/).
 
+
+#### Debian and derivates ####
+Contained in official repo.
+
+```
+apt-get install nudoku
+```
+
 #### EL 7 (CentOS/Oracle Linux/Scientific Linux/RedHat ####
 Since nudoku is in the EPEL repository, you just need to enable the EPEL repository and run:
 
@@ -24,12 +32,9 @@ dnf install nudoku
 ```
 
 #### Funtoo/Gentoo ####
-Add [strangeland-overlay](https://github.com/jubalh/strangeland-overlay).
-
-Then run:
+Contained in official repos since 2018-02-16. Before that you had to use [strangeland-overlay](https://github.com/jubalh/strangeland-overlay).
 
 ```
-emerge --sync
 emerge nudoku -a
 ```
 
@@ -37,10 +42,9 @@ emerge nudoku -a
 
 Since openSUSE Leap 42.1 (and Tumbleweed) you can find nudoku in the official repository.
 For others you need to add the `games` repo.
-On openSUSE 13.2 for example, you can do it like this:
 
 ```
-zypper ar http://download.opensuse.org/repositories/games/openSUSE_13.2/ games
+zypper ar obs://games games
 zypper in nudoku
 ```
 
