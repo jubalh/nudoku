@@ -45,6 +45,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define MAX_HINT_RANDOM_TRY	20
 #define SUDOKU_LENGTH		STREAM_LENGTH - 1
 #define COLOR_HIGHLIGHT		4
+#define COLOR_HIGHLIGHT_CURSOR	5
 
 #ifdef DEBUG
 #define EXAMPLE_STREAM "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......"
@@ -58,6 +59,7 @@ static char plain_board[STREAM_LENGTH];
 static char user_board[STREAM_LENGTH];
 static DIFFICULTY g_level = D_EASY;
 static WINDOW *grid, *infobox, *status;
+static bool g_useHighlights = false;
 
 /* FUNCTIONS */
 static void print_version(void)
@@ -179,6 +181,8 @@ static void init_curses(void)
 			init_pair(3, COLOR_CYAN, COLOR_BLACK);
 			// Highlight color
 			init_pair(COLOR_HIGHLIGHT, COLOR_BLACK, COLOR_WHITE);
+			// Cursor highlight color
+			init_pair(COLOR_HIGHLIGHT_CURSOR, COLOR_BLACK, COLOR_MAGENTA);
 		}
 		else
 		{
@@ -269,6 +273,7 @@ static void init_windows(void)
 	wprintw(infobox, " l - Move right\n");
 	wprintw(infobox, " j - Move down\n");
 	wprintw(infobox, " k - Move up\n");
+	wprintw(infobox, " M - Toggle marks\n");
 	wprintw(infobox, " x - Delete number\n");
 	wprintw(infobox, " c - Check solution\n");
 	wprintw(infobox, " N - New puzzle\n");
@@ -278,12 +283,22 @@ static void init_windows(void)
 		wattroff(infobox, COLOR_PAIR(1));
 }
 
-static void fill_grid(char *board, int highlight)
+static int get_character_at_grid(char* board, int x, int y)
+{
+	int posx, posy;
+	posy = (y-GRID_NUMBER_START_Y)/GRID_COL_DELTA;
+	posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
+	return board[posy*9+posx];
+}
+
+static void fill_grid(char *board, int x_cursor, int y_cursor)
 {
 	int row, col, x, y;
 	int n;
 	int c;
+	int selected;
 
+	selected = get_character_at_grid(board, x_cursor, y_cursor);
 	wstandend(grid);
 	y = GRID_NUMBER_START_Y;
 	for(row=0; row < 9; row++)
@@ -296,24 +311,25 @@ static void fill_grid(char *board, int highlight)
 				c = ' ';
 			else
 				c = n;
-			if (highlight == c)
-				wattron(grid, COLOR_PAIR(COLOR_HIGHLIGHT));
+			if (g_useHighlights && selected == c)
+			{
+				if (x == x_cursor && y == y_cursor)
+					wattron(grid, COLOR_PAIR(COLOR_HIGHLIGHT_CURSOR));
+				else
+					wattron(grid, COLOR_PAIR(COLOR_HIGHLIGHT));
+			}
 			mvwprintw(grid, y, x, "%c", c);
-			if (highlight == c)
-				wattroff(grid, COLOR_PAIR(COLOR_HIGHLIGHT));
+			if (g_useHighlights && selected == c)
+			{
+				if (x == x_cursor && y == y_cursor)
+					wattroff(grid, COLOR_PAIR(COLOR_HIGHLIGHT_CURSOR));
+				else
+					wattroff(grid, COLOR_PAIR(COLOR_HIGHLIGHT));
+			}
 			x += GRID_LINE_DELTA;
 		}
 		y += GRID_COL_DELTA;
 	}
-}
-
-static void fill_grid_with_highlight(char* board, int x, int y)
-{
-	int posx, posy, highlight;
-	posy = (y-GRID_NUMBER_START_Y)/GRID_COL_DELTA;
-	posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
-	highlight = board[posy*9+posx];
-	fill_grid(board, highlight);
 }
 
 static void new_puzzle(void)
@@ -333,7 +349,7 @@ static void new_puzzle(void)
 	if (!g_provided_stream)
 		free(stream);
 
-	fill_grid(plain_board, plain_board[0]);
+	fill_grid(plain_board, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
 
 	g_playing = true;
 }
@@ -364,7 +380,7 @@ static bool hint(void)
 
 int main(int argc, char *argv[])
 {
-	bool run = true;
+	bool run = true, enable_highlights=false;
 	int key, x, y, posx, posy;
 
 	g_provided_stream = NULL;
@@ -377,7 +393,7 @@ int main(int argc, char *argv[])
 #ifdef DEBUG
 	strcpy(plain_board, EXAMPLE_STREAM);
 	strcpy(user_board, EXAMPLE_STREAM);
-	fill_grid(plain_board, plain_board[0]);
+	fill_grid(plain_board, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
 	g_playing = true;
 #else
 	new_puzzle();
@@ -407,7 +423,7 @@ int main(int argc, char *argv[])
 				if(x>5)
 				{
 					x -= GRID_LINE_DELTA;
-					fill_grid_with_highlight(user_board, x, y);
+					fill_grid(user_board, x, y);
 				}
 				break;
 			case 'l':
@@ -415,7 +431,7 @@ int main(int argc, char *argv[])
 				if(x<34)
 				{
 					x += GRID_LINE_DELTA;
-					fill_grid_with_highlight(user_board, x, y);
+					fill_grid(user_board, x, y);
 				}
 				break;
 			case 'k':
@@ -423,7 +439,7 @@ int main(int argc, char *argv[])
 				if(y>2)
 				{
 					y -= GRID_COL_DELTA;
-					fill_grid_with_highlight(user_board, x, y);
+					fill_grid(user_board, x, y);
 				}
 				break;
 			case 'j':
@@ -431,7 +447,7 @@ int main(int argc, char *argv[])
 				if(y<17)
 				{
 					y += GRID_COL_DELTA;
-					fill_grid_with_highlight(user_board, x, y);
+					fill_grid(user_board, x, y);
 				}
 				break;
 			case 'Q':
@@ -451,7 +467,7 @@ int main(int argc, char *argv[])
 					refresh();
 					wrefresh(status);
 					solve(plain_board);
-					fill_grid_with_highlight(plain_board, x, y);
+					fill_grid(plain_board, x, y);
 					werase(status);
 					mvwprintw(status, 0, 0, "Solved!");
 					g_playing = false;
@@ -521,10 +537,14 @@ int main(int argc, char *argv[])
 			case 'H':
 				if (g_playing && hint())
 				{
-					fill_grid_with_highlight(user_board, x, y);
+					fill_grid(user_board, x, y);
 					werase(status);
 					mvwprintw(status, 0, 0, "Provided hint");
 				}
+				break;
+			case 'M':
+				g_useHighlights = !g_useHighlights;
+				fill_grid(user_board, x, y);
 				break;
 			default:
 				break;
@@ -540,7 +560,7 @@ int main(int argc, char *argv[])
 				// add inputted number to grid
 				user_board[posy*9+posx] = key;
 				// redraw grid to update highlight
-				fill_grid(user_board, key);
+				fill_grid(user_board, x, y);
 			}
 		}
 		wmove(grid, y,x);
