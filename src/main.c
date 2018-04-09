@@ -1,4 +1,6 @@
 /*
+vim: noexpandtab:ts=4:sts=4:sw=4
+
 nudoku
 
 Copyright (C) 2014 - 2018 Michael "jubalh" Vetter - jubalh _a-t_ iodoru.org

@@ -1,3 +1,5 @@
+// vim: noexpandtab:ts=4:sts=4:sw=4
+
 #ifndef SUDOKU_H
 #define SUDOKU_H
 
