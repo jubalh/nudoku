@@ -1,7 +1,7 @@
 /*
 nudoku
 
-Copyright (C) 2014 Michael "jubalh" Vetter - jubalh _a-t_ openmailbox.org
+Copyright (C) 2014 - 2018 Michael "jubalh" Vetter - jubalh _a-t_ iodoru.org
 
 LICENCE:
 This program is free software: you can redistribute it and/or modify
