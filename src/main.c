@@ -58,6 +58,7 @@ static bool g_useColor = true;
 static bool g_playing = false;
 static bool g_useHighlights = false;
 static char* g_provided_stream;				/* in case of -s flag the user provides the sudoku stream */
+static int g_hint_counter;
 static char plain_board[STREAM_LENGTH];
 static char user_board[STREAM_LENGTH];
 static DIFFICULTY g_level = D_EASY;
@@ -495,12 +496,14 @@ int main(int argc, char *argv[])
 					solve(plain_board);
 					fill_grid(plain_board, x, y);
 					werase(status);
-					mvwprintw(status, 0, 0, "Solved!");
+					mvwprintw(status, 0, 0, "Solved");
 					g_playing = false;
 				}
 				break;
 			case 'N':
 				g_useHighlights = false;
+				g_hint_counter = 0;
+
 				werase(status);
 				mvwprintw(status, 0, 0, "Generating puzzle...");
 				refresh();
@@ -534,7 +537,15 @@ int main(int argc, char *argv[])
 					{
 						if (strchr(user_board, '.') == NULL)
 						{
-							mvwprintw(status, 0, 0, "Solved!");
+							mvwprintw(status, 0, 0, "Solved");
+
+							if (g_hint_counter > 0)
+							{
+								char t[256];
+								sprintf(t, " with the help of %d hints", g_hint_counter);
+								mvwprintw(status, 0, 6, t);
+							}
+
 							g_playing = false;
 						}
 						else
@@ -564,6 +575,7 @@ int main(int argc, char *argv[])
 			case 'H':
 				if (g_playing && hint())
 				{
+					g_hint_counter++;
 					fill_grid(user_board, x, y);
 					werase(status);
 					mvwprintw(status, 0, 0, "Provided hint");
