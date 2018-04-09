@@ -279,7 +279,7 @@ static void init_windows(void)
 	wprintw(infobox, " H - Give a hint\n");
 	if (g_useColor)
 	{
-		wprintw(infobox, " M - Toggle marks\n");
+		wprintw(infobox, " m - Toggle marks\n");
 	}
 	wprintw(infobox, " N - New puzzle\n");
 	wprintw(infobox, " Q - Quit\n");
@@ -581,8 +581,8 @@ int main(int argc, char *argv[])
 					mvwprintw(status, 0, 0, "Provided hint");
 				}
 				break;
-			case 'M':
-				// Ignore 'M' if we have no colors
+			case 'm':
+				// Ignore 'm' if we have no colors
 				if (g_useColor)
 				{
 					g_useHighlights = !g_useHighlights;
