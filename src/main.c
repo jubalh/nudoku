@@ -56,12 +56,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 /* GLOBALS */
 static bool g_useColor = true;
 static bool g_playing = false;
+static bool g_useHighlights = false;
 static char* g_provided_stream;				/* in case of -s flag the user provides the sudoku stream */
 static char plain_board[STREAM_LENGTH];
 static char user_board[STREAM_LENGTH];
 static DIFFICULTY g_level = D_EASY;
 static WINDOW *grid, *infobox, *status;
-static bool g_useHighlights = false;
 
 /* FUNCTIONS */
 static void print_version(void)
