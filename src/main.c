@@ -266,19 +266,20 @@ static void init_windows(void)
 		wattroff(infobox, A_BOLD|COLOR_PAIR(2));
 		wattron(infobox, COLOR_PAIR(1));
 	}
-	wprintw(infobox, "Commands\n");
-	wprintw(infobox, " Q - Quit\n");
-	wprintw(infobox, " r - Redraw\n");
+	wprintw(infobox, "Movement\n");
 	wprintw(infobox, " h - Move left\n");
-	wprintw(infobox, " l - Move right\n");
 	wprintw(infobox, " j - Move down\n");
 	wprintw(infobox, " k - Move up\n");
-	wprintw(infobox, " M - Toggle marks\n");
-	wprintw(infobox, " x - Delete number\n");
+	wprintw(infobox, " l - Move right\n\n");
+	wprintw(infobox, "Commands\n");
 	wprintw(infobox, " c - Check solution\n");
-	wprintw(infobox, " N - New puzzle\n");
-	wprintw(infobox, " S - Solve puzzle\n");
 	wprintw(infobox, " H - Give a hint\n");
+	wprintw(infobox, " M - Toggle marks\n");
+	wprintw(infobox, " N - New puzzle\n");
+	wprintw(infobox, " Q - Quit\n");
+	wprintw(infobox, " r - Redraw\n");
+	wprintw(infobox, " S - Solve puzzle\n");
+	wprintw(infobox, " x - Delete number\n");
 	if (g_useColor)
 		wattroff(infobox, COLOR_PAIR(1));
 }
