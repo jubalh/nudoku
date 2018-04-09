@@ -276,14 +276,19 @@ static void init_windows(void)
 	wprintw(infobox, "Commands\n");
 	wprintw(infobox, " c - Check solution\n");
 	wprintw(infobox, " H - Give a hint\n");
-	wprintw(infobox, " M - Toggle marks\n");
+	if (g_useColor)
+	{
+		wprintw(infobox, " M - Toggle marks\n");
+	}
 	wprintw(infobox, " N - New puzzle\n");
 	wprintw(infobox, " Q - Quit\n");
 	wprintw(infobox, " r - Redraw\n");
 	wprintw(infobox, " S - Solve puzzle\n");
 	wprintw(infobox, " x - Delete number\n");
 	if (g_useColor)
+	{
 		wattroff(infobox, COLOR_PAIR(1));
+	}
 }
 
 static int get_character_at_grid(char* board, int x, int y)
@@ -314,7 +319,7 @@ static void fill_grid(char *board, int x_cursor, int y_cursor)
 				c = ' ';
 			else
 				c = n;
-			if (g_useHighlights && selected == c)
+			if (g_useColor && g_useHighlights && selected == c)
 			{
 				if (x == x_cursor && y == y_cursor)
 					wattron(grid, COLOR_PAIR(COLOR_HIGHLIGHT_CURSOR));
@@ -322,7 +327,7 @@ static void fill_grid(char *board, int x_cursor, int y_cursor)
 					wattron(grid, COLOR_PAIR(COLOR_HIGHLIGHT));
 			}
 			mvwprintw(grid, y, x, "%c", c);
-			if (g_useHighlights && selected == c)
+			if (g_useColor && g_useHighlights && selected == c)
 			{
 				if (x == x_cursor && y == y_cursor)
 					wattroff(grid, COLOR_PAIR(COLOR_HIGHLIGHT_CURSOR));
@@ -565,8 +570,12 @@ int main(int argc, char *argv[])
 				}
 				break;
 			case 'M':
-				g_useHighlights = !g_useHighlights;
-				fill_grid(user_board, x, y);
+				// Ignore 'M' if we have no colors
+				if (g_useColor)
+				{
+					g_useHighlights = !g_useHighlights;
+					fill_grid(user_board, x, y);
+				}
 				break;
 			default:
 				break;
