@@ -1,5 +1,5 @@
 .\" Manpage for nudoku.
-.TH man 6 "07 June 2016" "0.2.5" "nudoku man page"
+.TH man 6 "09 April 2018" "0.2.5" "nudoku man page"
 .SH NAME
 nudoku \- ncurses based sudoku game
 .SH SYNOPSIS
@@ -14,14 +14,12 @@ Pressing a number will put it in a field. Pressing delete, backspace or x will d
 
 Some keys need to be typed uppercase to prevent pressing them accidentally.
 
-.BR Q
-Quit nudoku.
-
-.BR r
-Redraw screen. In case you resized your terminal this will come handy.
-
 .BR c
 Gives feedback whether your solution is right. If you think you finished your sudoku press this key to make sure it is. You can also use this during the game to check if you have made any mistakes.
+
+.BR H
+The computer will fill in one number for you. If you are pretty close to finishing he might not want to help you.
+And if you did something wrong so far, he will not say anything.
 
 .BR M
 Toggle marks. If enabled, the number in the currently selected cell will be highlighted in all other cells they occur in.
@@ -29,12 +27,14 @@ Toggle marks. If enabled, the number in the currently selected cell will be high
 .BR N
 Create a new puzzle.
 
+.BR Q
+Quit nudoku.
+
+.BR r
+Redraw screen. In case you resized your terminal this will come handy.
+
 .BR S
 Let the computer solve the puzzle.
-
-.BR H
-The computer will fill in one number for you. If you are pretty close to finishing he might not want to help you.
-And if you did something wrong so far, he will not say anything.
 
 .SH OPTIONS
 
