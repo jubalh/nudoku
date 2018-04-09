@@ -482,6 +482,7 @@ int main(int argc, char *argv[])
 			case 'S':
 				if(g_playing)
 				{
+					g_useHighlights = false;
 					werase(status);
 					mvwprintw(status, 0, 0, "Solving puzzle...");
 					refresh();
@@ -494,6 +495,7 @@ int main(int argc, char *argv[])
 				}
 				break;
 			case 'N':
+				g_useHighlights = false;
 				werase(status);
 				mvwprintw(status, 0, 0, "Generating puzzle...");
 				refresh();
