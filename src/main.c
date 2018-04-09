@@ -424,7 +424,15 @@ int main(int argc, char *argv[])
 				if(x>5)
 				{
 					x -= GRID_LINE_DELTA;
-					fill_grid(user_board, x, y);
+					if(g_playing)
+					{
+						// if we have highlighting enabled, we need to redraw the whole grid
+						// so we can have the new colors in the matching colors.
+						// this should only be done when we are playing, because plain_board
+						// is actually the one being solved and thus displayed.
+						// this is true for all movement keys.
+						fill_grid(user_board, x, y);
+					}
 				}
 				break;
 			case 'l':
@@ -432,7 +440,10 @@ int main(int argc, char *argv[])
 				if(x<34)
 				{
 					x += GRID_LINE_DELTA;
-					fill_grid(user_board, x, y);
+					if(g_playing)
+					{
+						fill_grid(user_board, x, y);
+					}
 				}
 				break;
 			case 'k':
@@ -440,7 +451,10 @@ int main(int argc, char *argv[])
 				if(y>2)
 				{
 					y -= GRID_COL_DELTA;
-					fill_grid(user_board, x, y);
+					if(g_playing)
+					{
+						fill_grid(user_board, x, y);
+					}
 				}
 				break;
 			case 'j':
@@ -448,7 +462,10 @@ int main(int argc, char *argv[])
 				if(y<17)
 				{
 					y += GRID_COL_DELTA;
-					fill_grid(user_board, x, y);
+					if(g_playing)
+					{
+						fill_grid(user_board, x, y);
+					}
 				}
 				break;
 			case 'Q':
