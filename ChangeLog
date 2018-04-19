@@ -1,0 +1,7 @@
+0.2.5 to 1.0.0
+  * Add 'mark' command to highlight the currently selected number in all othre
+    cells. Thanks to James Warnock.
+  * Redesign commands display.
+  * Display how many hints a person used when the puzzle is solved.
+  * Update maintainer email and man page.
+  * Code cleanup
