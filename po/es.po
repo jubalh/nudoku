@@ -1,0 +1,187 @@
+# Spanish translations for nudoku package.
+# This file is put in the public domain.
+# ramshell <ramshellcinox@gmail.com>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: nudoku 1.0.0\n"
+"Report-Msgid-Bugs-To: jubalh@iodoru.org\n"
+"POT-Creation-Date: 2018-04-27 19:00-0300\n"
+"PO-Revision-Date: 2018-04-26 19:03-0300\n"
+"Last-Translator: ramshell <ramshellcinox@gmail.com>\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/main.c:84
+#, c-format
+msgid ""
+"nudoku [option]\n"
+"\n"
+msgstr ""
+"nudoku [option]\n"
+"\n"
+
+#: src/main.c:85
+#, c-format
+msgid "Options:\n"
+msgstr "Opciones:\n"
+
+#: src/main.c:86
+#, c-format
+msgid "-h help:\t\tPrint this help\n"
+msgstr "-h help:\t\tImprimir esta ayuda\n"
+
+#: src/main.c:87
+#, c-format
+msgid "-v version:\t\tPrint version\n"
+msgstr "-v version:\t\tImprimir version\n"
+
+#: src/main.c:88
+#, c-format
+msgid "-c nocolor:\t\tDo not use colors\n"
+msgstr "-c nocolor:\t\tNo use colores\n"
+
+#: src/main.c:89
+#, c-format
+msgid "-d difficulty:\t\tChoose between: easy, normal, hard\n"
+msgstr "-d dificultad:\t\tElige entre: facil, normal, dificil\n"
+
+#: src/main.c:90
+#, c-format
+msgid "-s stream:\t\tUser provided sudoku stream\n"
+msgstr "-s datos:\t\tDatos dados por el usuario\n"
+
+#: src/main.c:104
+#, c-format
+msgid "Character %c at position %d is not allowed.\n"
+msgstr "No se permite el caracter %c en la posicion %d.\n"
+
+#: src/main.c:112
+#, c-format
+msgid "Stream has to be %d characters long.\n"
+msgstr "Los datos deben tener como maximo %d characteres.\n"
+
+#: src/main.c:118
+#, c-format
+msgid "Stream does not represent a valid sudoku puzzle.\n"
+msgstr "Los datos no representan un sudoku valido.\n"
+
+#: src/main.c:147
+msgid "easy"
+msgstr "facil"
+
+#: src/main.c:149
+msgid "normal"
+msgstr "normal"
+
+#: src/main.c:151
+msgid "hard"
+msgstr "dificil"
+
+#: src/main.c:195
+msgid ""
+"Your terminal doesn't support colors.\n"
+"Try the nocolor (-c) option.\n"
+msgstr ""
+"Tu terminal no soporta colores.\n"
+"Prueba la opcion nocolor (-c).\n"
+
+#: src/main.c:266
+#, c-format
+msgid ""
+"level: %s\n"
+"\n"
+msgstr ""
+"nivel: %s\n"
+"\n"
+
+#: src/main.c:275
+msgid "Movement\n"
+msgstr "Movimiento\n"
+
+#: src/main.c:276
+msgid " h - Move left\n"
+msgstr " h - Mover a la izq\n"
+
+#: src/main.c:277
+msgid " j - Move down\n"
+msgstr " j - Mover a abajo\n"
+
+#: src/main.c:278
+msgid " k - Move up\n"
+msgstr " k - Mover a arriba\n"
+
+#: src/main.c:279
+msgid ""
+" l - Move right\n"
+"\n"
+msgstr " l - Mover a la der\n"
+
+#: src/main.c:280
+msgid "Commands\n"
+msgstr "Comandos\n"
+
+#: src/main.c:281
+msgid " c - Check solution\n"
+msgstr " c - Verificar sol\n"
+
+#: src/main.c:282
+msgid " H - Give a hint\n"
+msgstr " H - Dar una pista\n"
+
+#: src/main.c:285
+msgid " m - Toggle marks\n"
+msgstr " m - Activar marcas\n"
+
+#: src/main.c:287
+msgid " N - New puzzle\n"
+msgstr " N - Nuevo sudoku\n"
+
+#: src/main.c:288
+msgid " Q - Quit\n"
+msgstr " Q - Salir\n"
+
+#: src/main.c:289
+msgid " r - Redraw\n"
+msgstr " r - Redibujar\n"
+
+#: src/main.c:290
+msgid " S - Solve puzzle\n"
+msgstr " S - Resolver sudoku\n"
+
+#: src/main.c:291
+msgid " x - Delete number\n"
+msgstr " x - Borrar numero\n"
+
+#: src/main.c:500
+msgid "Solving puzzle..."
+msgstr "Resolviendo sudoku..."
+
+#: src/main.c:506 src/main.c:547
+msgid "Solved"
+msgstr "Resuelto"
+
+#: src/main.c:515
+msgid "Generating puzzle..."
+msgstr "Generando sudoku..."
+
+#: src/main.c:541
+msgid "Not correct"
+msgstr "Incorrecto"
+
+#: src/main.c:552
+#, c-format
+msgid " with the help of %d hints"
+msgstr " con la ayuda de %d pistas"
+
+#: src/main.c:560
+msgid "Correct so far"
+msgstr "Correctas hasta ahora"
+
+#: src/main.c:588
+msgid "Provided hint"
+msgstr "Pistas dadas"

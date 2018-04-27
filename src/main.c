@@ -19,12 +19,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 /* INCLUDES */
+#include "gettext.h"      /* gettext */
 #include <stdlib.h>				/* rand, srand */
 #include <unistd.h>				/* getopt */
 #include <ncurses.h>			/* ncurses */
 #include <time.h>				/* time */
 #include <string.h>				/* strcmp, strlen */
 #include "sudoku.h"				/* sudoku functions */
+
+#define _(x) gettext(x)
 
 /* DEFINES */
 //#define VERSION				"0.1" //gets set via autotools
@@ -78,13 +81,13 @@ This is free software, you are free to modify and redistribute it.\n");
 
 static void print_usage(void)
 {
-	printf("nudoku [option]\n\n");
-	printf("Options:\n");
-	printf("-h help:\t\tPrint this help\n");
-	printf("-v version:\t\tPrint version\n");
-	printf("-c nocolor:\t\tDo not use colors\n");
-	printf("-d difficulty:\t\tChoose between: easy, normal, hard\n");
-	printf("-s stream:\t\tUser provided sudoku stream\n");
+	printf(_("nudoku [option]\n\n"));
+	printf(_("Options:\n"));
+	printf(_("-h help:\t\tPrint this help\n"));
+	printf(_("-v version:\t\tPrint version\n"));
+	printf(_("-c nocolor:\t\tDo not use colors\n"));
+	printf(_("-d difficulty:\t\tChoose between: easy, normal, hard\n"));
+	printf(_("-s stream:\t\tUser provided sudoku stream\n"));
 }
 
 static bool is_valid_stream(char *s)
@@ -98,7 +101,7 @@ static bool is_valid_stream(char *s)
 
 		if(!((*p >= 49 && *p <= 57) || *p == '.' ))
 		{
-			printf("Character %c at position %d is not allowed.\n", *p, n);
+			printf(_("Character %c at position %d is not allowed.\n"), *p, n);
 			return false;
 		}
 		p++;
@@ -106,13 +109,13 @@ static bool is_valid_stream(char *s)
 
 	if (n != SUDOKU_LENGTH )
 	{
-		printf("Stream has to be %d characters long.\n", SUDOKU_LENGTH);
+		printf(_("Stream has to be %d characters long.\n"), SUDOKU_LENGTH);
 		return false;
 	}
 
 	if (!is_valid_puzzle(s))
 	{
-		printf("Stream does not represent a valid sudoku puzzle.\n");
+		printf(_("Stream does not represent a valid sudoku puzzle.\n"));
 		return false;
 	}
 
@@ -141,11 +144,11 @@ static void parse_arguments(int argc, char *argv[])
 				g_provided_stream = strdup(optarg);
 				break;
 			case 'd':
-				if (strcmp(optarg, "easy") == 0)
+				if (strcmp(optarg, _("easy")) == 0)
 					g_level = D_EASY;
-				else if (strcmp(optarg, "normal") == 0)
+				else if (strcmp(optarg, _("normal")) == 0)
 					g_level = D_NORMAL;
-				else if (strcmp(optarg, "hard") == 0)
+				else if (strcmp(optarg, _("hard")) == 0)
 					g_level = D_HARD;
 				else
 				{
@@ -189,7 +192,7 @@ static void init_curses(void)
 		}
 		else
 		{
-			printw( "Your terminal doesn't support colors.\nTry the nocolor (-c) option.\n");
+			printw( _("Your terminal doesn't support colors.\nTry the nocolor (-c) option.\n"));
 			getch();
 			exit(EXIT_FAILURE);
 		}
@@ -260,7 +263,7 @@ static void init_windows(void)
 	wprintw(infobox, "nudoku %s\n", VERSION);
 
 	if (!g_provided_stream)
-		wprintw(infobox, "level: %s\n\n", difficulty_to_str(g_level) );
+		wprintw(infobox, _("level: %s\n\n"), difficulty_to_str(g_level) );
 	else
 		wprintw(infobox, "\n\n");
 
@@ -269,23 +272,23 @@ static void init_windows(void)
 		wattroff(infobox, A_BOLD|COLOR_PAIR(2));
 		wattron(infobox, COLOR_PAIR(1));
 	}
-	wprintw(infobox, "Movement\n");
-	wprintw(infobox, " h - Move left\n");
-	wprintw(infobox, " j - Move down\n");
-	wprintw(infobox, " k - Move up\n");
-	wprintw(infobox, " l - Move right\n\n");
-	wprintw(infobox, "Commands\n");
-	wprintw(infobox, " c - Check solution\n");
-	wprintw(infobox, " H - Give a hint\n");
+	wprintw(infobox, _("Movement\n"));
+	wprintw(infobox, _(" h - Move left\n"));
+	wprintw(infobox, _(" j - Move down\n"));
+	wprintw(infobox, _(" k - Move up\n"));
+	wprintw(infobox, _(" l - Move right\n\n"));
+	wprintw(infobox, _("Commands\n"));
+	wprintw(infobox, _(" c - Check solution\n"));
+	wprintw(infobox, _(" H - Give a hint\n"));
 	if (g_useColor)
 	{
-		wprintw(infobox, " m - Toggle marks\n");
+		wprintw(infobox, _(" m - Toggle marks\n"));
 	}
-	wprintw(infobox, " N - New puzzle\n");
-	wprintw(infobox, " Q - Quit\n");
-	wprintw(infobox, " r - Redraw\n");
-	wprintw(infobox, " S - Solve puzzle\n");
-	wprintw(infobox, " x - Delete number\n");
+	wprintw(infobox, _(" N - New puzzle\n"));
+	wprintw(infobox, _(" Q - Quit\n"));
+	wprintw(infobox, _(" r - Redraw\n"));
+	wprintw(infobox, _(" S - Solve puzzle\n"));
+	wprintw(infobox, _(" x - Delete number\n"));
 	if (g_useColor)
 	{
 		wattroff(infobox, COLOR_PAIR(1));
@@ -389,6 +392,10 @@ static bool hint(void)
 
 int main(int argc, char *argv[])
 {
+	/* Set up internationalization */
+	setlocale(LC_ALL, "");
+	bindtextdomain(PACKAGE, LOCALEDIR);
+	textdomain(PACKAGE);
 	bool run = true, enable_highlights=false;
 	int key, x, y, posx, posy;
 
@@ -490,13 +497,13 @@ int main(int argc, char *argv[])
 				{
 					g_useHighlights = false;
 					werase(status);
-					mvwprintw(status, 0, 0, "Solving puzzle...");
+					mvwprintw(status, 0, 0, _("Solving puzzle..."));
 					refresh();
 					wrefresh(status);
 					solve(plain_board);
 					fill_grid(plain_board, x, y);
 					werase(status);
-					mvwprintw(status, 0, 0, "Solved");
+					mvwprintw(status, 0, 0, _("Solved"));
 					g_playing = false;
 				}
 				break;
@@ -505,7 +512,7 @@ int main(int argc, char *argv[])
 				g_hint_counter = 0;
 
 				werase(status);
-				mvwprintw(status, 0, 0, "Generating puzzle...");
+				mvwprintw(status, 0, 0, _("Generating puzzle..."));
 				refresh();
 				wrefresh(status);
 				new_puzzle();
@@ -531,18 +538,18 @@ int main(int argc, char *argv[])
 
 					if(solvable == 0)
 					{
-						mvwprintw(status, 0, 0, "Not correct");
+						mvwprintw(status, 0, 0, _("Not correct"));
 					}
 					else
 					{
 						if (strchr(user_board, '.') == NULL)
 						{
-							mvwprintw(status, 0, 0, "Solved");
+							mvwprintw(status, 0, 0, _("Solved"));
 
 							if (g_hint_counter > 0)
 							{
 								char t[256];
-								sprintf(t, " with the help of %d hints", g_hint_counter);
+								sprintf(t, _(" with the help of %d hints"), g_hint_counter);
 								mvwprintw(status, 0, 6, t);
 							}
 
@@ -550,7 +557,7 @@ int main(int argc, char *argv[])
 						}
 						else
 						{
-							mvwprintw(status, 0, 0, "Correct so far");
+							mvwprintw(status, 0, 0, _("Correct so far"));
 						}
 					}
 				}
@@ -578,7 +585,7 @@ int main(int argc, char *argv[])
 					g_hint_counter++;
 					fill_grid(user_board, x, y);
 					werase(status);
-					mvwprintw(status, 0, 0, "Provided hint");
+					mvwprintw(status, 0, 0, _("Provided hint"));
 				}
 				break;
 			case 'm':
