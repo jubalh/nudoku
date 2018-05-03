@@ -76,6 +76,18 @@ make
 
 Add `-DDEBUG` to `make` to have some debug output.
 
+##### I18n #####
+
+For i18n support use `make` like this:
+
+```
+make install
+LANGUAGE=es
+./src/nudoku
+```
+
+You can replace `es` with any other language suported (suported languages are listed in `po/LINGUAS` file).
+
 ## Bugtracker ##
 
 https://github.com/jubalh/nudoku/issues
