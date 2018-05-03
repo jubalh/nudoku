@@ -39,11 +39,11 @@ msgstr " c - Überprüfen Sie die Lösung\n"
 
 #: main.c:276
 msgid " h - Move left\n"
-msgstr " h - Geh nach links\n"
+msgstr " h - Nach links bewegen\n"
 
 #: main.c:277
 msgid " j - Move down\n"
-msgstr " j - Sich abwärts bewegen\n"
+msgstr " j - Nach unten gehen\n"
 
 #: main.c:278
 msgid " k - Move up\n"
@@ -77,7 +77,7 @@ msgstr " x - Nummer löschen\n"
 #: main.c:104
 #, c-format
 msgid "Character %c at position %d is not allowed.\n"
-msgstr "Charakter %c in Position %d ist nicht erlaubt.\n"
+msgstr "Zeichen %c an Position %d ist nicht erlaubt.\n"
 
 #: main.c:280
 msgid "Commands\n"
@@ -89,7 +89,7 @@ msgstr "Soweit richtig"
 
 #: main.c:513
 msgid "Generating puzzle..."
-msgstr "Generierendes Puzzle..."
+msgstr "Generiere Sudoku..."
 
 #: main.c:275
 msgid "Movement\n"
@@ -101,7 +101,7 @@ msgstr "Nicht richtig"
 
 #: main.c:586
 msgid "Provided hint"
-msgstr "Bereitgestellter Hinweis"
+msgstr "Tipp gegeben"
 
 #: main.c:504 main.c:545
 msgid "Solved"
