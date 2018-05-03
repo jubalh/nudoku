@@ -1,0 +1,181 @@
+# SOME DESCRIPTIVE TITLE.
+# This file is put in the public domain.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nudoku 1.0.0\n"
+"Report-Msgid-Bugs-To: jubalh@iodoru.org\n"
+"POT-Creation-Date: 2018-04-27 19:00-0300\n"
+"PO-Revision-Date: 2018-05-03 10:11-0300\n"
+"Last-Translator: Ramshell Cinox <ramshellcinox@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/main.c:84
+#, c-format
+msgid ""
+"nudoku [option]\n"
+"\n"
+msgstr ""
+
+#: src/main.c:85
+#, c-format
+msgid "Options:\n"
+msgstr ""
+
+#: src/main.c:86
+#, c-format
+msgid "-h help:\t\tPrint this help\n"
+msgstr ""
+
+#: src/main.c:87
+#, c-format
+msgid "-v version:\t\tPrint version\n"
+msgstr ""
+
+#: src/main.c:88
+#, c-format
+msgid "-c nocolor:\t\tDo not use colors\n"
+msgstr ""
+
+#: src/main.c:89
+#, c-format
+msgid "-d difficulty:\t\tChoose between: easy, normal, hard\n"
+msgstr ""
+
+#: src/main.c:90
+#, c-format
+msgid "-s stream:\t\tUser provided sudoku stream\n"
+msgstr ""
+
+#: src/main.c:104
+#, c-format
+msgid "Character %c at position %d is not allowed.\n"
+msgstr ""
+
+#: src/main.c:112
+#, c-format
+msgid "Stream has to be %d characters long.\n"
+msgstr ""
+
+#: src/main.c:118
+#, c-format
+msgid "Stream does not represent a valid sudoku puzzle.\n"
+msgstr ""
+
+#: src/main.c:147
+msgid "easy"
+msgstr ""
+
+#: src/main.c:149
+msgid "normal"
+msgstr ""
+
+#: src/main.c:151
+msgid "hard"
+msgstr ""
+
+#: src/main.c:195
+msgid ""
+"Your terminal doesn't support colors.\n"
+"Try the nocolor (-c) option.\n"
+msgstr ""
+
+#: src/main.c:266
+#, c-format
+msgid ""
+"level: %s\n"
+"\n"
+msgstr ""
+
+#: src/main.c:275
+msgid "Movement\n"
+msgstr ""
+
+#: src/main.c:276
+msgid " h - Move left\n"
+msgstr ""
+
+#: src/main.c:277
+msgid " j - Move down\n"
+msgstr ""
+
+#: src/main.c:278
+msgid " k - Move up\n"
+msgstr ""
+
+#: src/main.c:279
+msgid ""
+" l - Move right\n"
+"\n"
+msgstr ""
+
+#: src/main.c:280
+msgid "Commands\n"
+msgstr ""
+
+#: src/main.c:281
+msgid " c - Check solution\n"
+msgstr ""
+
+#: src/main.c:282
+msgid " H - Give a hint\n"
+msgstr ""
+
+#: src/main.c:285
+msgid " m - Toggle marks\n"
+msgstr ""
+
+#: src/main.c:287
+msgid " N - New puzzle\n"
+msgstr ""
+
+#: src/main.c:288
+msgid " Q - Quit\n"
+msgstr ""
+
+#: src/main.c:289
+msgid " r - Redraw\n"
+msgstr ""
+
+#: src/main.c:290
+msgid " S - Solve puzzle\n"
+msgstr ""
+
+#: src/main.c:291
+msgid " x - Delete number\n"
+msgstr ""
+
+#: src/main.c:500
+msgid "Solving puzzle..."
+msgstr ""
+
+#: src/main.c:506 src/main.c:547
+msgid "Solved"
+msgstr ""
+
+#: src/main.c:515
+msgid "Generating puzzle..."
+msgstr ""
+
+#: src/main.c:541
+msgid "Not correct"
+msgstr ""
+
+#: src/main.c:552
+#, c-format
+msgid " with the help of %d hints"
+msgstr ""
+
+#: src/main.c:560
+msgid "Correct so far"
+msgstr ""
+
+#: src/main.c:588
+msgid "Provided hint"
+msgstr ""
