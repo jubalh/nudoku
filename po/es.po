@@ -5,9 +5,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: nudoku 1.0.0\n"
-"Report-Msgid-Bugs-To: jubalh@iodoru.org\n"
+"Report-Msgid-Bugs-To: ramshellcinox@gmail.com\n"
 "POT-Creation-Date: 2018-04-27 19:00-0300\n"
-"PO-Revision-Date: 2018-04-26 19:03-0300\n"
+"PO-Revision-Date: 2018-05-03 10:12-0300\n"
 "Last-Translator: ramshell <ramshellcinox@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
@@ -69,18 +69,6 @@ msgstr "Los datos deben tener como maximo %d characteres.\n"
 #, c-format
 msgid "Stream does not represent a valid sudoku puzzle.\n"
 msgstr "Los datos no representan un sudoku valido.\n"
-
-#: src/main.c:147
-msgid "easy"
-msgstr "facil"
-
-#: src/main.c:149
-msgid "normal"
-msgstr "normal"
-
-#: src/main.c:151
-msgid "hard"
-msgstr "dificil"
 
 #: src/main.c:195
 msgid ""

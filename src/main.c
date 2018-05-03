@@ -144,11 +144,11 @@ static void parse_arguments(int argc, char *argv[])
 				g_provided_stream = strdup(optarg);
 				break;
 			case 'd':
-				if (strcmp(optarg, _("easy")) == 0)
+				if (strcmp(optarg, "easy") == 0)
 					g_level = D_EASY;
-				else if (strcmp(optarg, _("normal")) == 0)
+				else if (strcmp(optarg, "normal") == 0)
 					g_level = D_NORMAL;
-				else if (strcmp(optarg, _("hard")) == 0)
+				else if (strcmp(optarg, "hard") == 0)
 					g_level = D_HARD;
 				else
 				{
