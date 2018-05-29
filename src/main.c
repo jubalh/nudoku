@@ -346,7 +346,7 @@ static void fill_grid(char *board, int x_cursor, int y_cursor)
 
 static void new_puzzle(void)
 {
-	int holes = get_holes(g_level);
+	int holes = g_level;
 	char* stream;
 
 	if (g_provided_stream)

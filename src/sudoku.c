@@ -244,26 +244,6 @@ char* difficulty_to_str(DIFFICULTY level)
 	}
 }
 
-int get_holes(DIFFICULTY level)
-{
-	int holes;
-	switch (level)
-	{
-		case D_HARD:
-			/*holes = rand() % 60 + 30;*/
-			holes = 50;
-			break;
-		case D_NORMAL:
-			holes = 40;
-			break;
-		case D_EASY:
-		default:
-			holes = 30;
-			break;
-	}
-	return holes;
-}
-
 char* generate_puzzle(int holes)
 {
 	char* stream;

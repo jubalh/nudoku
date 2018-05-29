@@ -7,9 +7,8 @@
 
 #define STREAM_LENGTH 82
 
-typedef enum { D_EASY, D_NORMAL, D_HARD } DIFFICULTY;
+typedef enum { D_EASY = 30, D_NORMAL = 40, D_HARD = 50} DIFFICULTY;
 
-int		get_holes(DIFFICULTY level);
 char*	difficulty_to_str(DIFFICULTY level);
 char*	generate_puzzle(int holes);
 int		solve(char puzzle[STREAM_LENGTH]);
