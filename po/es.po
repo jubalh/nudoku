@@ -173,3 +173,16 @@ msgstr "Correctas hasta ahora"
 #: src/main.c:588
 msgid "Provided hint"
 msgstr "Pistas dadas"
+
+#: sudoku.c:241
+msgid "hard"
+msgstr "dificil"
+
+#: sudoku.c:243
+msgid "normal"
+msgstr "normal"
+
+#: sudoku.c:246
+msgid "easy"
+msgstr "facil"
+
