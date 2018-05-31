@@ -23,6 +23,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <time.h>		/* time */
 #include <string.h>		/* strdup */
 #include "sudoku.h"		/* enum */
+#include "gettext.h"    /* gettext */
+
+#define _(x) gettext(x)
 
 /* FUNCTIONS */
 
@@ -235,12 +238,12 @@ char* difficulty_to_str(DIFFICULTY level)
 	switch(level)
 	{
 		case D_HARD:
-			return "hard";
+			return _("hard");
 		case D_NORMAL:
-			return "normal";
+			return _("normal");
 		case D_EASY:
 		default:
-			return "easy";
+			return _("easy");
 	}
 }
 

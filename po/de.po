@@ -141,3 +141,16 @@ msgstr "Niveau: %s\n"
 #, c-format
 msgid "nudoku %s\n"
 msgstr "nudoku %s\n"
+
+#: sudoku.c:241
+msgid "hard"
+msgstr "schwer"
+
+#: sudoku.c:243
+msgid "normal"
+msgstr "normal"
+
+#: sudoku.c:246
+msgid "easy"
+msgstr "einfach"
+
