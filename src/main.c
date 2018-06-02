@@ -252,13 +252,12 @@ static void init_windows(void)
 	_draw_grid();
 
 	infobox = newwin(INFO_LINES, INFO_COLS, INFO_Y, INFO_X);
+
 	if (g_useColor)
 	{
 		wbkgd(infobox, COLOR_PAIR(2));
-	}
-
-	if (g_useColor)
 		wattron(infobox, A_BOLD|COLOR_PAIR(2));
+	}
 
 	wprintw(infobox, "nudoku %s\n", VERSION);
 
