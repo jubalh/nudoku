@@ -83,13 +83,15 @@ static bool is_available(char puzzle[STREAM_LENGTH], int row, int col, int num)
 	int rowStart = (row/3) * 3;
 	int colStart = (col/3) * 3;
 
+	num += 48;
+
 	for (i=0; i<9; i++)
 	{
-		if (puzzle[row * 9 + i] - 48 == num)
+		if (puzzle[row * 9 + i] == num)
 			return false;
-		if (puzzle[i * 9 + col] - 48 == num)
+		if (puzzle[i * 9 + col] == num)
 			return false;
-		if (puzzle[(rowStart + (i % 3)) * 9 + (colStart + (i / 3))] - 48 == num)
+		if (puzzle[(rowStart + (i % 3)) * 9 + (colStart + (i / 3))] == num)
 			return false;
 	}
 	return true;

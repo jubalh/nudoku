@@ -255,10 +255,8 @@ static void init_windows(void)
 	if (g_useColor)
 	{
 		wbkgd(infobox, COLOR_PAIR(2));
-	}
-
-	if (g_useColor)
 		wattron(infobox, A_BOLD|COLOR_PAIR(2));
+	}
 
 	wprintw(infobox, "nudoku %s\n", VERSION);
 
