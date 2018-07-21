@@ -235,7 +235,7 @@ static void punch_holes(char *stream, int count)
 	}
 }
 
-char* difficulty_to_str(DIFFICULTY level)
+const char* difficulty_to_str(DIFFICULTY level)
 {
 	switch(level)
 	{
