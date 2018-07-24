@@ -390,10 +390,12 @@ static bool hint(void)
 
 int main(int argc, char *argv[])
 {
+#if ENABLE_NLS
 	/* Set up internationalization */
 	setlocale(LC_ALL, "");
 	bindtextdomain(PACKAGE, LOCALEDIR);
 	textdomain(PACKAGE);
+#endif
 	bool run = true, enable_highlights=false;
 	int key, x, y, posx, posy;
 

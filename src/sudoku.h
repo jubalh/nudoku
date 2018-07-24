@@ -9,7 +9,7 @@
 
 typedef enum { D_EASY = 30, D_NORMAL = 40, D_HARD = 50} DIFFICULTY;
 
-char*	difficulty_to_str(DIFFICULTY level);
+const char*	difficulty_to_str(DIFFICULTY level);
 char*	generate_puzzle(int holes);
 int		solve(char puzzle[STREAM_LENGTH]);
 bool	is_valid_puzzle(char puzzle[STREAM_LENGTH]);
