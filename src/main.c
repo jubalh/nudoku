@@ -301,14 +301,16 @@ static int get_character_at_grid(char* board, int x, int y)
 	return board[posy*9+posx];
 }
 
-static void fill_grid(char *board, int x_cursor, int y_cursor)
+static void fill_grid(char *user_board, char *plain_board, int x_cursor, int y_cursor)
 {
 	int row, col, x, y;
 	int n;
 	int c;
 	int selected;
+	bool isUserInput;
+	int m;
 
-	selected = get_character_at_grid(board, x_cursor, y_cursor);
+	selected = get_character_at_grid(user_board, x_cursor, y_cursor);
 	wstandend(grid);
 	y = GRID_NUMBER_START_Y;
 	for(row=0; row < 9; row++)
@@ -316,11 +318,17 @@ static void fill_grid(char *board, int x_cursor, int y_cursor)
 		x = GRID_NUMBER_START_X;
 		for(col=0; col < 9; col++)
 		{
-			n = board[row*9+col];
+			isUserInput = true;
+			n = user_board[row*9+col];
 			if(n == '.')
 				c = ' ';
 			else
+			{
 				c = n;
+				m = plain_board[row*9+col];
+				if(n == m)
+					isUserInput = false;
+			}
 			if (g_useColor && g_useHighlights && selected == c)
 			{
 				if (x == x_cursor && y == y_cursor)
@@ -328,7 +336,11 @@ static void fill_grid(char *board, int x_cursor, int y_cursor)
 				else
 					wattron(grid, COLOR_PAIR(COLOR_HIGHLIGHT));
 			}
+			if(isUserInput)
+				wattron(grid, COLOR_PAIR(3));
 			mvwprintw(grid, y, x, "%c", c);
+			if(isUserInput)
+				wattroff(grid, COLOR_PAIR(3));
 			if (g_useColor && g_useHighlights && selected == c)
 			{
 				if (x == x_cursor && y == y_cursor)
@@ -359,7 +371,7 @@ static void new_puzzle(void)
 	if (!g_provided_stream)
 		free(stream);
 
-	fill_grid(plain_board, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
+	fill_grid(plain_board, plain_board, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
 
 	g_playing = true;
 }
@@ -409,7 +421,7 @@ int main(int argc, char *argv[])
 #ifdef DEBUG
 	strcpy(plain_board, EXAMPLE_STREAM);
 	strcpy(user_board, EXAMPLE_STREAM);
-	fill_grid(plain_board, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
+	fill_grid(plain_board, plain_board, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
 	g_playing = true;
 #else
 	new_puzzle();
@@ -446,7 +458,7 @@ int main(int argc, char *argv[])
 						// this should only be done when we are playing, because plain_board
 						// is actually the one being solved and thus displayed.
 						// this is true for all movement keys.
-						fill_grid(user_board, x, y);
+						fill_grid(user_board, plain_board, x, y);
 					}
 				}
 				break;
@@ -457,7 +469,7 @@ int main(int argc, char *argv[])
 					x += GRID_LINE_DELTA;
 					if(g_playing)
 					{
-						fill_grid(user_board, x, y);
+						fill_grid(user_board, plain_board, x, y);
 					}
 				}
 				break;
@@ -468,7 +480,7 @@ int main(int argc, char *argv[])
 					y -= GRID_COL_DELTA;
 					if(g_playing)
 					{
-						fill_grid(user_board, x, y);
+						fill_grid(user_board, plain_board, x, y);
 					}
 				}
 				break;
@@ -479,7 +491,7 @@ int main(int argc, char *argv[])
 					y += GRID_COL_DELTA;
 					if(g_playing)
 					{
-						fill_grid(user_board, x, y);
+						fill_grid(user_board, plain_board, x, y);
 					}
 				}
 				break;
@@ -501,7 +513,7 @@ int main(int argc, char *argv[])
 					refresh();
 					wrefresh(status);
 					solve(plain_board);
-					fill_grid(plain_board, x, y);
+					fill_grid(plain_board, plain_board, x, y);
 					werase(status);
 					mvwprintw(status, 0, 0, _("Solved"));
 					g_playing = false;
@@ -583,7 +595,7 @@ int main(int argc, char *argv[])
 				if (g_playing && hint())
 				{
 					g_hint_counter++;
-					fill_grid(user_board, x, y);
+					fill_grid(user_board, plain_board, x, y);
 					werase(status);
 					mvwprintw(status, 0, 0, _("Provided hint"));
 				}
@@ -593,7 +605,7 @@ int main(int argc, char *argv[])
 				if (g_useColor)
 				{
 					g_useHighlights = !g_useHighlights;
-					fill_grid(user_board, x, y);
+					fill_grid(user_board, plain_board, x, y);
 				}
 				break;
 			default:
@@ -610,7 +622,7 @@ int main(int argc, char *argv[])
 				// add inputted number to grid
 				user_board[posy*9+posx] = key;
 				// redraw grid to update highlight
-				fill_grid(user_board, x, y);
+				fill_grid(user_board, plain_board, x, y);
 			}
 		}
 		wmove(grid, y,x);
