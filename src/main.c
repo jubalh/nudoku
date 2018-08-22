@@ -26,6 +26,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <time.h>				/* time */
 #include <string.h>				/* strcmp, strlen */
 #include "sudoku.h"				/* sudoku functions */
+#include <stdbool.h>				/* bool */
 
 #define _(x) gettext(x)
 
@@ -307,7 +308,7 @@ static void fill_grid(char *user_board, char *plain_board, int x_cursor, int y_c
 	int n;
 	int c;
 	int selected;
-	int isUserInput;
+	bool isUserInput;
 	int m;
 
 	selected = get_character_at_grid(user_board, x_cursor, y_cursor);
@@ -318,7 +319,7 @@ static void fill_grid(char *user_board, char *plain_board, int x_cursor, int y_c
 		x = GRID_NUMBER_START_X;
 		for(col=0; col < 9; col++)
 		{
-		        isUserInput = 1; // True
+			isUserInput = true;
 			n = user_board[row*9+col];
 			if(n == '.')
 				c = ' ';
@@ -327,7 +328,7 @@ static void fill_grid(char *user_board, char *plain_board, int x_cursor, int y_c
 				c = n;
 				m = plain_board[row*9+col];
 				if(n == m)
-				        isUserInput = 0; // False
+					isUserInput = false;
 			}
 			if (g_useColor && g_useHighlights && selected == c)
 			{
@@ -337,10 +338,10 @@ static void fill_grid(char *user_board, char *plain_board, int x_cursor, int y_c
 					wattron(grid, COLOR_PAIR(COLOR_HIGHLIGHT));
 			}
 			if(isUserInput)
-			        wattron(grid, COLOR_PAIR(3));
+				wattron(grid, COLOR_PAIR(3));
 			mvwprintw(grid, y, x, "%c", c);
 			if(isUserInput)
-			     wattroff(grid, COLOR_PAIR(3));
+				wattroff(grid, COLOR_PAIR(3));
 			if (g_useColor && g_useHighlights && selected == c)
 			{
 				if (x == x_cursor && y == y_cursor)
@@ -458,7 +459,7 @@ int main(int argc, char *argv[])
 						// this should only be done when we are playing, because plain_board
 						// is actually the one being solved and thus displayed.
 						// this is true for all movement keys.
-					        fill_grid(user_board, plain_board, x, y);
+						fill_grid(user_board, plain_board, x, y);
 					}
 				}
 				break;
@@ -469,7 +470,7 @@ int main(int argc, char *argv[])
 					x += GRID_LINE_DELTA;
 					if(g_playing)
 					{
-					        fill_grid(user_board, plain_board, x, y);
+						fill_grid(user_board, plain_board, x, y);
 					}
 				}
 				break;
@@ -480,7 +481,7 @@ int main(int argc, char *argv[])
 					y -= GRID_COL_DELTA;
 					if(g_playing)
 					{
-					        fill_grid(user_board, plain_board, x, y);
+						fill_grid(user_board, plain_board, x, y);
 					}
 				}
 				break;
@@ -491,7 +492,7 @@ int main(int argc, char *argv[])
 					y += GRID_COL_DELTA;
 					if(g_playing)
 					{
-					        fill_grid(user_board, plain_board, x, y);
+						fill_grid(user_board, plain_board, x, y);
 					}
 				}
 				break;
