@@ -26,7 +26,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <time.h>				/* time */
 #include <string.h>				/* strcmp, strlen */
 #include "sudoku.h"				/* sudoku functions */
-#include <stdbool.h>				/* bool */
 
 #define _(x) gettext(x)
 
