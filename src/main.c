@@ -33,12 +33,43 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 //#define VERSION				"0.1" //gets set via autotools
 #define GRID_LINES				19
 #define GRID_COLS				37
+
+#ifndef SMALL_DISPLAY
 #define GRID_Y					3
+#endif
+
+#ifdef SMALL_DISPLAY
+#define GRID_Y					1
+#endif
+
+#ifndef SMALL_DISPLAY
 #define GRID_X					3
+#endif
+
+#ifdef SMALL_DISPLAY
+#define GRID_X					1
+#endif
+
 #define INFO_LINES				19
 #define INFO_COLS				20
+
+#ifndef SMALL_DISPLAY
 #define INFO_Y					3
-#define INFO_X					GRID_X + GRID_COLS + 5
+#endif
+
+#ifdef SMALL_DISPLAY
+#define INFO_Y					2
+#endif
+
+#ifndef SMALL_DISPLAY
+#define INFO_INDENT				5
+#endif
+
+#ifdef SMALL_DISPLAY
+#define INFO_INDENT				1
+#endif
+
+#define INFO_X					GRID_X + GRID_COLS + INFO_INDENT
 #define GRID_NUMBER_START_Y		1
 #define GRID_NUMBER_START_X		2
 #define GRID_LINE_DELTA			4
