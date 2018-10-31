@@ -49,7 +49,8 @@ zypper in nudoku
 
 ### From Source ###
 
-#### Dependency ####
+#### Dependencies ####
+- gettext
 - ncurses
 
 #### Compilation ####
