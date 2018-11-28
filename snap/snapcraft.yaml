@@ -1,0 +1,17 @@
+name: nudoku
+version: master
+summary: ncurses based sudoku game
+description: nudoku is a ncurses based sudoku game.
+
+confinement: strict
+
+apps:
+  nudoku:
+    command: nudoku
+
+parts:
+  nudoku:
+    source: https://github.com/jubalh/nudoku/archive/1.0.0.tar.gz
+    plugin: autotools
+    build-packages:
+      - libncurses-dev
