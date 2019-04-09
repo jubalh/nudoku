@@ -426,7 +426,7 @@ int main(int argc, char *argv[])
 #ifdef ENABLE_CAIRO
 		char* stream;
 		stream = generate_puzzle(g_level);
-		generate_output(stream);
+		generate_output(stream, difficulty_to_str(g_level));
 		free(stream);
 		return 0;
 #else
