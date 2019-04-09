@@ -20,7 +20,11 @@ AC_ARG_ENABLE(
 
 # Checks for libraries.
 
+AM_CONDITIONAL([BUILD_CAIRO], [false])
+
 if test "${enable_cairo}" = "yes"; then
+
+        AM_CONDITIONAL([BUILD_CAIRO], [true])
 
         PKG_CHECK_MODULES([CAIRO], [cairo],, [AC_MSG_ERROR([
 The cairo library was not found. Either install

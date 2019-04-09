@@ -3,7 +3,7 @@ vim: noexpandtab:ts=4:sts=4:sw=4
 
 nudoku
 
-Copyright (C) 2014 - 2018 Michael "jubalh" Vetter - jubalh _a-t_ iodoru.org
+Copyright (C) 2014 - 2019 Michael "jubalh" Vetter - jubalh _a-t_ iodoru.org
 
 LICENCE:
 This program is free software: you can redistribute it and/or modify
@@ -26,6 +26,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <time.h>				/* time */
 #include <string.h>				/* strcmp, strlen */
 #include "sudoku.h"				/* sudoku functions */
+#ifdef ENABLE_CAIRO
+#include "outp.h"				/* output functions */
+#endif
 
 #define _(x) gettext(x)
 
@@ -72,7 +75,7 @@ static WINDOW *grid, *infobox, *status;
 static void print_version(void)
 {
 	printf("nudoku version " VERSION "\n\n\
-Copyright (C) Michael Vetter 2014\n\
+Copyright (C) Michael Vetter 2014 - 2019\n\
 License GPLv3+: GNU GPL version 3 or later.\n\
 This is free software, you are free to modify and redistribute it.\n");
 #ifdef DEBUG
@@ -421,13 +424,11 @@ int main(int argc, char *argv[])
 	if (g_outputFilename)
 	{
 #ifdef ENABLE_CAIRO
-		/*
-		stream = generate_puzzle(holes);
+		char* stream;
+		stream = generate_puzzle(g_level);
 		generate_output(stream);
 		free(stream);
-		*/
-		printf("Not implemented yet\n");
-		return 23;
+		return 0;
 #else
 		printf("nudoku is compiled without cairo support.\n");
 		printf("To use the output feature, please compile with --enable-cairo.\n");
