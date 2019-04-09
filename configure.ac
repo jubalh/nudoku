@@ -11,7 +11,24 @@ AC_PROG_CC
 # Use C99.
 AC_PROG_CC_C99
 
+# Options
+AC_ARG_ENABLE(
+        [cairo],
+        [AS_HELP_STRING([--enable-cairo], [enable cairo drawing @<:@default=no@:>@])], ,
+        [enable_cairo="no"]
+)
+
 # Checks for libraries.
+
+if test "${enable_cairo}" = "yes"; then
+
+        PKG_CHECK_MODULES([CAIRO], [cairo],, [AC_MSG_ERROR([
+The cairo library was not found. Either install
+the cairo development libraries, or compile without support (--disable-cairo)
+])])
+        AC_DEFINE([ENABLE_CAIRO], [1], [Enable cairo])
+
+fi
 
 # Checks for header files.
 AC_CHECK_HEADERS([stdlib.h string.h unistd.h])

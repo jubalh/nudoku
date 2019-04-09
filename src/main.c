@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 /* INCLUDES */
-#include "gettext.h"      /* gettext */
+#include "gettext.h"			/* gettext */
 #include <stdlib.h>				/* rand, srand */
 #include <unistd.h>				/* getopt */
 #include <ncurses.h>			/* ncurses */
@@ -57,13 +57,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #endif // DEBUG
 
 /* GLOBALS */
-static bool g_useColor = true;
-static bool g_playing = false;
-static bool g_useHighlights = false;
-static char* g_provided_stream;				/* in case of -s flag the user provides the sudoku stream */
-static int g_hint_counter;
-static char plain_board[STREAM_LENGTH];
-static char user_board[STREAM_LENGTH];
+static bool  g_useColor = true;
+static bool  g_playing = false;
+static bool  g_useHighlights = false;
+static char* g_provided_stream = NULL;		/* in case of -s flag the user provides the sudoku stream */
+static int   g_hint_counter;
+static char  plain_board[STREAM_LENGTH];
+static char  user_board[STREAM_LENGTH];
+static char* g_outputFilename = NULL;		/* in case -o flag we get a filename past for outputting */
 static DIFFICULTY g_level = D_EASY;
 static WINDOW *grid, *infobox, *status;
 
@@ -125,7 +126,7 @@ static bool is_valid_stream(char *s)
 static void parse_arguments(int argc, char *argv[])
 {
 	int opt;
-	while ((opt = getopt(argc, argv, "hvcs:d:")) != -1)
+	while ((opt = getopt(argc, argv, "hvcs:d:o:")) != -1)
 	{
 		switch (opt)
 		{
@@ -155,6 +156,9 @@ static void parse_arguments(int argc, char *argv[])
 					print_usage();
 					exit(EXIT_FAILURE);
 				}
+				break;
+			case 'o':
+				g_outputFilename = strdup(optarg);
 				break;
 			default:
 				print_usage();
@@ -411,12 +415,28 @@ int main(int argc, char *argv[])
 	bool run = true, enable_highlights=false;
 	int key, x, y, posx, posy;
 
-	g_provided_stream = NULL;
-
 	parse_arguments(argc, argv);
+	srand(time(NULL));
+
+	if (g_outputFilename)
+	{
+#ifdef ENABLE_CAIRO
+		/*
+		stream = generate_puzzle(holes);
+		generate_output(stream);
+		free(stream);
+		*/
+		printf("Not implemented yet\n");
+		return 23;
+#else
+		printf("nudoku is compiled without cairo support.\n");
+		printf("To use the output feature, please compile with --enable-cairo.\n");
+		return 1;
+#endif
+	}
+
 	init_curses();
 	init_windows();
-	srand(time(NULL));
 
 #ifdef DEBUG
 	strcpy(plain_board, EXAMPLE_STREAM);
@@ -634,6 +654,8 @@ int main(int argc, char *argv[])
 
 	if (g_provided_stream)
 		free(g_provided_stream);
+	if (g_outputFilename)
+		free(g_outputFilename);
 
 	endwin();
 	return EXIT_SUCCESS;
