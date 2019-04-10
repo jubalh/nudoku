@@ -3,7 +3,7 @@ vim: noexpandtab:ts=4:sts=4:sw=4
 
 nudoku
 
-Copyright (C) 2014 - 2018 Michael "jubalh" Vetter - jubalh _a-t_ iodoru.org
+Copyright (C) 2014 - 2019 Michael "jubalh" Vetter - jubalh _a-t_ iodoru.org
 
 LICENCE:
 This program is free software: you can redistribute it and/or modify
@@ -24,6 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <string.h>		/* strdup */
 #include "sudoku.h"		/* enum */
 #include "gettext.h"	/* gettext */
+#include "unistd.h"		/* sleep */
 
 #define _(x) gettext(x)
 
@@ -177,6 +178,12 @@ static char* generate_seed()
 	int index = 0;
 	int iSquare = 0;
 
+	// for GUI this works. but:
+	// if we create several sudokus right after each other,
+	// like we do when we create several of them in one PDF.
+	// then time is still the same. lets wait a short time
+	// so that we get different numbers.
+	sleep(1);
 	srand(time(NULL));
 
 	char* upperleft = create_random_numbers();
