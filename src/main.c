@@ -424,10 +424,7 @@ int main(int argc, char *argv[])
 	if (g_outputFilename)
 	{
 #ifdef ENABLE_CAIRO
-		char* stream;
-		stream = generate_puzzle(g_level);
-		generate_output(stream, difficulty_to_str(g_level));
-		free(stream);
+		generate_output(g_level);
 		return 0;
 #else
 		printf("nudoku is compiled without cairo support.\n");

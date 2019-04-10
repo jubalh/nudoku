@@ -3,6 +3,6 @@
 #ifndef OUTP_H
 #define OUTP_H
 
-void generate_output(const char *stream, const char *difficulty);
+void generate_output(int difficulty);
 
 #endif // OUTP_H
