@@ -100,7 +100,7 @@ void generate_output(int difficulty)
 
 	int start_x = 30;
 	int start_y = 50;
-	for (int i=0; i < 4; i++)
+	for (int i=0; i < 8; i++)
 	{
 		char* stream;
 		stream = generate_puzzle(40);
@@ -109,15 +109,21 @@ void generate_output(int difficulty)
 		cairo_translate(cr, start_x, start_y);
 		draw_grid(stream, cr);
 
-		cairo_translate(cr, 0, -start_y);
-
 		if (i-1 % 2 == 0)
 		{
 			cairo_translate(cr, -start_x, 0);
 			start_x = 0;
 			start_y += 510;
 		} else {
+			cairo_translate(cr, start_x, -start_y);
 			start_x += 470;
+		}
+
+		if (i-1 % 4 == 0)
+		{
+			start_x = 30;
+			start_y = 50;
+			cairo_show_page(cr);
 		}
 
 		free(stream);
