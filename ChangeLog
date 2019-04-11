@@ -17,3 +17,37 @@
   * Display how many hints a person used when the puzzle is solved.
   * Update maintainer email and man page.
   * Code cleanup
+
+0.2.4 to 0.2.5 (2016-06-07)
+  * Fix manpage warning section-mismatch (issue #5)
+
+0.2.3 to 0.2.4 (2015-08-26)
+  * Handle automatic resize requests
+  * Document deletion of number (x key)
+  * Provide stream example to man page
+  * Fix array acces in validity check (issue #4)
+
+0.2.2 to 0.2.3 (2015-08-21)
+  * Clean up validity checker
+  * Move manpage to its own directory
+  * Add manpages to `make dist`
+  * Update autoconf files
+  * Clean up headers
+  * Make local functions static
+
+0.2.1 to 0.2.2 (2015-08-19)
+  * Add manpage
+  * User can provide sudokus of hiw own (-s option)
+  * Major code cleanup
+  * Provide hints (H key)
+  * Improve feedback fro 'check' with which the user validates his inputs (c
+  key)
+
+0.2.0 to 0.2.1 (2015-02-11)
+  * Fix autoconf
+
+0.1 to 0.2.0 (2015-02-07)
+  * Fix removing of inserted numbers
+
+0.1 (2015-02-03)
+  * nudoku is born
