@@ -73,12 +73,12 @@ void draw_grid(const char* stream, cairo_t *cr)
 	}
 }
 
-void generate_output(int difficulty)
+void generate_pdf(int difficulty, int sudokus_count, const char* filename)
 {
 	cairo_surface_t *surface;
 	cairo_t *cr;
-	//surface = cairo_pdf_surface_create("pdffile.pdf", 1024, 1024);
-	surface = cairo_pdf_surface_create("pdffile.pdf", 595, 842);
+
+	surface = cairo_pdf_surface_create(filename, 595, 842);
 	cr = cairo_create(surface);
 
 	cairo_set_source_rgb(cr, 0, 0, 0);
@@ -102,7 +102,6 @@ void generate_output(int difficulty)
 
 	int start_x = 0;
 	int start_y = 0;
-	int sudokus_count = 12;
 	for (int i=0; i < sudokus_count; i++)
 	{
 		if (i == 0) {
@@ -131,8 +130,11 @@ void generate_output(int difficulty)
 		}
 
 		char* stream;
-		stream = generate_puzzle(40);
+		stream = generate_puzzle(difficulty);
+
+#ifdef DEBUG
 		printf("%d: %s\n", i, stream);
+#endif // DEBUG
 
 		cairo_translate(cr, start_x, start_y);
 		draw_grid(stream, cr);
@@ -152,4 +154,41 @@ void generate_output(int difficulty)
 	cairo_show_page(cr);
 	cairo_destroy(cr);
 	cairo_surface_destroy(surface);
+}
+
+void generate_png(int difficulty, char* filename)
+{
+	cairo_surface_t *surface;
+	cairo_t *cr;
+
+	surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 453, 453);
+	cr = cairo_create(surface);
+
+	cairo_set_source_rgb(cr, 0, 0, 0);
+	cairo_set_line_cap(cr, CAIRO_LINE_CAP_SQUARE);
+
+	cairo_select_font_face(cr, "Sans", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_NORMAL);
+	cairo_set_font_size(cr, 10.0);
+
+	char* stream;
+	stream = generate_puzzle(difficulty);
+
+	cairo_translate(cr, 2, 2);
+	draw_grid(stream, cr);
+	cairo_surface_write_to_png(surface, filename);
+
+	cairo_destroy(cr);
+	cairo_surface_destroy(surface);
+
+	free(stream);
+}
+
+void generate_output(int difficulty, char* filename, int sudokuCount, bool isPDF)
+{
+	if (isPDF)
+	{
+		generate_pdf(difficulty, sudokuCount, filename);
+	} else {
+		generate_png(difficulty, filename);
+	}
 }

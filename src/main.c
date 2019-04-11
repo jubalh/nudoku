@@ -67,7 +67,9 @@ static char* g_provided_stream = NULL;		/* in case of -s flag the user provides 
 static int   g_hint_counter;
 static char  plain_board[STREAM_LENGTH];
 static char  user_board[STREAM_LENGTH];
-static char* g_outputFilename = NULL;		/* in case -o flag we get a filename past for outputting */
+static char* g_outputFilename = NULL;		/* in case -p/-i flag we get a filename passed for outputting */
+static int   g_sudokuCount = 1;				/* in case of -n we can the numbers of sudoku that should end up in the PDf (-p) */
+static bool  g_outIsPDF;
 static DIFFICULTY g_level = D_EASY;
 static WINDOW *grid, *infobox, *status;
 
@@ -92,6 +94,9 @@ static void print_usage(void)
 	printf(_("-c nocolor:\t\tDo not use colors\n"));
 	printf(_("-d difficulty:\t\tChoose between: easy, normal, hard\n"));
 	printf(_("-s stream:\t\tUser provided sudoku stream\n"));
+	printf(_("-p filename:\t\tOutput PDF\n"));
+	printf(_("-n filename:\t\tNumber of sudokus to put in PDF\n"));
+	printf(_("-i filename:\t\tOutput PNG image\n"));
 }
 
 static bool is_valid_stream(char *s)
@@ -129,7 +134,7 @@ static bool is_valid_stream(char *s)
 static void parse_arguments(int argc, char *argv[])
 {
 	int opt;
-	while ((opt = getopt(argc, argv, "hvcs:d:o:")) != -1)
+	while ((opt = getopt(argc, argv, "hvcs:d:p:i:n:")) != -1)
 	{
 		switch (opt)
 		{
@@ -160,8 +165,19 @@ static void parse_arguments(int argc, char *argv[])
 					exit(EXIT_FAILURE);
 				}
 				break;
-			case 'o':
+			// output pdf
+			case 'p':
 				g_outputFilename = strdup(optarg);
+				g_outIsPDF = true;
+				break;
+			// output png image
+			case 'i':
+				g_outputFilename = strdup(optarg);
+				g_outIsPDF = false;
+				break;
+			// numbers of sudoku for output pdf
+			case 'n':
+				g_sudokuCount = atoi(optarg);
 				break;
 			default:
 				print_usage();
@@ -424,7 +440,7 @@ int main(int argc, char *argv[])
 	if (g_outputFilename)
 	{
 #ifdef ENABLE_CAIRO
-		generate_output(g_level);
+		generate_output(g_level, g_outputFilename, g_sudokuCount, g_outIsPDF);
 		return 0;
 #else
 		printf("nudoku is compiled without cairo support.\n");

@@ -1,5 +1,5 @@
 .\" Manpage for nudoku.
-.TH man 6 "19 April 2018" "1.0.0" "nudoku man page"
+.TH man 6 "11 April 2019" "1.0.0" "nudoku man page"
 .SH NAME
 nudoku \- ncurses based sudoku game
 .SH SYNOPSIS
@@ -56,6 +56,22 @@ Available options are: easy, normal, hard
 User provided stream.
 The user can provide a sudoku himself. Nudoku won't generate it in this case. Notation is in stream format, meaning everthing in one line. Use dots (.) for empy fields.
 Example: nudoku -s 4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......
+
+.BR \-p
+Output PDF.
+Prints a sudoku into a PDF file. File name needs to follow.
+This can be combined with -n to define how many sudokus the PDF should contain.
+Example: -p riddle.pdf
+
+.BR \-n
+Number of sudokuks to put in PDF.
+This can only be used with -p
+Example: -p riddle.pdf -n 8
+
+.BR \-i
+Output PNG image.
+Puts a single sudoku into an PNG image file. File name needs to follow.
+Example: -i sudoku.png
 
 .SH BUGS
 No known bugs.
