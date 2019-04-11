@@ -51,6 +51,7 @@ zypper in nudoku
 
 #### Dependency ####
 - ncurses
+- cairo (optional: for PDF/PNG output)
 
 #### Compilation ####
 
@@ -75,6 +76,20 @@ make
 ```
 
 Add `-DDEBUG` to `make` to have some debug output.
+
+nudoku can also output sudokus in PDF and PNG format (see `man nudoku` -p/-i/-n).
+You need to have cairo installed and configure with:
+
+```
+./configure --enable-cairo
+```
+
+##### Usage #####
+
+For normal interactive GUI run `nudoku`.
+To print two PDF pages with 8 hard sudokus run `nudoku -p riddle.pdf -n 8 -d hard`.
+To get a PNG with an easy sudoku run `nudoku -i sudoku.png -d easy`.
+See `man nudoku` to learn more.
 
 ##### I18n #####
 
