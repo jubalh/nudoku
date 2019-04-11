@@ -1,4 +1,16 @@
-0.2.5 to 1.0.0
+1.0.0 to 2.0.0 (2019-04-11)
+  * Translation support
+  * Added translations for:
+    - Spanish
+    - German
+    - Russian
+  * Refactoring and code cleanup
+  * Add color difference between provided numbers and the ones entered by the
+  user
+  * Output sudoku PDFs (-p/-n option)
+  * Output sudoku PNG (-i option)
+
+0.2.5 to 1.0.0 (2018-04-19)
   * Add 'mark' command to highlight the currently selected number in all othre
     cells. Thanks to James Warnock.
   * Redesign commands display.
