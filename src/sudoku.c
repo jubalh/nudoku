@@ -178,14 +178,6 @@ static char* generate_seed()
 	int index = 0;
 	int iSquare = 0;
 
-	// for GUI this works. but:
-	// if we create several sudokus right after each other,
-	// like we do when we create several of them in one PDF.
-	// then time is still the same. lets wait a short time
-	// so that we get different numbers.
-	sleep(1);
-	srand(time(NULL));
-
 	char* upperleft = create_random_numbers();
 	char* center = create_random_numbers();
 	char* lowerright = create_random_numbers();
