@@ -1,7 +1,11 @@
 #AM_CFLAGS = --pedantic -Wall
 #-DDEBUG
 
+if HAVE_WIDE_NCURSES
+nudoku_LDADD = -lncursesw
+else
 nudoku_LDADD = -lncurses
+endif
 bin_PROGRAMS = nudoku
 nudoku_SOURCES = main.c sudoku.c sudoku.h
 

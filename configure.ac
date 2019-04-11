@@ -34,6 +34,16 @@ the cairo development libraries, or compile without support (--disable-cairo)
 
 fi
 
+have_wide_ncurses=no
+AC_CHECK_LIB(ncursesw, initscr, [have_wide_ncurses=yes])
+if test $have_wide_ncurses = no; then
+   AC_CHECK_LIB(ncurses, initscr, [], [
+   echo "nudoku requires ncurses"
+   exit 1
+   ])
+fi
+AM_CONDITIONAL([HAVE_WIDE_NCURSES], [test $have_wide_ncurses = yes])
+
 # Checks for header files.
 AC_CHECK_HEADERS([stdlib.h string.h unistd.h])
 
