@@ -12,7 +12,7 @@ As a bonus you will even learn the basic **vi** movement commands.
 
 
 ### Features 
-nudoku can also generate PDF files containing sudokus and create single sudoku PNGs like the following:
+nudoku can also generate PDF files, like [this](http://jubalh.github.io/nudoku/riddle.pdf), containing sudokus and create single sudoku PNGs like the following:
 
 ![sudoku game](https://i.postimg.cc/bYbrRP5n/sudoku.png)
 
