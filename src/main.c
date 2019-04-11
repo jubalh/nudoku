@@ -38,8 +38,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define GRID_COLS				37
 #define GRID_Y					3
 #define GRID_X					3
-#define INFO_LINES				19
-#define INFO_COLS				20
+#define INFO_LINES				25
+#define INFO_COLS				30
 #define INFO_Y					3
 #define INFO_X					GRID_X + GRID_COLS + 5
 #define GRID_NUMBER_START_Y		1
