@@ -237,13 +237,36 @@ static void _draw_grid()
 				if(j % 3 == 0)
 					wattron(grid, A_BOLD|COLOR_PAIR(2));
 			}
-			wprintw(grid, "+");
+
+			if(i == 0 && j == 0)
+				waddch(grid, ACS_ULCORNER);
+			else if(i == 0 && j == 9)
+				waddch(grid, ACS_URCORNER);
+			else if(i == 9 && j == 9)
+				waddch(grid, ACS_LRCORNER);
+			else if(i == 9 && j == 0)
+				waddch(grid, ACS_LLCORNER);
+			else if(i == 0)
+				waddch(grid, ACS_TTEE);
+			else if(i == 9)
+				waddch(grid, ACS_BTEE);
+			else if(j == 0)
+				waddch(grid, ACS_LTEE);
+			else if(j == 9)
+				waddch(grid, ACS_RTEE);
+			else
+				waddch(grid, ACS_PLUS);
+
 			if(g_useColor && (j % 3 == 0) && (i % 3 != 0))
 			{
 				wattron(grid, A_BOLD|COLOR_PAIR(1));
 			}
 			if(j < 9)
-				wprintw(grid, "---");
+			{
+				waddch(grid, ACS_HLINE);
+				waddch(grid, ACS_HLINE);
+				waddch(grid, ACS_HLINE);
+			}
 			if(g_useColor && (i % 3 == 0))
 			{
 				wattron(grid, A_BOLD|COLOR_PAIR(1));
@@ -254,9 +277,8 @@ static void _draw_grid()
 			if(g_useColor && (j % 3 == 0))
 				wattron(grid, A_BOLD|COLOR_PAIR(2));
 			if(j > 0)
-				wprintw(grid, "   |");
-			else
-				wprintw(grid, "|");
+				wprintw(grid, "   ");
+			waddch(grid, ACS_VLINE);
 			if(g_useColor && (j % 3 == 0))
 			{
 				wattron(grid, A_BOLD|COLOR_PAIR(1));
