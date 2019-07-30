@@ -208,7 +208,7 @@ static char* generate_seed()
 		for(int j = 0; j < 6 ; j++)
 			stream[index++] = '.';
 		for(int j = 0; j < 3; j++)
-			stream[index++] = upperleft[iSquare++];
+			stream[index++] = lowerright[iSquare++];
 	}
 
 	stream[81] = '\0';
