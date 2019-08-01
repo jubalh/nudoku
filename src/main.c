@@ -194,6 +194,7 @@ static void cleanup(void)
 static void init_curses(void)
 {
 	initscr();
+	use_default_colors();
 	clear();
 	atexit(cleanup);
 	cbreak();
@@ -204,10 +205,10 @@ static void init_curses(void)
 		if(has_colors())
 		{
 			start_color();
-			init_pair(1, COLOR_GREEN, COLOR_BLACK);
-			init_pair(2, COLOR_BLUE, COLOR_BLACK);
+			init_pair(1, COLOR_GREEN, -1);
+			init_pair(2, COLOR_BLUE, -1);
 			// user input color
-			init_pair(3, COLOR_CYAN, COLOR_BLACK);
+			init_pair(3, COLOR_CYAN, -1);
 			// Highlight color
 			init_pair(COLOR_HIGHLIGHT, COLOR_BLACK, COLOR_WHITE);
 			// Cursor highlight color
