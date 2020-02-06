@@ -454,7 +454,7 @@ int main(int argc, char *argv[])
 	bindtextdomain(PACKAGE, LOCALEDIR);
 	textdomain(PACKAGE);
 #endif
-	bool run = true, enable_highlights=false;
+	bool run = true;
 	int key, x, y, posx, posy;
 
 	parse_arguments(argc, argv);
