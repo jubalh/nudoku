@@ -51,8 +51,8 @@ AC_CHECK_HEADERS([stdlib.h string.h unistd.h])
 AC_CHECK_HEADER_STDBOOL
 
 # Set gettext files
-AM_GNU_GETTEXT_VERSION([0.19.6])
-AM_GNU_GETTEXT_REQUIRE_VERSION([0.19.6])
+AM_GNU_GETTEXT_VERSION([0.20.0])
+AM_GNU_GETTEXT_REQUIRE_VERSION([0.20.0])
 AM_GNU_GETTEXT([external])
 
 # Checks for library functions.
