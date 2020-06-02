@@ -27,5 +27,6 @@ As of now nudoku is also in the official repositores of:
 * Fedora
 * Gentoo
 * Ubuntu (based on Debian stretch)
+* Homebrew
 
 If you don't run any of these, well, go read the [readme](https://github.com/jubalh/nudoku/blob/master/README.md).
