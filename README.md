@@ -47,6 +47,14 @@ zypper ar obs://games games
 zypper in nudoku
 ```
 
+### macOS ###
+
+There is a [formula](https://formulae.brew.sh/formula/nudoku) for [Homebrew](https://brew.sh/)
+
+```
+brew install nudoku
+```
+
 ### From Source ###
 
 #### Dependency ####
