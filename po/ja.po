@@ -48,7 +48,7 @@ msgstr "-c 単色:\t\t色を使用しない\n"
 #: src/main.c:95
 #, c-format
 msgid "-d difficulty:\t\tChoose between: easy, normal, hard\n"
-msgstr "-d 難易度:\t\teasy, normal, hardから選択"
+msgstr "-d 難易度:\t\teasy, normal, hardから選択\n"
 
 #: src/main.c:96
 #, c-format
@@ -68,7 +68,7 @@ msgstr "-n ファイル名:\t\tPDFに載せる数独の数\n"
 #: src/main.c:99
 #, c-format
 msgid "-i filename:\t\tOutput PNG image\n"
-msgstr "-i ファイル名前:\t\tPNG形式で出力"
+msgstr "-i ファイル名前:\t\tPNG形式で出力\n"
 
 #: src/main.c:113
 #, c-format
