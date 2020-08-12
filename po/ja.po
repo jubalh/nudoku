@@ -22,76 +22,76 @@ msgid ""
 "nudoku [option]\n"
 "\n"
 msgstr ""
-"nudoku [$B%*%W%7%g%s(B]\n"
+"nudoku [オプション]\n"
 "\n"
 
 #: src/main.c:91
 #, c-format
 msgid "Options:\n"
-msgstr "$B%*%W%7%g%s(B:\n"
+msgstr "オプション:\n"
 
 #: src/main.c:92
 #, c-format
 msgid "-h help:\t\tPrint this help\n"
-msgstr "-h $B<j0z$-(B:\t\t$B$3$N<j0z$-$rI=<((B\n"
+msgstr "-h 手引き:\t\tこの手引きを表示\n"
 
 #: src/main.c:93
 #, c-format
 msgid "-v version:\t\tPrint version\n"
-msgstr "-v $BHG<!(B:\t\t$BHG<!$rI=<((B\n"
+msgstr "-v 版次:\t\t版次を表示\n"
 
 #: src/main.c:94
 #, c-format
 msgid "-c nocolor:\t\tDo not use colors\n"
-msgstr "-c $BC1?'(B:\t\t$B?'$r;HMQ$7$J$$(B\n"
+msgstr "-c 単色:\t\t色を使用しない\n"
 
 #: src/main.c:95
 #, c-format
 msgid "-d difficulty:\t\tChoose between: easy, normal, hard\n"
-msgstr "-d $BFq0WEY(B:\t\teasy, normal, hard$B$+$iA*Br(B"
+msgstr "-d 難易度:\t\teasy, normal, hardから選択"
 
 #: src/main.c:96
 #, c-format
 msgid "-s stream:\t\tUser provided sudoku stream\n"
-msgstr "-s $B?tNs(B:\t\t$B?tFH$N?tNs$rMxMQ<T$,;XDj$9$k(B\n"
+msgstr "-s 数列:\t\t数独の数列を利用者が指定する\n"
 
 #: src/main.c:97
 #, c-format
 msgid "-p filename:\t\tOutput PDF\n"
-msgstr "-p $B%U%!%$%kL>(B:\t\tPDF$B7A<0$G=PNO(B\n"
+msgstr "-p ファイル名:\t\tPDF形式で出力\n"
 
 #: src/main.c:98
 #, c-format
 msgid "-n filename:\t\tNumber of sudokus to put in PDF\n"
-msgstr "-n $B%U%!%$%kL>(B:\t\tPDF$B$K:\$;$k?tFH$N?t(B\n"
+msgstr "-n ファイル名:\t\tPDFに載せる数独の数\n"
 
 #: src/main.c:99
 #, c-format
 msgid "-i filename:\t\tOutput PNG image\n"
-msgstr "-i $B%U%!%$%kL>A0(B:\t\tPNG$B7A<0$G=PNO(B"
+msgstr "-i ファイル名前:\t\tPNG形式で出力"
 
 #: src/main.c:113
 #, c-format
 msgid "Character %c at position %d is not allowed.\n"
-msgstr "$B0LCV(B%d$B$KJ8;z(B%c$B$rCV$/$3$H$O$G$-$^$;$s!#(B\n"
+msgstr "位置%dに文字%cを置くことはできません。\n"
 
 #: src/main.c:121
 #, c-format
 msgid "Stream has to be %d characters long.\n"
-msgstr "$B?tNs$O(B%d$BJ8;z$ND9$5$G$"$kI,MW$,$"$j$^$9!#(B\n"
+msgstr "数列は%d文字の長さである必要があります。\n"
 
 #: src/main.c:127
 #, c-format
 msgid "Stream does not represent a valid sudoku puzzle.\n"
-msgstr "$B?tNs$NI=<($OBEEv$J?tFH$NLdBj$G$O$"$j$^$;$s!#(B\n"
+msgstr "数列の表示は妥当な数独の問題ではありません。\n"
 
 #: src/main.c:218
 msgid ""
 "Your terminal doesn't support colors.\n"
 "Try the nocolor (-c) option.\n"
 msgstr ""
-"$BK\C<Kv$O?'$KBP1~$7$F$$$^$;$s!#(B\n"
-"$BC1?'(B (-c) $B%*%W%7%g%s$r$*;n$7$/$@$5$$!#(B\n"
+"本端末は色に対応していません。\n"
+"単色 (-c) オプションをお試しください。\n"
 
 #: src/main.c:309
 #, c-format
@@ -99,95 +99,94 @@ msgid ""
 "level: %s\n"
 "\n"
 msgstr ""
-"$BFq0WEY(B: %s\n"
+"難易度: %s\n"
 "\n"
 
 #: src/main.c:318
 msgid "Movement\n"
-msgstr "$B0\F0(B\n"
+msgstr "移動\n"
 
 #: src/main.c:319
 msgid " h - Move left\n"
-msgstr " h - $B:8$K0\F0(B\n"
+msgstr " h - 左に移動\n"
 
 #: src/main.c:320
 msgid " j - Move down\n"
-msgstr " j - $B2<$K0\F0(B\n"
+msgstr " j - 下に移動\n"
 
 #: src/main.c:321
 msgid " k - Move up\n"
-msgstr " k - $B>e$K0\F0(B\n"
+msgstr " k - 上に移動\n"
 
 #: src/main.c:322
 msgid ""
 " l - Move right\n"
 "\n"
 msgstr ""
-" l - $B1&$K0\F0(B\n"
+" l - 右に移動\n"
 "\n"
 
 #: src/main.c:323
 msgid "Commands\n"
-msgstr "$BL?Na(B\n"
+msgstr "命令\n"
 
 #: src/main.c:324
 msgid " c - Check solution\n"
-msgstr " c - $B2rEz$r3N$+$a$k(B\n"
+msgstr " c - 解答を確かめる\n"
 
 #: src/main.c:325
 msgid " H - Give a hint\n"
-msgstr " H - $B<j3]$j$r8+$k(B\n"
+msgstr " H - 手掛りを見る\n"
 
 #: src/main.c:328
 msgid " m - Toggle marks\n"
-msgstr " m - $B0u$rIU$1$k(B/$B30$9(B\n"
+msgstr " m - 印を付ける/外す\n"
 
 #: src/main.c:330
 msgid " N - New puzzle\n"
-msgstr " N - $B?7$7$$LdBj(B\n"
+msgstr " N - 新しい問題\n"
 
 #: src/main.c:331
 msgid " Q - Quit\n"
-msgstr " Q - $B=*N;(B\n"
+msgstr " Q - 終了\n"
 
 #: src/main.c:332
 msgid " r - Redraw\n"
-msgstr " r - $B:FIA2h(B\n"
+msgstr " r - 再描画\n"
 
 #: src/main.c:333
 msgid " S - Solve puzzle\n"
-msgstr " S - $BLdBj$r2r$/(B\n"
+msgstr " S - 問題を解く\n"
 
 #: src/main.c:334
 msgid " x - Delete number\n"
-msgstr " x - $B?t;z$r>C$9(B\n"
+msgstr " x - 数字を消す\n"
 
 #: src/main.c:568
 msgid "Solving puzzle..."
-msgstr "$BLdBj$r2r$$$F$$$^$9(B..."
+msgstr "問題を解いています..."
 
 #: src/main.c:574 src/main.c:615
 msgid "Solved"
-msgstr "$B@52r$G$9(B"
+msgstr "正解です"
 
 #: src/main.c:583
 msgid "Generating puzzle..."
-msgstr "$BLdBj$r@8@.$7$F$$$^$9(B..."
+msgstr "問題を生成しています..."
 
 #: src/main.c:609
 msgid "Not correct"
-msgstr "$B@5$7$/$"$j$^$;$s(B"
+msgstr "正しくありません"
 
 #: src/main.c:620
 #, c-format
 msgid " with the help of %d hints"
-msgstr "$B!J<j3]$+$j$r(B%d$B2sMQ$$$^$7$?!K(B"
+msgstr "（手掛かりを%d回用いました）"
 
 #: src/main.c:628
 msgid "Correct so far"
-msgstr "$B:#$N$H$3$m@52r$G$9(B"
+msgstr "今のところ正解です"
 
 #: src/main.c:656
 msgid "Provided hint"
-msgstr "$B<j3]$j$rF@$^$7$?(B"
-
+msgstr "手掛りを得ました"
