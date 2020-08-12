@@ -1,0 +1,192 @@
+# SOME DESCRIPTIVE TITLE.
+# This file is put in the public domain.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: nudoku 2.0.0\n"
+"Report-Msgid-Bugs-To: jubalh@iodoru.org\n"
+"POT-Creation-Date: 2019-07-30 12:08+0200\n"
+"PO-Revision-Date: 2020-08-12 15:14+09:00\n"
+"Last-Translator: cmplstofB <20594300+cmplstofB@users.noreply.github.com>\n"
+"Language-Team: \n"
+"Language: Japanese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/main.c:90
+#, c-format
+msgid ""
+"nudoku [option]\n"
+"\n"
+msgstr ""
+"nudoku [オプション]\n"
+"\n"
+
+#: src/main.c:91
+#, c-format
+msgid "Options:\n"
+msgstr "オプション:\n"
+
+#: src/main.c:92
+#, c-format
+msgid "-h help:\t\tPrint this help\n"
+msgstr "-h 手引き:\t\tこの手引きを表示\n"
+
+#: src/main.c:93
+#, c-format
+msgid "-v version:\t\tPrint version\n"
+msgstr "-v 版次:\t\t版次を表示\n"
+
+#: src/main.c:94
+#, c-format
+msgid "-c nocolor:\t\tDo not use colors\n"
+msgstr "-c 単色:\t\t色を使用しない\n"
+
+#: src/main.c:95
+#, c-format
+msgid "-d difficulty:\t\tChoose between: easy, normal, hard\n"
+msgstr "-d 難易度:\t\teasy, normal, hardから選択\n"
+
+#: src/main.c:96
+#, c-format
+msgid "-s stream:\t\tUser provided sudoku stream\n"
+msgstr "-s 数列:\t\t数独の数列を利用者が指定する\n"
+
+#: src/main.c:97
+#, c-format
+msgid "-p filename:\t\tOutput PDF\n"
+msgstr "-p ファイル名:\t\tPDF形式で出力\n"
+
+#: src/main.c:98
+#, c-format
+msgid "-n filename:\t\tNumber of sudokus to put in PDF\n"
+msgstr "-n ファイル名:\t\tPDFに載せる数独の数\n"
+
+#: src/main.c:99
+#, c-format
+msgid "-i filename:\t\tOutput PNG image\n"
+msgstr "-i ファイル名前:\t\tPNG形式で出力\n"
+
+#: src/main.c:113
+#, c-format
+msgid "Character %c at position %d is not allowed.\n"
+msgstr "位置%dに文字%cを置くことはできません。\n"
+
+#: src/main.c:121
+#, c-format
+msgid "Stream has to be %d characters long.\n"
+msgstr "数列は%d文字の長さである必要があります。\n"
+
+#: src/main.c:127
+#, c-format
+msgid "Stream does not represent a valid sudoku puzzle.\n"
+msgstr "数列の表示は妥当な数独の問題ではありません。\n"
+
+#: src/main.c:218
+msgid ""
+"Your terminal doesn't support colors.\n"
+"Try the nocolor (-c) option.\n"
+msgstr ""
+"本端末は色に対応していません。\n"
+"単色 (-c) オプションをお試しください。\n"
+
+#: src/main.c:309
+#, c-format
+msgid ""
+"level: %s\n"
+"\n"
+msgstr ""
+"難易度: %s\n"
+"\n"
+
+#: src/main.c:318
+msgid "Movement\n"
+msgstr "移動\n"
+
+#: src/main.c:319
+msgid " h - Move left\n"
+msgstr " h - 左に移動\n"
+
+#: src/main.c:320
+msgid " j - Move down\n"
+msgstr " j - 下に移動\n"
+
+#: src/main.c:321
+msgid " k - Move up\n"
+msgstr " k - 上に移動\n"
+
+#: src/main.c:322
+msgid ""
+" l - Move right\n"
+"\n"
+msgstr ""
+" l - 右に移動\n"
+"\n"
+
+#: src/main.c:323
+msgid "Commands\n"
+msgstr "命令\n"
+
+#: src/main.c:324
+msgid " c - Check solution\n"
+msgstr " c - 解答を確かめる\n"
+
+#: src/main.c:325
+msgid " H - Give a hint\n"
+msgstr " H - 手掛りを見る\n"
+
+#: src/main.c:328
+msgid " m - Toggle marks\n"
+msgstr " m - 印を付ける/外す\n"
+
+#: src/main.c:330
+msgid " N - New puzzle\n"
+msgstr " N - 新しい問題\n"
+
+#: src/main.c:331
+msgid " Q - Quit\n"
+msgstr " Q - 終了\n"
+
+#: src/main.c:332
+msgid " r - Redraw\n"
+msgstr " r - 再描画\n"
+
+#: src/main.c:333
+msgid " S - Solve puzzle\n"
+msgstr " S - 問題を解く\n"
+
+#: src/main.c:334
+msgid " x - Delete number\n"
+msgstr " x - 数字を消す\n"
+
+#: src/main.c:568
+msgid "Solving puzzle..."
+msgstr "問題を解いています..."
+
+#: src/main.c:574 src/main.c:615
+msgid "Solved"
+msgstr "正解です"
+
+#: src/main.c:583
+msgid "Generating puzzle..."
+msgstr "問題を生成しています..."
+
+#: src/main.c:609
+msgid "Not correct"
+msgstr "正しくありません"
+
+#: src/main.c:620
+#, c-format
+msgid " with the help of %d hints"
+msgstr "（手掛かりを%d回用いました）"
+
+#: src/main.c:628
+msgid "Correct so far"
+msgstr "今のところ正解です"
+
+#: src/main.c:656
+msgid "Provided hint"
+msgstr "手掛りを得ました"
