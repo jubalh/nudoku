@@ -33,27 +33,27 @@ msgstr "オプション:\n"
 #: src/main.c:86
 #, c-format
 msgid "-h help:\t\tPrint this help\n"
-msgstr "-h help:\t\tこの手引きを表示\n"
+msgstr "-h:\t\tこの手引きを表示\n"
 
 #: src/main.c:87
 #, c-format
 msgid "-v version:\t\tPrint version\n"
-msgstr "-v version:\t\t版を表示\n"
+msgstr "-v:\t\t版を表示\n"
 
 #: src/main.c:88
 #, c-format
 msgid "-c nocolor:\t\tDo not use colors\n"
-msgstr "-c nocolor:\t\t着色しない\n"
+msgstr "-c:\t\t着色しない\n"
 
 #: src/main.c:89
 #, c-format
 msgid "-d difficulty:\t\tChoose between: easy, normal, hard\n"
-msgstr "-d difficulty:\t\t難易度を選択: easy, normal, hard\n"
+msgstr "-d 難易度:\t\t難易度を選択: easy, normal, hard\n"
 
 #: src/main.c:90
 #, c-format
 msgid "-s stream:\t\tUser provided sudoku stream\n"
-msgstr "-s stream:\t\t数独の盤面を指定する\n"
+msgstr "-s 版面:\t\t数独の盤面を指定する\n"
 
 #: src/main.c:104
 #, c-format
