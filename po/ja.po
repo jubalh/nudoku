@@ -73,7 +73,7 @@ msgstr "-i ファイル名前:\t\tPNG形式で出力\n"
 #: src/main.c:113
 #, c-format
 msgid "Character %c at position %d is not allowed.\n"
-msgstr "位置%dに文字%cを置くことはできません。\n"
+msgstr "文字%cを位置%dに置くことはできません。\n"
 
 #: src/main.c:121
 #, c-format
