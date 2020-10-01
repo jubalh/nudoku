@@ -1,10 +1,10 @@
-# nudoku #
+# nidoku #
 
 nudoku is a ncurses based sudoku game.
 
 ## Install ##
 
-### Using package manager ###
+### Using Package Manager ###
 
 #### Arch Linux ####
 I heard rumors of nudoku being in the [AUR](https://aur.archlinux.org/packages/nudoku-git/).
