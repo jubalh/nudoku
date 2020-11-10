@@ -553,7 +553,8 @@ int main(int argc, char *argv[])
 				}
 				break;
 			case 'y': // Diagonally up and left
-				if(y>2&&x>5) {
+				if(y>2&&x>5)
+				{
 					y -= GRID_COL_DELTA;
 					x -= GRID_LINE_DELTA;
 					if(g_playing)
@@ -563,7 +564,8 @@ int main(int argc, char *argv[])
 				}
 				break;
 			case 'u': // Diagonally up and right
-				if(y>2&&x<34) {
+				if(y>2&&x<34)
+				{
 					y -= GRID_COL_DELTA;
 					x += GRID_LINE_DELTA;
 					if(g_playing)
@@ -573,7 +575,8 @@ int main(int argc, char *argv[])
 				}
 				break;
 			case 'b': // Diagonally down and left
-				if(y<17&&x>5) {
+				if(y<17&&x>5)
+				{
 					y += GRID_COL_DELTA;
 					x -= GRID_LINE_DELTA;
 					if(g_playing)
