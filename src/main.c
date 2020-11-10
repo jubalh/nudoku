@@ -552,6 +552,47 @@ int main(int argc, char *argv[])
 					}
 				}
 				break;
+			case 'y': // Diagonally up and left
+				if(y>2&&x>5) {
+					y -= GRID_COL_DELTA;
+					x -= GRID_LINE_DELTA;
+					if(g_playing)
+					{
+						fill_grid(user_board, plain_board, x, y);
+					}
+				}
+				break;
+			case 'u': // Diagonally up and right
+				if(y>2&&x<34) {
+					y -= GRID_COL_DELTA;
+					x += GRID_LINE_DELTA;
+					if(g_playing)
+					{
+						fill_grid(user_board, plain_board, x, y);
+					}
+				}
+				break;
+			case 'b': // Diagonally down and left
+				if(y<17&&x>5) {
+					y += GRID_COL_DELTA;
+					x -= GRID_LINE_DELTA;
+					if(g_playing)
+					{
+						fill_grid(user_board, plain_board, x, y);
+					}
+				}
+				break;
+			case 'n': // Diagonally down and right
+				if(y<17&&x<34)
+				{
+					y += GRID_COL_DELTA;
+					x += GRID_LINE_DELTA;
+					if(g_playing)
+					{
+						fill_grid(user_board, plain_board, x, y);
+					}
+				}
+				break;
 			case 'Q':
 			case 27:
 				run = false;
@@ -697,4 +738,3 @@ int main(int argc, char *argv[])
 	endwin();
 	return EXIT_SUCCESS;
 }
-
