@@ -37,6 +37,9 @@ Contained in official repo since 2018-02-16. Before that you had to use [strange
 emerge nudoku -a
 ```
 
+### NixOS ###
+nudoku is [available](https://github.com/NixOS/nixpkgs/tree/master/pkgs/games/nudoku) in the Nix package manager.
+
 ### NetBSD ###
 nudoku is [available](https://pkgsrc.se/games/nudoku) in the Nix package manager.
 
