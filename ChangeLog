@@ -1,7 +1,10 @@
-Unreleased
+2.0.0 to 2.1.0 (2020-11-20)
   * Use actual terminal background color (instead of black) as background
   color (pr #31)
-  * Define minimux gettext version instead of exact one (pr #32)
+  * Define minimum gettext version instead of exact one (pr #32)
+  * Require gettext 0.20
+  * Add Japanese translation (pr #40)
+  * Minor code change
 
 1.0.0 to 2.0.0 (2019-07-30)
   * Translation support
