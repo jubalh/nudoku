@@ -37,6 +37,9 @@ Contained in official repo since 2018-02-16. Before that you had to use [strange
 emerge nudoku -a
 ```
 
+### NetBSD ###
+nudoku is [available](https://pkgsrc.se/games/nudoku) in the Nix package manager.
+
 ### openSUSE ###
 
 Since openSUSE Leap 42.1 (and Tumbleweed) you can find nudoku in the official repository.
