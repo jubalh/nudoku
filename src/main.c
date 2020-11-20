@@ -3,7 +3,7 @@ vim: noexpandtab:ts=4:sts=4:sw=4
 
 nudoku
 
-Copyright (C) 2014 - 2019 Michael "jubalh" Vetter - jubalh _a-t_ iodoru.org
+Copyright (C) 2014 - 2020 Michael "jubalh" Vetter - jubalh _a-t_ iodoru.org
 
 LICENCE:
 This program is free software: you can redistribute it and/or modify
@@ -77,7 +77,7 @@ static WINDOW *grid, *infobox, *status;
 static void print_version(void)
 {
 	printf("nudoku version " VERSION "\n\n\
-Copyright (C) Michael Vetter 2014 - 2019\n\
+Copyright (C) Michael Vetter 2014 - 2020\n\
 License GPLv3+: GNU GPL version 3 or later.\n\
 This is free software, you are free to modify and redistribute it.\n");
 #ifdef DEBUG

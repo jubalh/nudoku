@@ -3,7 +3,7 @@ vim: noexpandtab:ts=4:sts=4:sw=4
 
 nudoku
 
-Copyright (C) 2014 - 2019 Michael "jubalh" Vetter - jubalh _a-t_ iodoru.org
+Copyright (C) 2014 - 2020 Michael "jubalh" Vetter - jubalh _a-t_ iodoru.org
 
 LICENCE:
 This program is free software: you can redistribute it and/or modify
