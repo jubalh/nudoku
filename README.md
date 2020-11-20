@@ -40,10 +40,8 @@ emerge nudoku -a
 ### openSUSE ###
 
 Since openSUSE Leap 42.1 (and Tumbleweed) you can find nudoku in the official repository.
-For others you need to add the `games` repo.
 
 ```
-zypper ar obs://games games
 zypper in nudoku
 ```
 
