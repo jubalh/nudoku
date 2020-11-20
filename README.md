@@ -51,6 +51,9 @@ Since openSUSE Leap 42.1 (and Tumbleweed) you can find nudoku in the official re
 zypper in nudoku
 ```
 
+### VoidLinux ###
+nudoku is [available](https://github.com/void-linux/void-packages/tree/master/srcpkgs/nudoku) on Void.
+
 ### macOS ###
 
 There is a [formula](https://formulae.brew.sh/formula/nudoku) for [Homebrew](https://brew.sh/)
