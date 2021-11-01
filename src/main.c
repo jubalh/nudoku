@@ -619,7 +619,7 @@ int main(int argc, char *argv[])
 							{
 								char t[256];
 								sprintf(t, _(" with the help of %d hints"), g_hint_counter);
-								mvwprintw(status, 0, 6, t);
+								mvwprintw(status, 0, 6, "%s", t);
 							}
 
 							g_playing = false;
