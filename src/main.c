@@ -22,11 +22,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 /* INCLUDES */
 #include "gettext.h"			/* gettext */
 #include <stdlib.h>				/* rand, srand */
-#include <unistd.h>				/* getopt */
+#include <getopt.h>				/* getopt */
 #include <ncurses.h>			/* ncurses */
 #include <time.h>				/* time */
 #include <string.h>				/* strcmp, strlen */
 #include "sudoku.h"				/* sudoku functions */
+#define ENABLE_CAIRO			/* enable cairo features like PDF */
 #ifdef ENABLE_CAIRO
 #include "outp.h"				/* output functions */
 #endif
@@ -337,6 +338,7 @@ static void init_windows(void)
 	wprintw(infobox, _(" r - Redraw\n"));
 	wprintw(infobox, _(" S - Solve puzzle\n"));
 	wprintw(infobox, _(" x - Delete number\n"));
+	wprintw(infobox, _(" D - Difficulty for new puzzle\n"));
 	if (g_useColor)
 	{
 		wattroff(infobox, COLOR_PAIR(1));
@@ -647,8 +649,8 @@ int main(int argc, char *argv[])
 							if (g_hint_counter > 0)
 							{
 								char t[256];
-								sprintf(t, _(" with the help of %d hints"), g_hint_counter);
-								mvwprintw(status, 0, 6, "%s", t);
+								sprintf(t, _("with the help of %d hints"), g_hint_counter);
+								mvwprintw(status, 1, 0, "%s", t);
 							}
 
 							g_playing = false;
@@ -694,6 +696,21 @@ int main(int argc, char *argv[])
 					g_useHighlights = !g_useHighlights;
 					fill_grid(user_board, plain_board, x, y);
 				}
+				break;
+			case 'D':
+				if (g_level == D_EASY)
+					g_level = D_NORMAL;
+				else if (g_level == D_NORMAL)
+					g_level = D_HARD;
+				else
+					g_level = D_EASY;
+				if (g_useColor)
+				{
+					wbkgd(infobox, COLOR_PAIR(2));
+					wattron(infobox, A_BOLD|COLOR_PAIR(2));
+				}
+				mvwprintw(infobox, 1, 0, _("level: %s\n\n"), difficulty_to_str(g_level) );
+				wrefresh(infobox);
 				break;
 			default:
 				break;
