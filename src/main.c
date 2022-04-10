@@ -4,6 +4,7 @@ vim: noexpandtab:ts=4:sts=4:sw=4
 nudoku
 
 Copyright (C) 2014 - 2020 Michael "jubalh" Vetter - jubalh _a-t_ iodoru.org
+Copyright (C) 2022 Sandroid75 - real-time elapsed playing time
 
 LICENCE:
 This program is free software: you can redistribute it and/or modify
@@ -34,6 +35,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 /* DEFINES */
 //#define VERSION				"0.1" //gets set via autotools
+#define VERSION					"0.2" //gets set via autotools
 #define GRID_LINES				19
 #define GRID_COLS				37
 #define GRID_Y					3
@@ -54,6 +56,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define SUDOKU_LENGTH			STREAM_LENGTH - 1
 #define COLOR_HIGHLIGHT			4
 #define COLOR_HIGHLIGHT_CURSOR	5
+#define MAX_BUFFER				256 //buffer for msg string
 
 #ifdef DEBUG
 #define EXAMPLE_STREAM "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......"
@@ -72,6 +75,7 @@ static int   g_sudokuCount = 1;				/* in case of -n we can the numbers of sudoku
 static bool  g_outIsPDF;
 static DIFFICULTY g_level = D_EASY;
 static WINDOW *grid, *infobox, *status;
+time_t start_t, current_t;	//time variables to calculate elapsed time
 
 /* FUNCTIONS */
 static void print_version(void)
@@ -205,8 +209,8 @@ static void init_curses(void)
 		if(has_colors())
 		{
 			start_color();
-			init_pair(1, COLOR_GREEN, -1);
-			init_pair(2, COLOR_BLUE, -1);
+			init_pair(1, COLOR_BLUE, -1);	//more clear to see the grid
+			init_pair(2, COLOR_CYAN, -1);	//more clear to see the grid
 			// user input color
 			init_pair(3, COLOR_CYAN, -1);
 			// Highlight color
@@ -420,6 +424,7 @@ static void new_puzzle(void)
 	fill_grid(plain_board, plain_board, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
 
 	g_playing = true;
+	time(&start_t); //start time for new game session
 }
 
 static bool hint(void)
@@ -446,8 +451,24 @@ static bool hint(void)
 	return false;
 }
 
+/* function to compose message string with elapsed time */
+static void elapsed_time_str(const char *msg, char *time_string)
+{
+	int hours, minutes, seconds;	//variables to compose time string hh:mm:ss
+
+	if(g_playing)			//only if playing
+		time(&current_t);	//get current time
+		
+	current_t -= start_t;			//determinate the elapsed time
+	hours = current_t / 3600;		//calculate the elapsed hours
+	minutes = (current_t % 3600) / 60;	//calculate the elapsed minutes
+	seconds = current_t % 60;		//calculate the elapsed seconds
+	sprintf(time_string, "%s%02i:%02i:%02i", msg, hours, minutes, seconds);	//compose the string with time
+}
+
 int main(int argc, char *argv[])
 {
+	char msg_str[MAX_BUFFER];	//message buffer
 #if ENABLE_NLS
 	/* Set up internationalization */
 	setlocale(LC_ALL, "");
@@ -496,6 +517,12 @@ int main(int argc, char *argv[])
 #ifdef DEBUG
 		mvprintw(0, 0, "y: %.2d x: %.2d", y, x);
 #endif // DEBUG
+		if (g_playing)	//only when playing
+		{
+			elapsed_time_str("Elapsed Time ", msg_str);	//compose elapsed time string
+			mvprintw(22, 4, _(msg_str));			//print the messang at bottom of the grid
+			timeout(1000);					//no wait for getch()
+		}
 		refresh();
 		wrefresh(grid);
 		key = getch();
@@ -613,7 +640,9 @@ int main(int argc, char *argv[])
 					{
 						if (strchr(user_board, '.') == NULL)
 						{
-							mvwprintw(status, 0, 0, _("Solved"));
+							//mvwprintw(status, 0, 0, _("Solved"));
+							elapsed_time_str("Solved in: ", msg_str);	//compose the solved string with final elapsed time
+							mvwprintw(status, 0, 0, _(msg_str));		//print the solved string
 
 							if (g_hint_counter > 0)
 							{
@@ -623,6 +652,7 @@ int main(int argc, char *argv[])
 							}
 
 							g_playing = false;
+							timeout(-1);	//restore waiting for getch()
 						}
 						else
 						{
