@@ -1,6 +1,7 @@
 *.o
 *.swp
 *.tar.??
+*.json
 Makefile
 Makefile.in
 aclocal.m4
@@ -16,3 +17,5 @@ src/.deps/
 src/Makefile
 src/Makefile.in
 src/nudoku
+src/.clang-format.
+src/.vscode/
