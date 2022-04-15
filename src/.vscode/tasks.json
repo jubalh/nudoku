@@ -1,0 +1,34 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++: gcc compila il file attivo",
+			"command": "/usr/bin/gcc",
+			"args": [
+				"-std=gnu99",
+				"-Wall",
+				"-O2",
+				//"-ggdb",
+				//"${file}",
+				"${fileDirname}/*.c",
+				"-o",
+				//"${fileDirname}/${fileBasenameNoExtension}",
+				"${fileDirname}/nudoku",
+				"-lncursesw",
+				"`pkg-config --libs --cflags cairo`"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "compilatore: /usr/bin/gcc"
+		}
+	]
+}
