@@ -4,7 +4,6 @@ vim: noexpandtab:ts=4:sts=4:sw=4
 nudoku
 
 Copyright (C) 2014 - 2020 Michael "jubalh" Vetter - jubalh _a-t_ iodoru.org
-Copyright (C) 2022 Sandroid75 - real-time elapsed playing time
 
 LICENCE:
 This program is free software: you can redistribute it and/or modify
@@ -521,7 +520,7 @@ int main(int argc, char *argv[])
 #endif // DEBUG
 		if (g_playing)	//only when playing
 		{
-			elapsed_time_str("Elapsed Time ", msg_str);	//compose elapsed time string
+			elapsed_time_str(_("Elapsed Time "), msg_str);	//compose elapsed time string
 			mvprintw(22, 4, _(msg_str));			//print the messang at bottom of the grid
 			timeout(1000);					//no wait for getch()
 		}
