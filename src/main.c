@@ -33,7 +33,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define _(x) gettext(x)
 
 /* DEFINES */
-//#define VERSION				"0.1" //gets set via autotools
+#define VERSION				"0.1" //gets set via autotools
 #define GRID_LINES				19
 #define GRID_COLS				37
 #define GRID_Y					3
@@ -333,6 +333,9 @@ static void init_windows(void)
 	wprintw(infobox, _(" r - Redraw\n"));
 	wprintw(infobox, _(" S - Solve puzzle\n"));
 	wprintw(infobox, _(" x - Delete number\n"));
+#ifdef DIF_LEVEL
+	wprintw(infobox, _(" D - Difficulty for new puzzle\n"));
+#endif
 	if (g_useColor)
 	{
 		wattroff(infobox, COLOR_PAIR(1));
@@ -665,6 +668,23 @@ int main(int argc, char *argv[])
 					fill_grid(user_board, plain_board, x, y);
 				}
 				break;
+#ifdef DIF_LEVEL
+			case 'D':
+				if (g_level == D_EASY)
+					g_level = D_NORMAL;
+				else if (g_level == D_NORMAL)
+					g_level = D_HARD;
+				else
+					g_level = D_EASY;
+				if (g_useColor)
+				{
+					wbkgd(infobox, COLOR_PAIR(2));
+					wattron(infobox, A_BOLD|COLOR_PAIR(2));
+				}
+				mvwprintw(infobox, 1, 0, _("level: %s\n\n"), difficulty_to_str(g_level) );
+				wrefresh(infobox);
+				break;
+#endif
 			default:
 				break;
 		}
