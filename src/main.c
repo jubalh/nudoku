@@ -31,9 +31,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 #define _(x) gettext(x)
+#define HOURS(t) (int) (t / 3600)				//calculate the elapsed hours
+#define MINUTES(t) (int) ((t % 3600) / 60)	//calculate the elapsed minutes
+#define SECONDS(t) (int) (t % 60)				//calculate the elapsed seconds
 
 /* DEFINES */
-//#define VERSION				"0.1" //gets set via autotools
+#define VERSION				"0.1" //gets set via autotools
 #define GRID_LINES				19
 #define GRID_COLS				37
 #define GRID_Y					3
@@ -54,6 +57,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define SUDOKU_LENGTH			STREAM_LENGTH - 1
 #define COLOR_HIGHLIGHT			4
 #define COLOR_HIGHLIGHT_CURSOR	5
+#define MAX_BUFFER				256
 
 #ifdef DEBUG
 #define EXAMPLE_STREAM "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......"
@@ -72,6 +76,7 @@ static int   g_sudokuCount = 1;				/* in case of -n we can the numbers of sudoku
 static bool  g_outIsPDF;
 static DIFFICULTY g_level = D_EASY;
 static WINDOW *grid, *infobox, *status;
+time_t start_t, current_t;	//time variables to calculate elapsed time
 
 /* FUNCTIONS */
 static void print_version(void)
@@ -420,6 +425,7 @@ static void new_puzzle(void)
 	fill_grid(plain_board, plain_board, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
 
 	g_playing = true;
+	time(&start_t); //start time for new game session
 }
 
 static bool hint(void)
@@ -446,8 +452,17 @@ static bool hint(void)
 	return false;
 }
 
+/* function to compose message string with elapsed time */
+static void elapsed_time_str(char *time_string)
+{
+	time(&current_t);					//get current time
+	current_t -= start_t;				//determinate the elapsed time
+	sprintf(time_string, "Elapsed Time %02i:%02i:%02i", HOURS(current_t), MINUTES(current_t), SECONDS(current_t));
+}
+
 int main(int argc, char *argv[])
 {
+	char msg_str[MAX_BUFFER];	//message buffer
 #if ENABLE_NLS
 	/* Set up internationalization */
 	setlocale(LC_ALL, "");
@@ -491,11 +506,17 @@ int main(int argc, char *argv[])
 	y = GRID_NUMBER_START_Y;
 	x = GRID_NUMBER_START_X;
 	wmove(grid, y, x);
+	timeout(1000);	//no wait for getch()
 	while(run)
 	{
 #ifdef DEBUG
 		mvprintw(0, 0, "y: %.2d x: %.2d", y, x);
 #endif // DEBUG
+		if (g_playing)	//only when playing
+		{
+			elapsed_time_str(msg_str);	//compose elapsed time string
+			mvprintw(2, 3, _(msg_str));	//print the messang at bottom of the grid
+		}
 		refresh();
 		wrefresh(grid);
 		key = getch();
@@ -617,12 +638,13 @@ int main(int argc, char *argv[])
 
 							if (g_hint_counter > 0)
 							{
-								char t[256];
-								sprintf(t, _(" with the help of %d hints"), g_hint_counter);
+								char t[MAX_BUFFER];
+								sprintf(t, _("with the help of %d hints"), g_hint_counter);
 								mvwprintw(status, 0, 6, "%s", t);
 							}
 
 							g_playing = false;
+							timeout(-1);	//restore waiting for getch()
 						}
 						else
 						{
