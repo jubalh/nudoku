@@ -2,9 +2,9 @@
 #-DDEBUG
 
 if HAVE_WIDE_NCURSES
-nudoku_LDADD = -lncursesw
+nudoku_LDADD = ${ncursesw_LIBS}
 else
-nudoku_LDADD = -lncurses
+nudoku_LDADD = ${ncurses_LIBS}
 endif
 bin_PROGRAMS = nudoku
 nudoku_SOURCES = main.c sudoku.c sudoku.h
