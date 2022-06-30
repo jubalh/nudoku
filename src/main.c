@@ -22,6 +22,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "gettext.h"			/* gettext */
 #include <stdlib.h>				/* rand, srand */
 #include <unistd.h>				/* getopt */
+#include <sys/types.h>			/* stat type */
+#include <sys/stat.h>			/* stat function */
 #include <ncurses.h>			/* ncurses */
 #include <time.h>				/* time */
 #include <string.h>				/* strcmp, strlen */
@@ -71,7 +73,17 @@ static char* g_outputFilename = NULL;		/* in case -p/-i flag we get a filename p
 static int   g_sudokuCount = 1;				/* in case of -n we can the numbers of sudoku that should end up in the PDf (-p) */
 static bool  g_outIsPDF;
 static DIFFICULTY g_level = D_EASY;
-static WINDOW *grid, *infobox, *status;
+static WINDOW *grid, *infobox, *status, *resume;
+static bool is_board_solved = false;		/* if the board is solved, we do not save the state */
+
+const char* choices[] = { "Yes", "No" };
+size_t n_choices = sizeof(choices) / sizeof(char *);
+
+// These are defined here because declaration of n_choices is needed
+// RESUME_COLS may be moved to above, below define statements. However,
+// it is placed here for readability purposes
+#define RESUME_LINES			(GRID_LINES / 2) - n_choices
+#define RESUME_COLS				(GRID_COLS / 2) - 7
 
 /* FUNCTIONS */
 static void print_version(void)
@@ -333,6 +345,8 @@ static void init_windows(void)
 	wprintw(infobox, _(" r - Redraw\n"));
 	wprintw(infobox, _(" S - Solve puzzle\n"));
 	wprintw(infobox, _(" x - Delete number\n"));
+	wprintw(infobox, _(" g - Save\n"));	
+	wprintw(infobox, _(" G - Save and quit\n"));	
 	if (g_useColor)
 	{
 		wattroff(infobox, COLOR_PAIR(1));
@@ -398,6 +412,145 @@ static void fill_grid(char *user_board, char *plain_board, int x_cursor, int y_c
 		}
 		y += GRID_COL_DELTA;
 	}
+}
+
+char* get_paused_file_path(void) {
+	const char* home_path = getenv("HOME");
+	size_t len_home_path = strlen(home_path);
+
+	const char* dir_name = "/.nudoku/";
+	size_t len_dir_name = strlen(dir_name);
+
+	char* dir_path = malloc(len_home_path + len_dir_name + 1);
+	strcpy(dir_path, home_path);
+	strcat(dir_path, dir_name);
+
+	struct stat st = {0};
+    if (stat(dir_path, &st) == -1) {
+        mkdir(dir_path, 0700);
+    }
+
+	const char* file_name = "game_state.txt";
+	size_t len_file = strlen(file_name);
+
+	char* file_path = malloc(len_home_path + len_dir_name + len_file + 1);
+	strcpy(file_path, dir_path);
+	strcat(file_path, file_name);
+	
+	free(dir_path);
+	return file_path;
+}
+
+void save_game_state(char user_board[], char plain_board[], int n) {
+	char* file_path = get_paused_file_path();
+	FILE* fp;
+	fp = fopen(file_path, "w");
+	if ( fp == NULL ) {
+		exit(EXIT_FAILURE);
+	}
+	for ( int i=0; i<n; ++i ) {
+		fprintf(fp, "%c", user_board[i]);
+	}
+	for ( int i=0; i<n; ++i ) {
+		fprintf(fp, "%c", plain_board[i]);
+	}
+	fclose(fp);
+	free(file_path);
+}
+
+void get_saved_game_state(char user_board[], char plain_board[]) {
+	FILE* fp;
+	char* file_path = get_paused_file_path();
+	fp = fopen(file_path, "r");
+
+	int c;
+	int i = 0;
+	while ( i < STREAM_LENGTH ) {
+		c = fgetc(fp);
+		user_board[i++] = c;
+	}
+
+	i = 0;
+	while ( ( c = fgetc(fp)) != EOF ) {
+		plain_board[i++] = c;
+	}
+
+	fclose(fp);
+	free(file_path);
+}
+
+bool is_game_saved(void) {
+	char* file_path = get_paused_file_path();
+	FILE* fp;
+	fp = fopen(file_path, "r");
+	if ( fp == NULL )
+		return false;
+
+	fclose(fp);
+	free(file_path);
+	return true;
+}
+
+void print_dialog_menu(WINDOW* dialog, int highlight) {
+	box(dialog, 0, 0);
+
+	int x = RESUME_COLS + 5, y = RESUME_LINES + 2;
+	for ( int i=0; i<n_choices; ++i ) {
+		if ( highlight == i + 1 ) {
+			wattron(dialog, A_REVERSE);
+			mvwprintw(dialog, y, x, choices[i]);
+			wattroff(dialog, A_REVERSE);
+		}
+		else {
+			mvwprintw(dialog, y, x, choices[i]);
+		}
+		y++;
+	}
+	wrefresh(dialog);
+}
+
+bool resume_the_game(WINDOW* win) {
+	curs_set(0);
+	win = newwin(GRID_LINES - 1, GRID_COLS, GRID_Y, GRID_X);
+	keypad(win, true);
+	mvwprintw(win, RESUME_LINES, RESUME_COLS, _("Resume the game?"));
+	refresh();
+
+	int highlight = 1;
+	int choice = 0;
+	print_dialog_menu(win, highlight);
+	
+	int selection;
+	while ( true ) {
+		selection = wgetch(win);
+		switch ( selection ) {
+			case KEY_UP:
+				// we are at the top, go to bottom on the next key_up
+				if ( highlight == 1 )
+					highlight = 2;
+				else
+					highlight--;
+				break;
+			case KEY_DOWN:
+				// we are at the bottom, go to top on the next key_down
+				if ( highlight == 2 )
+					highlight = 1;
+				else
+					highlight++;
+				break;
+			// the user pressed enter, now we can break out of the infinite loop
+			case 10:
+				choice = highlight;
+				break;
+			default:
+				break;
+		}
+		print_dialog_menu(win, highlight);
+		if ( choice != 0 )
+			break;
+	}
+	curs_set(1);
+	return choice == 1;  // is YES selected?
 }
 
 static void new_puzzle(void)
@@ -472,16 +625,32 @@ int main(int argc, char *argv[])
 #endif
 	}
 
-	init_curses();
-	init_windows();
-
 #ifdef DEBUG
 	strcpy(plain_board, EXAMPLE_STREAM);
 	strcpy(user_board, EXAMPLE_STREAM);
 	fill_grid(plain_board, plain_board, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
 	g_playing = true;
 #else
-	new_puzzle();
+
+	init_curses();
+	if ( is_game_saved() ) {
+		bool is_resumed = resume_the_game(resume);
+		delwin(resume);
+		clear();
+		init_windows();
+		if ( is_resumed ) {
+			get_saved_game_state(user_board, plain_board);
+			fill_grid(user_board, plain_board, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
+			g_playing = true;
+		}
+		else
+			new_puzzle();
+	}
+	else {
+		init_windows();
+		new_puzzle();
+	}
+
 #endif // DEBUG
 
 	refresh();
@@ -574,6 +743,7 @@ int main(int argc, char *argv[])
 					werase(status);
 					mvwprintw(status, 0, 0, _("Solved"));
 					g_playing = false;
+					is_board_solved = true;
 				}
 				break;
 			case 'N':
@@ -664,6 +834,24 @@ int main(int argc, char *argv[])
 					g_useHighlights = !g_useHighlights;
 					fill_grid(user_board, plain_board, x, y);
 				}
+				break;
+			case 'g':
+				werase(status);
+				if ( !is_board_solved ) {
+					save_game_state(user_board, plain_board, STREAM_LENGTH);
+					mvwprintw(status, 0, 0, _("Saved!"));
+				}
+				else {
+					mvwprintw(status, 0, 0, _("The board is solved already. Nothing is saved!"));
+				}
+				refresh();
+				wrefresh(status);
+				break;
+			case 'G':
+				if ( !is_board_solved )
+					save_game_state(user_board, plain_board, STREAM_LENGTH);
+
+				run = false;
 				break;
 			default:
 				break;
