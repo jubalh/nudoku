@@ -4,63 +4,9 @@ nudoku is a ncurses based sudoku game.
 
 ## Install ##
 
-### Using package manager ###
+nudoku is easily installable via many package managers.
 
-#### Arch Linux ####
-I heard rumors of nudoku being in the [AUR](https://aur.archlinux.org/packages/nudoku-git/).
-
-#### Debian and derivates ####
-Contained in official stable repositories since Debian Stretch.
-
-```
-apt-get install nudoku
-```
-
-#### EL 7 (CentOS/Oracle Linux/Scientific Linux/RedHat ####
-You need to enable the EPEL repository and run:
-
-```
-yum install nudoku
-```
-  
-#### Fedora ####
-nudoku is in the official Fedora repository since June 2016:
-
-```
-dnf install nudoku
-```
-
-#### Funtoo/Gentoo ####
-Contained in official repo since 2018-02-16. Before that you had to use [strangeland-overlay](https://github.com/jubalh/strangeland-overlay).
-
-```
-emerge nudoku -a
-```
-
-### NixOS ###
-nudoku is [available](https://github.com/NixOS/nixpkgs/tree/master/pkgs/games/nudoku) in the Nix package manager.
-
-### NetBSD ###
-nudoku is [available](https://pkgsrc.se/games/nudoku) in the Nix package manager.
-
-### openSUSE ###
-
-Since openSUSE Leap 42.1 (and Tumbleweed) you can find nudoku in the official repository.
-
-```
-zypper in nudoku
-```
-
-### VoidLinux ###
-nudoku is [available](https://github.com/void-linux/void-packages/tree/master/srcpkgs/nudoku) on Void.
-
-### macOS ###
-
-There is a [formula](https://formulae.brew.sh/formula/nudoku) for [Homebrew](https://brew.sh/)
-
-```
-brew install nudoku
-```
+[![Packaging status](https://repology.org/badge/vertical-allrepos/nudoku.svg)](https://repology.org/project/nudoku/versions)
 
 ### From Source ###
 
