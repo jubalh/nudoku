@@ -11,8 +11,6 @@ PKG_PROG_PKG_CONFIG()
 
 # Checks for programs.
 AC_PROG_CC
-# Use C99.
-AC_PROG_CC_C99
 
 # Options
 AC_ARG_ENABLE(
