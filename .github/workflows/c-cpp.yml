@@ -1,0 +1,23 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-22.04
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: install dependencies
+      run: sudo apt-get -y install autoconf autopoint build-essential pkg-config gettext
+    - name: autoreconf
+      run: autoreconf -i
+    - name: configure
+      run: ./configure
+    - name: make
+      run: make
