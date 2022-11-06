@@ -32,6 +32,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #define _(x) gettext(x)
 
+#define ELAPSED_TIME			/* comment this line to exlude elapsed time function */
+
 #ifdef ELAPSED_TIME
 #define HOURS(t) (int) (t / 3600)				//calculate the elapsed hours
 #define MINUTES(t) (int) ((t % 3600) / 60)	//calculate the elapsed minutes
@@ -39,7 +41,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #endif
 
 /* DEFINES */
-#define VERSION				"0.1" //gets set via autotools
+#define VERSION					"0.1" //gets set via autotools
 #define GRID_LINES				19
 #define GRID_COLS				37
 #define GRID_Y					3
@@ -466,7 +468,7 @@ static void elapsed_time_str(char *time_string)
 {
 	time(&current_t);					//get current time
 	current_t -= start_t;				//determinate the elapsed time
-	sprintf(time_string, "Elapsed Time %02i:%02i:%02i", HOURS(current_t), MINUTES(current_t), SECONDS(current_t));
+	sprintf(time_string, "Elapsed Time %02i:%02i:%02i     (P - Pause)", HOURS(current_t), MINUTES(current_t), SECONDS(current_t));
 }
 #endif
 
@@ -703,6 +705,17 @@ int main(int argc, char *argv[])
 					fill_grid(user_board, plain_board, x, y);
 				}
 				break;
+		#ifdef ELAPSED_TIME
+			case 'P':
+				time(&current_t);		//get current time
+				current_t -= start_t;	//determinate the elapsed time
+				timeout(-1);			//restore waiting for getch()
+				getch();				//wait for key press
+				timeout(1000);			//no wait for getch()
+				time(&start_t);			//get current time
+				start_t -= current_t;	//calculate the new starting time
+				break;
+		#endif
 			default:
 				break;
 		}
