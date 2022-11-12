@@ -532,7 +532,7 @@ int main(int argc, char *argv[])
 		{
 			char msg_str[MAX_BUFFER];	//message buffer
 			elapsed_time_str(msg_str);	//compose elapsed time string
-			mvprintw(2, 3, _(msg_str));	//print the messang at bottom of the grid
+			mvprintw(2, 3, _(msg_str));	//print the messang at top of the grid
 		}
 #endif
 		refresh();
@@ -707,13 +707,37 @@ int main(int argc, char *argv[])
 				break;
 		#ifdef ELAPSED_TIME
 			case 'P':
+		//IMPLEMENTARE QUI IL CODICE PER CATTURARE LA SCHERMATA E QUINDI OSCURARLA
+
+				char pause_grid[STREAM_LENGTH] = { [0 ... 80] = '.', '\n' };
+
 				time(&current_t);		//get current time
 				current_t -= start_t;	//determinate the elapsed time
-				timeout(-1);			//restore waiting for getch()
-				getch();				//wait for key press
-				timeout(1000);			//no wait for getch()
+				mvprintw(2, 26, _("(C - Continue)"));	//print the messang at top of the grid
+				srand(time(0));
+
+				do {
+					fill_grid(pause_grid, pause_grid, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
+					wmove(grid, y,x);
+					wrefresh(grid);
+
+					for(int i = 0; i < STREAM_LENGTH; i++) {
+						pause_grid[i] = (rand() % (9 - 1 +1) + 1) + '0';
+					}
+
+					//timeout(-1);			//restore waiting for getch()
+					//getch();				//wait for key press
+					//timeout(1000);			//no wait for getch()
+
+				} while(getch() != 'C');
+
+				fill_grid(user_board, plain_board, x, y);
+				wrefresh(grid);
+
 				time(&start_t);			//get current time
 				start_t -= current_t;	//calculate the new starting time
+				
+		//IMPLEMENTARE QUI IL CODICE PER RIPRISTINARE LA SCERMATA DEL PUZZLE
 				break;
 		#endif
 			default:
