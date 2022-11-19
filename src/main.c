@@ -32,9 +32,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #define _(x) gettext(x)
 
-#define ELAPSED_TIME			/* comment this line to exlude elapsed time function */
+#define ENABLE_TIME			/* comment this line to exlude elapsed time function */
+#define ENABLE_DIFF_LEV		/* comment this line to exlude difficulty switch function */
 
-#ifdef ELAPSED_TIME
+#ifdef ENABLE_TIME
 #define HOURS(t) (int) (t / 3600)				//calculate the elapsed hours
 #define MINUTES(t) (int) ((t % 3600) / 60)	//calculate the elapsed minutes
 #define SECONDS(t) (int) (t % 60)				//calculate the elapsed seconds
@@ -82,7 +83,7 @@ static bool  g_outIsPDF;
 static DIFFICULTY g_level = D_EASY;
 static WINDOW *grid, *infobox, *status;
 
-#ifdef ELAPSED_TIME
+#ifdef ENABLE_TIME
 time_t start_t, current_t;	//time variables to calculate elapsed time
 #endif
 
@@ -346,6 +347,9 @@ static void init_windows(void)
 	wprintw(infobox, _(" r - Redraw\n"));
 	wprintw(infobox, _(" S - Solve puzzle\n"));
 	wprintw(infobox, _(" x - Delete number\n"));
+#ifdef ENABLE_DIFF_LEV	
+	wprintw(infobox, _(" L - Level for new puzzle\n"));
+#endif
 	if (g_useColor)
 	{
 		wattroff(infobox, COLOR_PAIR(1));
@@ -433,7 +437,7 @@ static void new_puzzle(void)
 	fill_grid(plain_board, plain_board, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
 
 	g_playing = true;
-#ifdef ELAPSED_TIME
+#ifdef ENABLE_TIME
 	time(&start_t); //start time for new game session
 #endif
 }
@@ -462,9 +466,9 @@ static bool hint(void)
 	return false;
 }
 
-#ifdef ELAPSED_TIME
+#ifdef ENABLE_TIME
 /* function to compose message string with elapsed time */
-static void elapsed_time_str(char *time_string)
+static void ENABLE_TIME_str(char *time_string)
 {
 	time(&current_t);					//get current time
 	current_t -= start_t;				//determinate the elapsed time
@@ -524,11 +528,20 @@ int main(int argc, char *argv[])
 		mvprintw(0, 0, "y: %.2d x: %.2d", y, x);
 #endif // DEBUG
 
-#ifdef ELAPSED_TIME
+#ifdef ENABLE_DIFF_LEV		
+		if (g_useColor)
+		{
+			wattroff(infobox, A_BOLD|COLOR_PAIR(2));
+			wattron(infobox, COLOR_PAIR(1));
+		}
+		mvwprintw(infobox, 13, 16, _("%s   "), difficulty_to_str(g_level) );	//print level for new puzzle
+		wrefresh(infobox);
+#endif
+#ifdef ENABLE_TIME
 		if (g_playing)	//only when playing
 		{
 			char msg_str[MAX_BUFFER];	//message buffer
-			elapsed_time_str(msg_str);	//compose elapsed time string
+			ENABLE_TIME_str(msg_str);	//compose elapsed time string
 			mvprintw(2, 3, _(msg_str));	//print the messang at top of the grid
 			timeout(1000);	//no wait for getch()
 		}
@@ -632,6 +645,15 @@ int main(int argc, char *argv[])
 					free(g_provided_stream);
 					g_provided_stream = NULL;
 				}
+#ifdef ENABLE_DIFF_LEV		
+				if (g_useColor)
+				{
+					wbkgd(infobox, COLOR_PAIR(2));
+					wattron(infobox, A_BOLD|COLOR_PAIR(2));
+				}
+				mvwprintw(infobox, 1, 7, _("%s   "), difficulty_to_str(g_level) );	//print level for new puzzle
+				wrefresh(infobox);
+#endif
 				break;
 			case 'c':
 				if(g_playing)
@@ -704,7 +726,17 @@ int main(int argc, char *argv[])
 					fill_grid(user_board, plain_board, x, y);
 				}
 				break;
-#ifdef ELAPSED_TIME
+#ifdef ENABLE_DIFF_LEV
+			case 'L':
+				if (g_level == D_EASY)
+					g_level = D_NORMAL;
+				else if (g_level == D_NORMAL)
+					g_level = D_HARD;
+				else
+					g_level = D_EASY;
+				break;
+#endif				
+#ifdef ENABLE_TIME
 			case 'P':
 				//char pause_grid[STREAM_LENGTH] = { [0 ... 80] = '.', '\n' };
 
