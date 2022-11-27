@@ -4,14 +4,15 @@
 		{
 			"type": "cppbuild",
 			"label": "C/C++: gcc build active file",
-			"command": "/usr/lib64/ccache/gcc",
+			//"command": "/usr/lib64/ccache/gcc",
+			"command": "/usr/bin/gcc",
 			"args": [
 				"-fdiagnostics-color=always",
 				"-std=gnu17",
 				"-Wall",
 				"-O0",
 				"-ggdb",
-				"-DVERSION='\"0.2\"'",
+				"-DVERSION='\"0.3\"'",
 				"${workspaceFolder}/src/main.c",
 				"${workspaceFolder}/src/sudoku.c",
 				"${workspaceFolder}/src/sudoku.h",
@@ -26,7 +27,8 @@
 				"$gcc"
 			],
 			"group": "build",
-			"detail": "compiler: /usr/lib64/ccache/gcc"
+			"detail": "compiler: /usr/bin/gcc"
+			//"detail": "compiler: /usr/lib64/ccache/gcc"
 		}
 	]
 }
