@@ -2,9 +2,8 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"type": "cppbuild",
-			"label": "C/C++: gcc build active file",
-			//"command": "/usr/lib64/ccache/gcc",
+			"type": "shell",
+			"label": "C/C++: gcc build active project",
 			"command": "/usr/bin/gcc",
 			"args": [
 				"-fdiagnostics-color=always",
@@ -15,7 +14,6 @@
 				"-DVERSION='\"0.3\"'",
 				"${workspaceFolder}/src/main.c",
 				"${workspaceFolder}/src/sudoku.c",
-				"${workspaceFolder}/src/sudoku.h",
 				"-o",
 				"${workspaceFolder}/nudoku",
 				"-lncursesw"
@@ -28,7 +26,6 @@
 			],
 			"group": "build",
 			"detail": "compiler: /usr/bin/gcc"
-			//"detail": "compiler: /usr/lib64/ccache/gcc"
 		}
 	]
 }
