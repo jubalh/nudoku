@@ -25,6 +25,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <ncurses.h>			/* ncurses */
 #include <time.h>				/* time */
 #include <string.h>				/* strcmp, strlen */
+#include <locale.h>				/* setlocale */
 #include "sudoku.h"				/* sudoku functions */
 #ifdef ENABLE_CAIRO
 #include "outp.h"				/* output functions */
