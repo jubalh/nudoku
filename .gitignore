@@ -16,3 +16,5 @@ src/.deps/
 src/Makefile
 src/Makefile.in
 src/nudoku
+nudoku
+.vscode

@@ -33,8 +33,17 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #define _(x) gettext(x)
 
+#define ENABLE_TIME			/* comment this line to exlude elapsed time function */
+#define ENABLE_DIFF_LEV		/* comment this line to exlude difficulty switch function */
+
+#ifdef ENABLE_TIME
+#define HOURS(t) (int) (t / 3600)				//calculate the elapsed hours
+#define MINUTES(t) (int) ((t % 3600) / 60)	//calculate the elapsed minutes
+#define SECONDS(t) (int) (t % 60)				//calculate the elapsed seconds
+#endif
+
 /* DEFINES */
-//#define VERSION				"0.1" //gets set via autotools
+//#define VERSION					"0.1" //gets set via autotools
 #define GRID_LINES				19
 #define GRID_COLS				37
 #define GRID_Y					3
@@ -55,6 +64,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define SUDOKU_LENGTH			STREAM_LENGTH - 1
 #define COLOR_HIGHLIGHT			4
 #define COLOR_HIGHLIGHT_CURSOR	5
+#define MAX_BUFFER				256
 
 #ifdef DEBUG
 #define EXAMPLE_STREAM "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......"
@@ -73,6 +83,10 @@ static int   g_sudokuCount = 1;				/* in case of -n we can the numbers of sudoku
 static bool  g_outIsPDF;
 static DIFFICULTY g_level = D_EASY;
 static WINDOW *grid, *infobox, *status;
+
+#ifdef ENABLE_TIME
+time_t start_t, current_t;	//time variables to calculate elapsed time
+#endif
 
 /* FUNCTIONS */
 static void print_version(void)
@@ -334,6 +348,9 @@ static void init_windows(void)
 	wprintw(infobox, _(" r - Redraw\n"));
 	wprintw(infobox, _(" S - Solve puzzle\n"));
 	wprintw(infobox, _(" x - Delete number\n"));
+#ifdef ENABLE_DIFF_LEV	
+	wprintw(infobox, _(" L - Level for new puzzle\n"));
+#endif
 	if (g_useColor)
 	{
 		wattroff(infobox, COLOR_PAIR(1));
@@ -421,6 +438,9 @@ static void new_puzzle(void)
 	fill_grid(plain_board, plain_board, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
 
 	g_playing = true;
+#ifdef ENABLE_TIME
+	time(&start_t); //start time for new game session
+#endif
 }
 
 static bool hint(void)
@@ -446,6 +466,16 @@ static bool hint(void)
 	}
 	return false;
 }
+
+#ifdef ENABLE_TIME
+/* function to compose message string with elapsed time */
+static void ENABLE_TIME_str(char *time_string)
+{
+	time(&current_t);					//get current time
+	current_t -= start_t;				//determinate the elapsed time
+	sprintf(time_string, "Elapsed Time %02i:%02i:%02i     (P - Pause)", HOURS(current_t), MINUTES(current_t), SECONDS(current_t));
+}
+#endif
 
 int main(int argc, char *argv[])
 {
@@ -492,11 +522,33 @@ int main(int argc, char *argv[])
 	y = GRID_NUMBER_START_Y;
 	x = GRID_NUMBER_START_X;
 	wmove(grid, y, x);
+	
 	while(run)
 	{
 #ifdef DEBUG
 		mvprintw(0, 0, "y: %.2d x: %.2d", y, x);
 #endif // DEBUG
+
+#ifdef ENABLE_DIFF_LEV		
+		if (g_useColor)
+		{
+			wattroff(infobox, A_BOLD|COLOR_PAIR(2));
+			wattron(infobox, COLOR_PAIR(1));
+		}
+		mvwprintw(infobox, 13, 16, _("%s   "), difficulty_to_str(g_level) );	//print level for new puzzle
+		wrefresh(infobox);
+#endif
+#ifdef ENABLE_TIME
+		if (g_playing)	//only when playing
+		{
+			char msg_str[MAX_BUFFER];	//message buffer
+			ENABLE_TIME_str(msg_str);	//compose elapsed time string
+			mvprintw(2, 3, _(msg_str));	//print the messang at top of the grid
+			timeout(1000);	//no wait for getch()
+		}
+		else
+			timeout(-1);	//restore waiting for getch()
+#endif
 		refresh();
 		wrefresh(grid);
 		key = getch();
@@ -594,6 +646,15 @@ int main(int argc, char *argv[])
 					free(g_provided_stream);
 					g_provided_stream = NULL;
 				}
+#ifdef ENABLE_DIFF_LEV		
+				if (g_useColor)
+				{
+					wbkgd(infobox, COLOR_PAIR(2));
+					wattron(infobox, A_BOLD|COLOR_PAIR(2));
+				}
+				mvwprintw(infobox, 1, 7, _("%s   "), difficulty_to_str(g_level) );	//print level for new puzzle
+				wrefresh(infobox);
+#endif
 				break;
 			case 'c':
 				if(g_playing)
@@ -618,8 +679,8 @@ int main(int argc, char *argv[])
 
 							if (g_hint_counter > 0)
 							{
-								char t[256];
-								sprintf(t, _(" with the help of %d hints"), g_hint_counter);
+								char t[MAX_BUFFER];
+								sprintf(t, _("with the help of %d hints"), g_hint_counter);
 								mvwprintw(status, 0, 6, "%s", t);
 							}
 
@@ -666,6 +727,42 @@ int main(int argc, char *argv[])
 					fill_grid(user_board, plain_board, x, y);
 				}
 				break;
+#ifdef ENABLE_DIFF_LEV
+			case 'L':
+				if (g_level == D_EASY)
+					g_level = D_NORMAL;
+				else if (g_level == D_NORMAL)
+					g_level = D_HARD;
+				else
+					g_level = D_EASY;
+				break;
+#endif				
+#ifdef ENABLE_TIME
+			case 'P':
+				//char pause_grid[STREAM_LENGTH] = { [0 ... 80] = '.', '\n' };
+
+				time(&current_t);		//get current time
+				current_t -= start_t;	//save the elapsed time
+
+				attron(A_BLINK);
+				mvprintw(2, 28, _("(R - Resume)"));		//print Resume message at top of the grid
+				attroff(A_BLINK);
+
+				do {	//grid saver
+					char *pause_grid = generate_puzzle(g_level);
+
+					solve(pause_grid);
+					fill_grid(pause_grid, pause_grid, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
+					free(pause_grid);
+					wmove(grid, y,x);
+					wrefresh(grid);
+				} while(getch() != 'R');
+
+				time(&start_t);			//get current time
+				start_t -= current_t;	//calculate the new starting time after resume
+				fill_grid(user_board, plain_board, x, y);	//restore the puzzle
+				break;
+#endif
 			default:
 				break;
 		}
@@ -698,4 +795,3 @@ int main(int argc, char *argv[])
 	endwin();
 	return EXIT_SUCCESS;
 }
-
