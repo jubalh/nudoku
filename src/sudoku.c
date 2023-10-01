@@ -23,7 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <time.h>		/* time */
 #include <string.h>		/* strdup */
 #include "sudoku.h"		/* enum */
-#include "gettext.h"	/* gettext */
+#include <libintl.h>
 #include "unistd.h"		/* sleep */
 
 #define _(x) gettext(x)

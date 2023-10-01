@@ -19,7 +19,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 /* INCLUDES */
-#include "gettext.h"			/* gettext */
+#include <libintl.h>			/* gettext */
+#include <locale.h>
 #include <stdlib.h>				/* rand, srand */
 #include <unistd.h>				/* getopt */
 #include <ncurses.h>			/* ncurses */
@@ -167,11 +168,11 @@ static void parse_arguments(int argc, char *argv[])
 				g_provided_stream = strdup(optarg);
 				break;
 			case 'd':
-				if (strcmp(optarg, "easy") == 0)
+				if (strcmp(optarg, _("easy")) == 0)
 					g_level = D_EASY;
-				else if (strcmp(optarg, "normal") == 0)
+				else if (strcmp(optarg, _("normal")) == 0)
 					g_level = D_NORMAL;
-				else if (strcmp(optarg, "hard") == 0)
+				else if (strcmp(optarg, _("hard")) == 0)
 					g_level = D_HARD;
 				else
 				{
@@ -472,7 +473,7 @@ static void ENABLE_TIME_str(char *time_string)
 {
 	time(&current_t);					//get current time
 	current_t -= start_t;				//determinate the elapsed time
-	sprintf(time_string, "Elapsed Time %02i:%02i:%02i     (P - Pause)", HOURS(current_t), MINUTES(current_t), SECONDS(current_t));
+	sprintf(time_string, _("Elapsed Time %02i:%02i:%02i     (P - Pause)"), HOURS(current_t), MINUTES(current_t), SECONDS(current_t));
 }
 #endif
 
