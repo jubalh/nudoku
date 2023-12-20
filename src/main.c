@@ -667,7 +667,7 @@ int main(int argc, char *argv[])
 				break;
 			case 'm':
 				// Ignore 'm' if we have no colors
-				if (g_useColor)
+				if (g_playing && g_useColor)
 				{
 					g_useHighlights = !g_useHighlights;
 					fill_grid(user_board, plain_board, x, y);
