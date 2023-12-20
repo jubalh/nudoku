@@ -55,6 +55,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define SUDOKU_LENGTH			STREAM_LENGTH - 1
 #define COLOR_HIGHLIGHT			4
 #define COLOR_HIGHLIGHT_CURSOR	5
+#define COLOR_USER_HIGHLIGHT	6
 
 #ifdef DEBUG
 #define EXAMPLE_STREAM "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......"
@@ -214,6 +215,8 @@ static void init_curses(void)
 			init_pair(COLOR_HIGHLIGHT, COLOR_BLACK, COLOR_WHITE);
 			// Cursor highlight color
 			init_pair(COLOR_HIGHLIGHT_CURSOR, COLOR_BLACK, COLOR_MAGENTA);
+			// User input highlight color
+			init_pair(COLOR_USER_HIGHLIGHT, COLOR_BLACK, COLOR_CYAN);
 		}
 		else
 		{
@@ -380,18 +383,22 @@ static void fill_grid(char *user_board, char *plain_board, int x_cursor, int y_c
 			{
 				if (x == x_cursor && y == y_cursor)
 					wattron(grid, COLOR_PAIR(COLOR_HIGHLIGHT_CURSOR));
+				else if (isUserInput)
+					wattron(grid, COLOR_PAIR(COLOR_USER_HIGHLIGHT));
 				else
 					wattron(grid, COLOR_PAIR(COLOR_HIGHLIGHT));
 			}
-			if(isUserInput)
+			if(isUserInput && selected != c)
 				wattron(grid, COLOR_PAIR(3));
 			mvwprintw(grid, y, x, "%c", c);
-			if(isUserInput)
+			if(isUserInput && selected != c)
 				wattroff(grid, COLOR_PAIR(3));
 			if (g_useColor && g_useHighlights && selected == c)
 			{
 				if (x == x_cursor && y == y_cursor)
 					wattroff(grid, COLOR_PAIR(COLOR_HIGHLIGHT_CURSOR));
+				else if (isUserInput)
+					wattroff(grid, COLOR_PAIR(COLOR_USER_HIGHLIGHT));
 				else
 					wattroff(grid, COLOR_PAIR(COLOR_HIGHLIGHT));
 			}
