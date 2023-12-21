@@ -1,3 +1,10 @@
+2.1.0 to 3.0.0 (2023-12-21)
+  * Fix build failure with ncurses 6.3
+  * Add call to PKG_PROG_PKG_CONFIG and pkg-check ncurses libs #46
+  * Fix build with musl
+  * Add highlighting of user input #56
+  * Fix toggling marks removing solution #51
+
 2.0.0 to 2.1.0 (2020-11-20)
   * Use actual terminal background color (instead of black) as background
   color (pr #31)
