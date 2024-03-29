@@ -1,0 +1,190 @@
+# Turkish translations for nudoku package.
+# This file is distributed under the same license as the nudoku package.
+# Oğuz Ersen <oguz@ersen.moe>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: nudoku 1.0.0\n"
+"Report-Msgid-Bugs-To: jubalh@iodoru.org\n"
+"POT-Creation-Date: 2018-04-27 19:00-0300\n"
+"PO-Revision-Date: 2024-03-29 19:50+0300\n"
+"Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
+"Language-Team: Turkish <tr>\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Gtranslator 45.3\n"
+
+#: src/main.c:84
+#, c-format
+msgid ""
+"nudoku [option]\n"
+"\n"
+msgstr ""
+"nudoku [seçenek]\n"
+"\n"
+
+#: src/main.c:85
+#, c-format
+msgid "Options:\n"
+msgstr "Seçenekler:\n"
+
+#: src/main.c:86
+#, c-format
+msgid "-h help:\t\tPrint this help\n"
+msgstr "-h:\t\tYardım metnini yazdır\n"
+
+#: src/main.c:87
+#, c-format
+msgid "-v version:\t\tPrint version\n"
+msgstr "-v:\t\tSürüm numarasını yazdır\n"
+
+#: src/main.c:88
+#, c-format
+msgid "-c nocolor:\t\tDo not use colors\n"
+msgstr "-c:\t\tRenkler kullanılmasın\n"
+
+#: src/main.c:89
+#, c-format
+msgid "-d difficulty:\t\tChoose between: easy, normal, hard\n"
+msgstr "-d zorluk:\t\tZorluk derecesini seç: easy, normal, hard\n"
+
+#: src/main.c:90
+#, c-format
+msgid "-s stream:\t\tUser provided sudoku stream\n"
+msgstr "-s tahta:\t\tBelirtilen sudoku tahtasını kullan\n"
+
+#: src/main.c:104
+#, c-format
+msgid "Character %c at position %d is not allowed.\n"
+msgstr "%c karakterine %d konumunda izin verilmiyor.\n"
+
+#: src/main.c:112
+#, c-format
+msgid "Stream has to be %d characters long.\n"
+msgstr "Tahta %d karakter uzunluğunda olmalıdır.\n"
+
+#: src/main.c:118
+#, c-format
+msgid "Stream does not represent a valid sudoku puzzle.\n"
+msgstr "Tahta geçerli bir sudoku bulmacası değil.\n"
+
+#: src/main.c:147
+msgid "easy"
+msgstr "kolay"
+
+#: src/main.c:149
+msgid "normal"
+msgstr "normal"
+
+#: src/main.c:151
+msgid "hard"
+msgstr "zor"
+
+#: src/main.c:195
+msgid ""
+"Your terminal doesn't support colors.\n"
+"Try the nocolor (-c) option.\n"
+msgstr ""
+"Terminaliniz renkleri desteklemiyor.\n"
+"Renksiz (-c) seçeneğini deneyin.\n"
+
+#: src/main.c:266
+#, c-format
+msgid ""
+"level: %s\n"
+"\n"
+msgstr ""
+"seviye: %s\n"
+"\n"
+
+#: src/main.c:275
+msgid "Movement\n"
+msgstr "Hareket\n"
+
+#: src/main.c:276
+msgid " h - Move left\n"
+msgstr " h - Sola git\n"
+
+#: src/main.c:277
+msgid " j - Move down\n"
+msgstr " j - Aşağı git\n"
+
+#: src/main.c:278
+msgid " k - Move up\n"
+msgstr " k - Yukarı git\n"
+
+#: src/main.c:279
+msgid ""
+" l - Move right\n"
+"\n"
+msgstr ""
+" l - Sağa git\n"
+"\n"
+
+#: src/main.c:280
+msgid "Commands\n"
+msgstr "Komutlar\n"
+
+#: src/main.c:281
+msgid " c - Check solution\n"
+msgstr " c - Çözümü denetle\n"
+
+#: src/main.c:282
+msgid " H - Give a hint\n"
+msgstr " H - İpucu ver\n"
+
+#: src/main.c:285
+msgid " m - Toggle marks\n"
+msgstr " m - İşaretleri aç/kapat\n"
+
+#: src/main.c:287
+msgid " N - New puzzle\n"
+msgstr " N - Yeni bulmaca\n"
+
+#: src/main.c:288
+msgid " Q - Quit\n"
+msgstr " Q - Çıkış\n"
+
+#: src/main.c:289
+msgid " r - Redraw\n"
+msgstr " r - Yeniden çiz\n"
+
+#: src/main.c:290
+msgid " S - Solve puzzle\n"
+msgstr " S - Bulmacayı çöz\n"
+
+#: src/main.c:291
+msgid " x - Delete number\n"
+msgstr " x - Sayıyı sil\n"
+
+#: src/main.c:500
+msgid "Solving puzzle..."
+msgstr "Bulmaca çözülüyor..."
+
+#: src/main.c:506 src/main.c:547
+msgid "Solved"
+msgstr "Çözüldü"
+
+#: src/main.c:515
+msgid "Generating puzzle..."
+msgstr "Bulmaca oluşturuluyor..."
+
+#: src/main.c:541
+msgid "Not correct"
+msgstr "Doğru değil"
+
+#: src/main.c:552
+#, c-format
+msgid " with the help of %d hints"
+msgstr "%d ipucu yardımıyla"
+
+#: src/main.c:560
+msgid "Correct so far"
+msgstr "Şimdiye kadar doğru"
+
+#: src/main.c:588
+msgid "Provided hint"
+msgstr "İpucu verildi"
