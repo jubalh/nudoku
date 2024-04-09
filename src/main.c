@@ -56,6 +56,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define COLOR_HIGHLIGHT			4
 #define COLOR_HIGHLIGHT_CURSOR	5
 #define COLOR_USER_HIGHLIGHT	6
+#define UNDO_STACK_SIZE			SUDOKU_LENGTH * 10 // arbitrary length. overflows shouldn't cause an error, just a limit in history length.
 
 #ifdef DEBUG
 #define EXAMPLE_STREAM "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......"
@@ -74,6 +75,8 @@ static int   g_sudokuCount = 1;				/* in case of -n we can the numbers of sudoku
 static bool  g_outIsPDF;
 static DIFFICULTY g_level = D_EASY;
 static WINDOW *grid, *infobox, *status;
+static move_t	g_undo_stack[UNDO_STACK_SIZE];	/* Stack of previous moves */
+static int   g_undo_stack_index = 0;
 
 /* FUNCTIONS */
 static void print_version(void)
@@ -337,10 +340,32 @@ static void init_windows(void)
 	wprintw(infobox, _(" r - Redraw\n"));
 	wprintw(infobox, _(" S - Solve puzzle\n"));
 	wprintw(infobox, _(" x - Delete number\n"));
+	wprintw(infobox, _(" u - Undo previous action\n"));
 	if (g_useColor)
 	{
 		wattroff(infobox, COLOR_PAIR(1));
 	}
+}
+
+static int undo_stack_push(move_t move) {
+
+	if (g_undo_stack_index >= UNDO_STACK_SIZE) {
+		return -1;
+	}
+	g_undo_stack[g_undo_stack_index++] = move;
+
+	return 0;
+}
+
+static int undo_stack_pop(move_t *move) {
+
+	if (g_undo_stack_index <= 0) {
+		return -1;
+	}
+
+	*move = g_undo_stack[--g_undo_stack_index];
+
+	return 0;
 }
 
 static int get_character_at_grid(char* board, int x, int y)
@@ -587,6 +612,7 @@ int main(int argc, char *argv[])
 			case 'N':
 				g_useHighlights = false;
 				g_hint_counter = 0;
+				g_undo_stack_index = 0;
 
 				werase(status);
 				mvwprintw(status, 0, 0, _("Generating puzzle..."));
@@ -651,6 +677,8 @@ int main(int argc, char *argv[])
 					// if on empty position
 					if(plain_board[posy*9+posx] == '.')
 					{
+						// Push coordinates to undo stack
+						undo_stack_push((move_t){x, y, user_board[posy*9+posx]});
 						user_board[posy*9+posx] = '.';
 						wprintw(grid, " ");
 					}
@@ -673,6 +701,20 @@ int main(int argc, char *argv[])
 					fill_grid(user_board, plain_board, x, y);
 				}
 				break;
+			case 'u': // Undo
+				move_t old_move;
+				if (undo_stack_pop(&old_move))
+				{	// Stack empty
+					break;
+				}
+				x = old_move.x;
+				y = old_move.y;
+				posy = (y-GRID_NUMBER_START_Y)/GRID_COL_DELTA;
+				posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
+				user_board[posy*9+posx] = old_move.prev_val;
+				fill_grid(user_board, plain_board, x, y);
+				break;
+
 			default:
 				break;
 		}
@@ -684,6 +726,8 @@ int main(int argc, char *argv[])
 			// if on empty position
 			if(plain_board[posy*9+posx] == '.')
 			{
+				// Push coordinates to undo stack
+				undo_stack_push((move_t){x, y, user_board[posy*9+posx]});
 				// add inputted number to grid
 				user_board[posy*9+posx] = key;
 				// redraw grid to update highlight
