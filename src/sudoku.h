@@ -9,12 +9,6 @@
 
 typedef enum { D_EASY = 30, D_NORMAL = 40, D_HARD = 50} DIFFICULTY;
 
-typedef struct move{
-    int x;
-    int y;
-    char prev_val;
-} move_t;
-
 const char*	difficulty_to_str(DIFFICULTY level);
 char*	generate_puzzle(int holes);
 int		solve(char puzzle[STREAM_LENGTH]);

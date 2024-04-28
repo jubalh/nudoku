@@ -62,6 +62,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define EXAMPLE_STREAM "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......"
 #endif // DEBUG
 
+typedef struct move{
+    int x;
+    int y;
+    char prev_val;
+} move_t;
+
 /* GLOBALS */
 static bool  g_useColor = true;
 static bool  g_playing = false;
