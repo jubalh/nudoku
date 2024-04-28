@@ -15,6 +15,11 @@ jobs:
     - name: install dependencies
       run: brew install autoconf automake pkg-config cairo gettext
 
+    - name: set up environment to use clang
+      run: |
+        echo "CC=clang" >> $GITHUB_ENV
+        echo "CXX=clang++" >> $GITHUB_ENV
+
     - name: autoreconf
       run: autoreconf --force --install --verbose
 
