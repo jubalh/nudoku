@@ -1,6 +1,6 @@
 3.0.0 to 4.0.0 (2024-04-28)
   * Add Turkish translation (pr #57)
-  * Add undo feature (p3 #58)
+  * Add undo feature (pr #58)
 
 2.1.0 to 3.0.0 (2023-12-21)
   * Fix build failure with ncurses 6.3
