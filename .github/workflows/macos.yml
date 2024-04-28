@@ -1,0 +1,28 @@
+name: C/C++ CI (MacOS)
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: install dependencies
+      run: brew install autoconf automake pkg-config cairo gettext
+
+    - name: set up environment to use clang
+      run: |
+        echo "CC=clang" >> $GITHUB_ENV
+        echo "CXX=clang++" >> $GITHUB_ENV
+
+    - name: autoreconf
+      run: autoreconf --force --install --verbose
+
+    - run: ./configure
+
+    - run: make
