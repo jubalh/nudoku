@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([nudoku], [4.0.0], [jubalh@iodoru.org])
+AC_INIT([nudoku], [4.0.1], [jubalh@iodoru.org])
 AC_CONFIG_SRCDIR([src/main.c])
 AM_INIT_AUTOMAKE([foreign])
 
