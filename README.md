@@ -6,7 +6,7 @@ nudoku is a ncurses based sudoku game.
 
 nudoku is easily installable via many package managers.
 
-[![Packaging status](https://repology.org/badge/vertical-allrepos/nudoku.svg)](https://repology.org/project/nudoku/versions)
+[![Packaging status](https://repology.org/badge/tiny-repos/nudoku.svg)](https://repology.org/project/nudoku/versions)
 
 ### From Source ###
 
