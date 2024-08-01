@@ -1,0 +1,195 @@
+# Ukrainian translations for nudoku package.
+# This file is distributed under the same license as the nudoku package.
+# Oleksii Stroganov <merv1n@proton.me>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: nudoku 1.0.0\n"
+"Report-Msgid-Bugs-To: jubalh@iodoru.org\n"
+"POT-Creation-Date: 2018-04-27 19:00-0300\n"
+"PO-Revision-Date: 2024-07-29 00:00+0300\n"
+"Last-Translator: Oleksii Stroganov <merv1n@proton.me>\n"
+"Language-Team: Ukrainian <uk>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Gtranslator 45.3\n"
+
+#: src/main.c:84
+#, c-format
+msgid ""
+"nudoku [option]\n"
+"\n"
+msgstr ""
+"nudoku [опції]\n"
+"\n"
+
+#: src/main.c:85
+#, c-format
+msgid "Options:\n"
+msgstr "Опції:\n"
+
+#: src/main.c:86
+#, c-format
+msgid "-h help:\t\tPrint this help\n"
+msgstr "-h:\t\tНадрукувати цю довідку\n"
+
+#: src/main.c:87
+#, c-format
+msgid "-v version:\t\tPrint version\n"
+msgstr "-v:\t\tНадрукувати версію\n"
+
+#: src/main.c:88
+#, c-format
+msgid "-c nocolor:\t\tDo not use colors\n"
+msgstr "-c:\t\tНе використовувати кольори\n"
+
+#: src/main.c:89
+#, c-format
+msgid "-d difficulty:\t\tChoose between: easy, normal, hard\n"
+msgstr "-d складність:\t\tОбрати рівень: easy, normal, hard\n"
+
+#: src/main.c:90
+#, c-format
+msgid "-s stream:\t\tUser provided sudoku stream\n"
+msgstr "-s поток:\t\tНаданий користувачем поток судоку\n"
+
+#: src/main.c:104
+#, c-format
+msgid "Character %c at position %d is not allowed.\n"
+msgstr "Символ %c в позиції %d не допускається.\n"
+
+#: src/main.c:112
+#, c-format
+msgid "Stream has to be %d characters long.\n"
+msgstr "Поток має бути %d символів у довжину.\n"
+
+#: src/main.c:118
+#, c-format
+msgid "Stream does not represent a valid sudoku puzzle.\n"
+msgstr "Поток не є правильним судоку.\n"
+
+#: src/main.c:147
+msgid "easy"
+msgstr "легкий"
+
+#: src/main.c:149
+msgid "normal"
+msgstr "нормальний"
+
+#: src/main.c:151
+msgid "hard"
+msgstr "складний"
+
+#: src/main.c:195
+msgid ""
+"Your terminal doesn't support colors.\n"
+"Try the nocolor (-c) option.\n"
+msgstr ""
+"Цей термінал не підтримує кольори\n"
+"Спробуйте опцію без кольору (-c).\n"
+
+#: src/main.c:266
+#, c-format
+msgid ""
+"level: %s\n"
+"\n"
+msgstr ""
+"Рівень: %s\n"
+"\n"
+
+#: src/main.c:275
+msgid "Movement\n"
+msgstr "Переміщення\n"
+
+#: src/main.c:276
+msgid " h - Move left\n"
+msgstr " h - Ліворуч\n"
+
+#: src/main.c:277
+msgid " j - Move down\n"
+msgstr " j - Вниз\n"
+
+#: src/main.c:278
+msgid " k - Move up\n"
+msgstr " k - Вверх\n"
+
+#: src/main.c:279
+msgid ""
+" l - Move right\n"
+"\n"
+msgstr ""
+" l - Праворуч\n"
+"\n"
+
+#: src/main.c:280
+msgid "Commands\n"
+msgstr "Команди\n"
+
+#: src/main.c:281
+msgid " c - Check solution\n"
+msgstr " c - Перевірити розв'язок\n"
+
+#: src/main.c:282
+msgid " H - Give a hint\n"
+msgstr " H - Дати підсказку\n"
+
+#: src/main.c:285
+msgid " m - Toggle marks\n"
+msgstr " m - Переключити позначки\n"
+
+#: src/main.c:287
+msgid " N - New puzzle\n"
+msgstr " N - Нова головоломка\n"
+
+#: src/main.c:288
+msgid " Q - Quit\n"
+msgstr " Q - Вийти\n"
+
+#: src/main.c:289
+msgid " r - Redraw\n"
+msgstr " r - Перемалювати\n"
+
+#: src/main.c:290
+msgid " S - Solve puzzle\n"
+msgstr " S - Розв'язати головоломку\n"
+
+#: src/main.c:291
+msgid " x - Delete number\n"
+msgstr " x - Видалити число\n"
+
+#: src/main.c:500
+msgid "Solving puzzle..."
+msgstr "Розв'язую головоломку..."
+
+#: src/main.c:506 src/main.c:547
+msgid "Solved"
+msgstr "Розв'язано"
+
+#: src/main.c:515
+msgid "Generating puzzle..."
+msgstr "Створюю головоломку..."
+
+#: src/main.c:541
+msgid "Not correct"
+msgstr "У вас помилка"
+
+#: src/main.c:552
+#, c-format
+msgid " with the help of %d hints"
+msgid_plural " with the help of %d hints"
+msgstr[0] " зa допомогою %d підсказки"
+msgstr[1] " зa допомогою %d підсказки"
+msgstr[2] " зa допомогою %d підсказок"
+msgstr[3] " зa допомогою %d підсказок"
+
+#: src/main.c:560
+msgid "Correct so far"
+msgstr "Поки що правильно"
+
+#: src/main.c:588
+msgid "Provided hint"
+msgstr "Ви використали підсказку"
+
