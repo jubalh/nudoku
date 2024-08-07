@@ -223,13 +223,28 @@ static char* generate_seed()
 static void punch_holes(char *stream, int count)
 {
 	int i = 0;
-	while(i < count)
+	while (i < count)
 	{
 		int random = rand() % 80 + 1;
+		char temp = stream[random];
+
 		if (stream[random] != '.')
 		{
 			stream[random] = '.';
-			i++;
+
+			char puzzle_copy[STREAM_LENGTH];
+			strncpy(puzzle_copy, stream, STREAM_LENGTH);
+
+			// check if puzzle has only 1 solution
+			if (solve(puzzle_copy) == 1)
+			{
+				i++;
+			}
+			else
+			{
+				// restore removed value
+				stream[random] = temp;
+			}
 		}
 	}
 }
