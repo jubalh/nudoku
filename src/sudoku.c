@@ -98,51 +98,44 @@ static bool is_available(char puzzle[STREAM_LENGTH], int row, int col, int num)
 	return true;
 }
 
-static int solve_recursively(char puzzle[STREAM_LENGTH], int row, int col)
+/* solve_recursively function influenced by CMPS: https://stackoverflow.com/questions/24343214/determine-whether-a-sudoku-has-a-unique-solution */
+static int solve_recursively(char puzzle[STREAM_LENGTH], int row, int col, int count)
 {
-	if (row < 9 && col < 9)
+	int i;
+	if (row == 9)
 	{
-		if (puzzle[row * 9 + col] != '.')
+		row = 0;
+		if (++col == 9)
+			return 1+count;
+	}
+	if (puzzle[row * 9 + col] != '.')  // skip filled cells
+		return solve_recursively(puzzle, row + 1, col, count);
+	for (i = 0; i < 9 && count < 2; ++i)
+	{
+		if (is_available(puzzle, row, col, i + 1))
 		{
-			if ((col + 1) < 9)
-				return solve_recursively(puzzle, row, col + 1);
-			else if ((row + 1) < 9)
-				return solve_recursively(puzzle, row + 1, 0);
-			else
-				return 1;
+			puzzle[row * 9 + col] = i + 1 + 48;
+			count = solve_recursively(puzzle, row + 1, col, count);
 		}
 		else
-		{
-			for (int i = 0; i < 9; i++)
-			{
-				if(is_available(puzzle, row, col, i + 1))
-				{
-					puzzle[row * 9 + col] = i + 1 + 48;
-
-					if(solve_recursively(puzzle, row, col))
-						return 1;
-					else
-						puzzle[row * 9 + col] = '.';
-				}
-			}
-		}
-		return 0;
+			puzzle[row * 9 + col] = '.'; // reset on backtrack
 	}
-	else
-		return 1;
+	return count;
 }
 
 int solve(char puzzle[STREAM_LENGTH])
 {
+	int count = 0;
 	if (is_valid_puzzle(puzzle))
-		return solve_recursively(puzzle, 0, 0);
+		return solve_recursively(puzzle, 0, 0, count);
 	else
 		return 0;
 }
 
 /* GENERATOR */
 /* Generator code is influenced by: http://rubyquiz.strd6.com/quizzes/182-sudoku-generator */
-static int rand_int(int n) {
+static int rand_int(int n)
+{
 	int rnd;
 	int limit = RAND_MAX - RAND_MAX % n;
 
@@ -152,7 +145,8 @@ static int rand_int(int n) {
 	return (rnd % n);
 }
 
-static void shuffle(char *array, int n) {
+static void shuffle(char *array, int n)
+{
 	int i, j;
 	char tmp;
 
