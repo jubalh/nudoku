@@ -62,7 +62,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define EXAMPLE_STREAM "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......"
 #endif // DEBUG
 
-typedef struct move{
+typedef struct move
+{
     int x;
     int y;
     char prev_val;
@@ -353,9 +354,10 @@ static void init_windows(void)
 	}
 }
 
-static int undo_stack_push(move_t move) {
-
-	if (g_undo_stack_index >= UNDO_STACK_SIZE) {
+static int undo_stack_push(move_t move) 
+{
+	if (g_undo_stack_index >= UNDO_STACK_SIZE)
+	{
 		return -1;
 	}
 	g_undo_stack[g_undo_stack_index++] = move;
@@ -363,11 +365,10 @@ static int undo_stack_push(move_t move) {
 	return 0;
 }
 
-static int undo_stack_pop(move_t *move) {
-
-	if (g_undo_stack_index <= 0) {
+static int undo_stack_pop(move_t *move) 
+{
+	if (g_undo_stack_index <= 0)
 		return -1;
-	}
 
 	*move = g_undo_stack[--g_undo_stack_index];
 
