@@ -77,6 +77,7 @@ static bool  g_playing = false;
 static bool  g_useHighlights = false;
 static char* g_provided_stream = NULL;		/* in case of -s flag the user provides the sudoku stream */
 static bool  g_resume_game = false;         /* in case of -r flag and saved game state */
+static int   g_resume_level;                /* store difficulty of the resume game */
 static int   g_hint_counter;
 static char  plain_board[STREAM_LENGTH];
 static char  user_board[STREAM_LENGTH];
@@ -149,45 +150,37 @@ static bool is_valid_stream(char *s)
 
 char* get_saved_file_path(void)
 {
-	const char* xdg_state_home = getenv("XDG_STATE_HOME");
-	const char* home_path = getenv("HOME");
+	char* home_path = getenv("XDG_STATE_HOME");
 
-	if (!home_path & !xdg_state_home)
-	exit(EXIT_FAILURE);
-
-	const char* local_state = "/.local/state";
-	const char* dir_name = "/nudoku/";
-
-	char* dir_path = NULL;
-
-	if (xdg_state_home)
+	if (home_path == NULL)
 	{
-	// user does have $XDG_STATE_HOME
-	size_t len_xdg_state_home = strlen(xdg_state_home);
-	size_t len_dir_name = strlen(dir_name);
-	dir_path = malloc(len_xdg_state_home + len_dir_name + 1);
+		// fallback to $HOME/.local/state
+		home_path = getenv("HOME");
 
-	strcpy(dir_path, xdg_state_home);
-	strcat(dir_path, dir_name);
+		const char* local_path = "/.local/state";
+		size_t len_home_path = strlen(home_path);
+		size_t len_local_path = strlen(local_path);
+
+		char* fallback_path = malloc(len_home_path + len_local_path + 1);
+
+		strcpy(fallback_path, home_path);
+		strcat(fallback_path, local_path);
+
+		home_path = fallback_path;
 	}
-	else
-	{
-	// fallback to $HOME/.local/state
+
 	size_t len_home_path = strlen(home_path);
-	size_t len_local_state = strlen(local_state);
-	size_t len_dir_name = strlen(dir_name);
-	dir_path = malloc(len_home_path + len_local_state + len_dir_name + 1);
 
+	const char* dir_name = "/nudoku/";
+	size_t len_dir_name = strlen(dir_name);
+
+	char* dir_path = malloc(len_home_path + len_dir_name + 1);
 	strcpy(dir_path, home_path);
-	strcat(dir_path, local_state);
 	strcat(dir_path, dir_name);
-	}
 
 	struct stat st = {0};
 	if (stat(dir_path, &st) == -1)
-	{
-	mkdir(dir_path, 0700);
-	}
+		mkdir(dir_path, 0700);
 
 	const char* file_name = STATE_FILE_NAME;
 	size_t len_file = strlen(file_name);
@@ -201,35 +194,46 @@ char* get_saved_file_path(void)
 	return file_path;
 }
 
-bool is_saved_game_valid(void)
+bool get_board_save(char user_board[], char plain_board[])
 {
-	char* file_path = get_saved_file_path();
-	FILE* fp = fopen(file_path, "r");
-
-	if (fseek(fp, STREAM_LENGTH, SEEK_SET) != 0)
-	{
-	fclose(fp);
-	free(file_path);
-	return false;
-	}
-
-	char test_board[STREAM_LENGTH];
 	int c;
 	int i = 0;
+	char board[2 * STREAM_LENGTH];
+	char tmp_board[STREAM_LENGTH];
 
-	while (i < STREAM_LENGTH)
+	char* file_path = get_saved_file_path();
+	FILE* fp = fopen(file_path, "r");
+	if ( fp == NULL )
+		exit(EXIT_FAILURE);
+
+	while ( (c = fgetc(fp)) != EOF )
 	{
-	c = fgetc(fp);
-	if (c == EOF) break;
-	test_board[i++] = (char)c;
+		board[i++] = (char)c;
 	}
 
-	bool valid = is_valid_stream(test_board);
-
 	fclose(fp);
+	unlink(file_path);
 	free(file_path);
 
-	return valid;
+	strncpy(user_board, board, STREAM_LENGTH);
+	strcpy(plain_board, board + STREAM_LENGTH);
+	strcpy(tmp_board, plain_board);
+
+	// set difficulty level
+	int count = 0;
+	const char *tmp = plain_board;
+	while((tmp = strchr(tmp, '.')) != NULL)
+	{
+		count++;
+		tmp++;
+	}
+
+	if (!is_valid_stream(tmp_board))
+		return false;
+
+	g_resume_level = count;
+
+	return true;
 }
 
 void save_stream(char user_board[], char plain_board[], int n)
@@ -249,52 +253,6 @@ void save_stream(char user_board[], char plain_board[], int n)
 	}
 	fclose(fp);
 	free(file_path);
-}
-
-void get_saved_game_state(char user_board[], char plain_board[])
-{
-	FILE* fp;
-	char* file_path = get_saved_file_path();
-	fp = fopen(file_path, "r");
-
-	int c;
-	int i = 0;
-	while ( i < STREAM_LENGTH )
-	{
-		c = fgetc(fp);
-		user_board[i++] = (char)c;
-	}
-
-	i = 0;
-	while ( ( c = fgetc(fp)) != EOF )
-	{
-		plain_board[i++] = (char)c;
-	}
-
-	fclose(fp);
-	unlink(file_path); // remove file after resuming the game
-	free(file_path);
-
-	// set difficulty level
-	int count = 0;
-	const char *tmp = plain_board;
-	while((tmp = strchr(tmp, '.')) != NULL)
-	{
-	count++;
-	tmp++;
-	}
-
-	if (count == 50)
-		g_level = D_HARD;
-	else if (count == 40)
-		g_level = D_NORMAL;
-	else
-		g_level = D_EASY;
-}
-
-static void print_resume_error(void)
-{
-	printf(_("Game save is missing or corrupted, try starting new game\n"));
 }
 
 static void parse_arguments(int argc, char *argv[])
@@ -319,11 +277,14 @@ static void parse_arguments(int argc, char *argv[])
 				g_provided_stream = strdup(optarg);
 				break;
 			case 'r':
-				if (is_saved_game_valid())
+				if (get_board_save(user_board, plain_board))
+				{
 					g_resume_game = true;
+					g_level = g_resume_level; // set global variables in one place
+				}
 				else
 				{
-					print_resume_error();
+					printf(_("Game save is missing or corrupted, try starting new game\n"));
 					exit(EXIT_FAILURE);
 				}
 				break;
@@ -677,6 +638,7 @@ int main(int argc, char *argv[])
 	}
 
 	init_curses();
+	init_windows();
 
 #ifdef DEBUG
 	strcpy(plain_board, EXAMPLE_STREAM);
@@ -687,16 +649,11 @@ int main(int argc, char *argv[])
 
 	if ( g_resume_game )
 	{
-		get_saved_game_state(user_board, plain_board);
-		init_windows(); // init after get_saved_game_state to print correct difficulty
 		fill_grid(user_board, plain_board, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
 		g_playing = true;
 	}
 	else
-	{
-		init_windows();
 		new_puzzle();
-	}
 
 #endif // DEBUG
 
