@@ -151,17 +151,21 @@ static bool is_valid_stream(char *s)
 char* get_saved_file_path(void)
 {
 	char* home_path = getenv("XDG_STATE_HOME");
+	char* fallback_path = NULL;
 
 	if (home_path == NULL)
 	{
 		// fallback to $HOME/.local/state
 		home_path = getenv("HOME");
 
+		if (home_path == NULL)
+			return NULL;
+
 		const char* local_path = "/.local/state";
 		size_t len_home_path = strlen(home_path);
 		size_t len_local_path = strlen(local_path);
 
-		char* fallback_path = malloc(len_home_path + len_local_path + 1);
+		fallback_path = malloc(len_home_path + len_local_path + 1);
 
 		strcpy(fallback_path, home_path);
 		strcat(fallback_path, local_path);
@@ -187,10 +191,19 @@ char* get_saved_file_path(void)
 	size_t len_dir_path = strlen(dir_path);
 
 	char* file_path = malloc(len_dir_path + len_file + 1);
+	if (file_path == NULL)
+	{
+		free(dir_path);
+		free(fallback_path);
+		return NULL;
+	}
+
 	strcpy(file_path, dir_path);
 	strcat(file_path, file_name);
 
 	free(dir_path);
+	free(fallback_path);
+
 	return file_path;
 }
 
@@ -204,11 +217,11 @@ bool get_board_save(char user_board[], char plain_board[])
 	char* file_path = get_saved_file_path();
 	FILE* fp = fopen(file_path, "r");
 	if ( fp == NULL )
-		exit(EXIT_FAILURE);
+		return false;
 
 	while ( (c = fgetc(fp)) != EOF )
 	{
-		board[i++] = (char)c;
+		board[i++] = c;
 	}
 
 	fclose(fp);
@@ -219,7 +232,10 @@ bool get_board_save(char user_board[], char plain_board[])
 	strcpy(plain_board, board + STREAM_LENGTH);
 	strcpy(tmp_board, plain_board);
 
-	// set difficulty level
+	if (!is_valid_stream(tmp_board))
+		return false;
+
+	// set difficulty level from save
 	int count = 0;
 	const char *tmp = plain_board;
 	while((tmp = strchr(tmp, '.')) != NULL)
@@ -228,21 +244,18 @@ bool get_board_save(char user_board[], char plain_board[])
 		tmp++;
 	}
 
-	if (!is_valid_stream(tmp_board))
-		return false;
-
 	g_resume_level = count;
 
 	return true;
 }
 
-void save_stream(char user_board[], char plain_board[], int n)
+bool save_stream(char user_board[], char plain_board[], int n)
 {
 	char* file_path = get_saved_file_path();
 	FILE* fp;
 	fp = fopen(file_path, "w");
 	if ( fp == NULL )
-		exit(EXIT_FAILURE);
+		return false;
 	for ( int i=0; i<n; ++i )
 	{
 		fprintf(fp, "%c", user_board[i]);
@@ -253,6 +266,7 @@ void save_stream(char user_board[], char plain_board[], int n)
 	}
 	fclose(fp);
 	free(file_path);
+	return true;
 }
 
 static void parse_arguments(int argc, char *argv[])
@@ -842,8 +856,12 @@ int main(int argc, char *argv[])
 				}
 				break;
 			case 'G':
-				save_stream(user_board, plain_board, STREAM_LENGTH);
-				mvwprintw(status, 0, 0, _("Saved!"));
+				if (save_stream(user_board, plain_board, STREAM_LENGTH))
+					mvwprintw(status, 0, 0, _("Saved!"));
+				else
+				{
+					mvwprintw(status, 0, 0, _("Can't save the game!"));
+				}
 				break;
 			case 'u': // Undo
 				{
