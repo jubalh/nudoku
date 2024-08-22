@@ -22,6 +22,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include "gettext.h"			/* gettext */
 #include <stdlib.h>				/* rand, srand */
 #include <unistd.h>				/* getopt */
+#include <sys/types.h>			/* stat type */
+#include <sys/stat.h>			/* stat function */
 #include <ncurses.h>			/* ncurses */
 #include <time.h>				/* time */
 #include <string.h>				/* strcmp, strlen */
@@ -57,6 +59,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #define COLOR_HIGHLIGHT_CURSOR	5
 #define COLOR_USER_HIGHLIGHT	6
 #define UNDO_STACK_SIZE			SUDOKU_LENGTH * 10 // arbitrary length. overflows shouldn't cause an error, just a limit in history length.
+#define STATE_FILE_NAME         "state.save"
 
 #ifdef DEBUG
 #define EXAMPLE_STREAM "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......"
@@ -74,6 +77,8 @@ static bool  g_useColor = true;
 static bool  g_playing = false;
 static bool  g_useHighlights = false;
 static char* g_provided_stream = NULL;		/* in case of -s flag the user provides the sudoku stream */
+static bool  g_resume_game = false;         /* in case of -r flag and saved game state */
+static int   g_resume_level;                /* store difficulty of the resume game */
 static int   g_hint_counter;
 static char  plain_board[STREAM_LENGTH];
 static char  user_board[STREAM_LENGTH];
@@ -106,6 +111,7 @@ static void print_usage(void)
 	printf(_("-c nocolor:\t\tDo not use colors\n"));
 	printf(_("-d difficulty:\t\tChoose between: easy, normal, hard\n"));
 	printf(_("-s stream:\t\tUser provided sudoku stream\n"));
+	printf(_("-r resume:\t\tResume the last saved game\n"));
 	printf(_("-p filename:\t\tOutput PDF\n"));
 	printf(_("-n filename:\t\tNumber of sudokus to put in PDF\n"));
 	printf(_("-i filename:\t\tOutput PNG image\n"));
@@ -143,10 +149,134 @@ static bool is_valid_stream(char *s)
 	return true;
 }
 
+char* get_saved_file_path(void)
+{
+	char* home_path = getenv("XDG_STATE_HOME");
+	char* fallback_path = NULL;
+
+	if (home_path == NULL)
+	{
+		// fallback to $HOME/.local/state
+		home_path = getenv("HOME");
+
+		if (home_path == NULL)
+			return NULL;
+
+		const char* local_path = "/.local/state";
+		size_t len_home_path = strlen(home_path);
+		size_t len_local_path = strlen(local_path);
+
+		fallback_path = malloc(len_home_path + len_local_path + 1);
+
+		strcpy(fallback_path, home_path);
+		strcat(fallback_path, local_path);
+
+		home_path = fallback_path;
+	}
+
+	size_t len_home_path = strlen(home_path);
+
+	const char* dir_name = "/nudoku/";
+	size_t len_dir_name = strlen(dir_name);
+
+	char* dir_path = malloc(len_home_path + len_dir_name + 1);
+	strcpy(dir_path, home_path);
+	strcat(dir_path, dir_name);
+
+	struct stat st = {0};
+	if (stat(dir_path, &st) == -1)
+		mkdir(dir_path, 0700);
+
+	const char* file_name = STATE_FILE_NAME;
+	size_t len_file = strlen(file_name);
+	size_t len_dir_path = strlen(dir_path);
+
+	char* file_path = malloc(len_dir_path + len_file + 1);
+	if (file_path == NULL)
+	{
+		free(dir_path);
+		free(fallback_path);
+		return NULL;
+	}
+
+	strcpy(file_path, dir_path);
+	strcat(file_path, file_name);
+
+	free(dir_path);
+	free(fallback_path);
+
+	return file_path;
+}
+
+bool get_board_save(char user_board[], char plain_board[])
+{
+	int c;
+	int i = 0;
+	char board[2 * STREAM_LENGTH];
+	char tmp_board[STREAM_LENGTH];
+
+	char* file_path = get_saved_file_path();
+	FILE* fp = fopen(file_path, "r");
+	unlink(file_path);
+	free(file_path);
+
+	if ( fp == NULL )
+		return false;
+
+	while ( (c = fgetc(fp)) != EOF )
+	{
+		board[i++] = c;
+	}
+
+	fclose(fp);
+
+	strncpy(user_board, board, STREAM_LENGTH);
+	strcpy(plain_board, board + STREAM_LENGTH);
+	strcpy(tmp_board, plain_board);
+
+	if (!is_valid_stream(tmp_board))
+		return false;
+
+	// set difficulty level from save
+	int count = 0;
+	const char *tmp = plain_board;
+	while((tmp = strchr(tmp, '.')) != NULL)
+	{
+		count++;
+		tmp++;
+	}
+
+	g_resume_level = count;
+
+	return true;
+}
+
+bool save_stream(char user_board[], char plain_board[], int n)
+{
+	char* file_path = get_saved_file_path();
+	FILE* fp = fopen(file_path, "w");
+	free(file_path);
+
+	if ( fp == NULL )
+		return false;
+
+	for ( int i=0; i<n; ++i )
+	{
+		fprintf(fp, "%c", user_board[i]);
+	}
+	for ( int i=0; i<n; ++i )
+	{
+		fprintf(fp, "%c", plain_board[i]);
+	}
+	fclose(fp);
+
+	return true;
+}
+
 static void parse_arguments(int argc, char *argv[])
 {
 	int opt;
-	while ((opt = getopt(argc, argv, "hvcs:d:p:i:n:")) != -1)
+	while ((opt = getopt(argc, argv, "hvcrs:d:p:i:n:")) != -1)
 	{
 		switch (opt)
 		{
@@ -163,6 +293,18 @@ static void parse_arguments(int argc, char *argv[])
 				if (!is_valid_stream(optarg))
 					exit(EXIT_FAILURE);
 				g_provided_stream = strdup(optarg);
+				break;
+			case 'r':
+				if (get_board_save(user_board, plain_board))
+				{
+					g_resume_game = true;
+					g_level = g_resume_level; // set global variables in one place
+				}
+				else
+				{
+					printf(_("Game save is missing or corrupted, try starting new game\n"));
+					exit(EXIT_FAILURE);
+				}
 				break;
 			case 'd':
 				if (strcmp(optarg, "easy") == 0)
@@ -343,6 +485,7 @@ static void init_windows(void)
 		wprintw(infobox, _(" m - Toggle marks\n"));
 	}
 	wprintw(infobox, _(" N - New puzzle\n"));
+	wprintw(infobox, _(" G - Save\n"));
 	wprintw(infobox, _(" Q - Quit\n"));
 	wprintw(infobox, _(" r - Redraw\n"));
 	wprintw(infobox, _(" S - Solve puzzle\n"));
@@ -521,7 +664,15 @@ int main(int argc, char *argv[])
 	fill_grid(plain_board, plain_board, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
 	g_playing = true;
 #else
-	new_puzzle();
+
+	if ( g_resume_game )
+	{
+		fill_grid(user_board, plain_board, GRID_NUMBER_START_X, GRID_NUMBER_START_Y);
+		g_playing = true;
+	}
+	else
+		new_puzzle();
+
 #endif // DEBUG
 
 	refresh();
@@ -706,6 +857,14 @@ int main(int argc, char *argv[])
 				{
 					g_useHighlights = !g_useHighlights;
 					fill_grid(user_board, plain_board, x, y);
+				}
+				break;
+			case 'G':
+				if (save_stream(user_board, plain_board, STREAM_LENGTH))
+					mvwprintw(status, 0, 0, _("Saved!"));
+				else
+				{
+					mvwprintw(status, 0, 0, _("Can't save the game!"));
 				}
 				break;
 			case 'u': // Undo
