@@ -216,6 +216,9 @@ bool get_board_save(char user_board[], char plain_board[])
 
 	char* file_path = get_saved_file_path();
 	FILE* fp = fopen(file_path, "r");
+	unlink(file_path);
+	free(file_path);
+
 	if ( fp == NULL )
 		return false;
 
@@ -225,8 +228,6 @@ bool get_board_save(char user_board[], char plain_board[])
 	}
 
 	fclose(fp);
-	unlink(file_path);
-	free(file_path);
 
 	strncpy(user_board, board, STREAM_LENGTH);
 	strcpy(plain_board, board + STREAM_LENGTH);
@@ -252,10 +253,12 @@ bool get_board_save(char user_board[], char plain_board[])
 bool save_stream(char user_board[], char plain_board[], int n)
 {
 	char* file_path = get_saved_file_path();
-	FILE* fp;
-	fp = fopen(file_path, "w");
+	FILE* fp = fopen(file_path, "w");
+	free(file_path);
+
 	if ( fp == NULL )
 		return false;
+
 	for ( int i=0; i<n; ++i )
 	{
 		fprintf(fp, "%c", user_board[i]);
@@ -265,7 +268,7 @@ bool save_stream(char user_board[], char plain_board[], int n)
 		fprintf(fp, "%c", plain_board[i]);
 	}
 	fclose(fp);
-	free(file_path);
+
 	return true;
 }
 
