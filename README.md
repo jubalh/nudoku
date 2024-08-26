@@ -12,7 +12,7 @@ nudoku is easily installable via many package managers.
 - ncurses
 - cairo (optional: for PDF/PNG output)
 
-#### From source ###
+#### From source ####
 
 Get the latest `.tar.xz` [release](https://github.com/jubalh/nudoku/releases) and extract it.
 Then run:
@@ -52,13 +52,13 @@ See `man nudoku` to learn more.
 
 ## I18n ##
 
-For i18n support you need to set environment variable `LANGUAGE`:
+For i18n support you need to set `LANGUAGE` variable:
 
 ```sh
 export LANGUAGE=lang
 ```
 
-Where `lang` is the translation of choice. See the list supported languages in `po/LINGUAS` file.
+Where `lang` is the translation of choice. See the list of supported languages in `po/LINGUAS` file.
 
 ## Contributing ##
 
