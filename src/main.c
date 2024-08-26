@@ -302,7 +302,7 @@ static void parse_arguments(int argc, char *argv[])
 				}
 				else
 				{
-					printf(_("Game save is missing or corrupted, try starting new game\n"));
+					printf(_("Game save is missing or corrupted, try starting new game.\n"));
 					exit(EXIT_FAILURE);
 				}
 				break;
@@ -497,7 +497,7 @@ static void init_windows(void)
 	}
 }
 
-static int undo_stack_push(move_t move) 
+static int undo_stack_push(move_t move)
 {
 	if (g_undo_stack_index >= UNDO_STACK_SIZE)
 	{
@@ -508,7 +508,7 @@ static int undo_stack_push(move_t move)
 	return 0;
 }
 
-static int undo_stack_pop(move_t *move) 
+static int undo_stack_pop(move_t *move)
 {
 	if (g_undo_stack_index <= 0)
 		return -1;
@@ -649,8 +649,8 @@ int main(int argc, char *argv[])
 		generate_output(g_level, g_outputFilename, g_sudokuCount, g_outIsPDF);
 		return 0;
 #else
-		printf("nudoku is compiled without cairo support.\n");
-		printf("To use the output feature, please compile with --enable-cairo.\n");
+		printf(_("nudoku is compiled without cairo support.\n"));
+		printf(_("To use the output feature, please compile with --enable-cairo.\n"));
 		return 1;
 #endif
 	}

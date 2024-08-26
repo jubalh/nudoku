@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nudoku\n"
 "Report-Msgid-Bugs-To: jubalh@iodoru.org\n"
-"POT-Creation-Date: 2018-04-27 19:00-0300\n"
+"POT-Creation-Date: 2024-08-24 09:59+0300\n"
 "PO-Revision-Date: 2020-09-01 21:19+0900\n"
 "Last-Translator: cmplstofB <20594300+cmplstofB@users.noreply.github.com>\n"
 "Language-Team: Japanese\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: src/main.c:84
+#: src/main.c:107
 #, c-format
 msgid ""
 "nudoku [option]\n"
@@ -25,64 +25,77 @@ msgstr ""
 "nudoku [オプション]\n"
 "\n"
 
-#: src/main.c:85
+#: src/main.c:108
 #, c-format
 msgid "Options:\n"
 msgstr "オプション:\n"
 
-#: src/main.c:86
+#: src/main.c:109
 #, c-format
 msgid "-h help:\t\tPrint this help\n"
 msgstr "-h:\t\tこの手引きを表示\n"
 
-#: src/main.c:87
+#: src/main.c:110
 #, c-format
 msgid "-v version:\t\tPrint version\n"
 msgstr "-v:\t\t版を表示\n"
 
-#: src/main.c:88
+#: src/main.c:111
 #, c-format
 msgid "-c nocolor:\t\tDo not use colors\n"
 msgstr "-c:\t\t着色しない\n"
 
-#: src/main.c:89
+#: src/main.c:112
 #, c-format
 msgid "-d difficulty:\t\tChoose between: easy, normal, hard\n"
 msgstr "-d 難易度:\t\t難易度を選択: easy, normal, hard\n"
 
-#: src/main.c:90
+#: src/main.c:113
 #, c-format
 msgid "-s stream:\t\tUser provided sudoku stream\n"
 msgstr "-s 版面:\t\t数独の盤面を指定する\n"
 
-#: src/main.c:104
+#: src/main.c:114
+#, c-format
+msgid "-r resume:\t\tResume the last saved game\n"
+msgstr ""
+
+#: src/main.c:115
+#, c-format
+msgid "-p filename:\t\tOutput PDF\n"
+msgstr ""
+
+#: src/main.c:116
+#, c-format
+msgid "-n filename:\t\tNumber of sudokus to put in PDF\n"
+msgstr ""
+
+#: src/main.c:117
+#, c-format
+msgid "-i filename:\t\tOutput PNG image\n"
+msgstr ""
+
+#: src/main.c:131
 #, c-format
 msgid "Character %c at position %d is not allowed.\n"
 msgstr "文字%cは位置%dにあってはなりません。\n"
 
-#: src/main.c:112
+#: src/main.c:139
 #, c-format
 msgid "Stream has to be %d characters long.\n"
 msgstr "版面は%d文字以上なくてはなりません。\n"
 
-#: src/main.c:118
+#: src/main.c:145
 #, c-format
 msgid "Stream does not represent a valid sudoku puzzle.\n"
 msgstr "指定された版面は妥当な数独の問題を表わせません。\n"
 
-#: src/main.c:147
-msgid "easy"
-msgstr "易"
+#: src/main.c:305
+#, c-format
+msgid "Game save is missing or corrupted, try starting new game.\n"
+msgstr ""
 
-#: src/main.c:149
-msgid "normal"
-msgstr "中"
-
-#: src/main.c:151
-msgid "hard"
-msgstr "難"
-
-#: src/main.c:195
+#: src/main.c:375
 msgid ""
 "Your terminal doesn't support colors.\n"
 "Try the nocolor (-c) option.\n"
@@ -90,7 +103,7 @@ msgstr ""
 "お使いの端末は着色に対応していません。\n"
 "無着色 (-c) オプションをお試しください。\n"
 
-#: src/main.c:266
+#: src/main.c:466
 #, c-format
 msgid ""
 "level: %s\n"
@@ -99,23 +112,23 @@ msgstr ""
 "難易度: %s\n"
 "\n"
 
-#: src/main.c:275
+#: src/main.c:475
 msgid "Movement\n"
 msgstr "移  動\n"
 
-#: src/main.c:276
+#: src/main.c:476
 msgid " h - Move left\n"
 msgstr " h - 左に移動\n"
 
-#: src/main.c:277
+#: src/main.c:477
 msgid " j - Move down\n"
 msgstr " j - 下に移動\n"
 
-#: src/main.c:278
+#: src/main.c:478
 msgid " k - Move up\n"
 msgstr " k - 上に移動\n"
 
-#: src/main.c:279
+#: src/main.c:479
 msgid ""
 " l - Move right\n"
 "\n"
@@ -123,67 +136,105 @@ msgstr ""
 " l - 右に移動\n"
 "\n"
 
-#: src/main.c:280
+#: src/main.c:480
 msgid "Commands\n"
 msgstr "命  令\n"
 
-#: src/main.c:281
+#: src/main.c:481
 msgid " c - Check solution\n"
 msgstr " c - 解答を確かめる\n"
 
-#: src/main.c:282
+#: src/main.c:482
 msgid " H - Give a hint\n"
 msgstr " H - 手掛かりを見る\n"
 
-#: src/main.c:285
+#: src/main.c:485
 msgid " m - Toggle marks\n"
 msgstr " m - 印を付ける/外す\n"
 
-#: src/main.c:287
+#: src/main.c:487
 msgid " N - New puzzle\n"
 msgstr " N - 新しい問題\n"
 
-#: src/main.c:288
+#: src/main.c:488
+msgid " G - Save\n"
+msgstr ""
+
+#: src/main.c:489
 msgid " Q - Quit\n"
 msgstr " Q - 終了\n"
 
-#: src/main.c:289
+#: src/main.c:490
 msgid " r - Redraw\n"
 msgstr " r - 再描画\n"
 
-#: src/main.c:290
+#: src/main.c:491
 msgid " S - Solve puzzle\n"
 msgstr " S - 問題を解く\n"
 
-#: src/main.c:291
+#: src/main.c:492
 msgid " x - Delete number\n"
 msgstr " x - 数字を消す\n"
 
-#: src/main.c:500
+#: src/main.c:493
+msgid " u - Undo previous action\n"
+msgstr ""
+
+#: src/main.c:652
+#, c-format
+msgid "nudoku is compiled without cairo support.\n"
+msgstr ""
+
+#: src/main.c:653
+#, c-format
+msgid "To use the output feature, please compile with --enable-cairo.\n"
+msgstr ""
+
+#: src/main.c:760
 msgid "Solving puzzle..."
 msgstr "問題を解いています..."
 
-#: src/main.c:506 src/main.c:547
+#: src/main.c:766 src/main.c:808
 msgid "Solved"
 msgstr "正解です"
 
-#: src/main.c:515
+#: src/main.c:776
 msgid "Generating puzzle..."
 msgstr "問題を生成しています..."
 
-#: src/main.c:541
+#: src/main.c:802
 msgid "Not correct"
 msgstr "不正解です"
 
-#: src/main.c:552
+#: src/main.c:813
 #, c-format
 msgid " with the help of %d hints"
 msgstr "（手掛かりを%d回見ました）"
 
-#: src/main.c:560
+#: src/main.c:821
 msgid "Correct so far"
 msgstr "現時点では正解です"
 
-#: src/main.c:588
+#: src/main.c:851
 msgid "Provided hint"
 msgstr "手掛りを得ました"
+
+#: src/main.c:864
+msgid "Saved!"
+msgstr ""
+
+#: src/main.c:867
+msgid "Can't save the game!"
+msgstr ""
+
+#: src/sudoku.c:251
+msgid "hard"
+msgstr "難"
+
+#: src/sudoku.c:253
+msgid "normal"
+msgstr "中"
+
+#: src/sudoku.c:256
+msgid "easy"
+msgstr "易"
