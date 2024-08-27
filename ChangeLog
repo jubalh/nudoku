@@ -1,6 +1,6 @@
 4.0.1 to 5.0.0 (2024-08-27)
   * Add Ukrainian translation (pr #62)
-  * Don't create ambiguous games are generated (#50, pr#63)
+  * Don't create ambiguous games (#50, pr #63)
   * Allow to pause game (#47, pr #65)
 
 4.0.0 to 4.0.1 (2024-05-06)
