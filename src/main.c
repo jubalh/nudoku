@@ -94,7 +94,7 @@ static int   g_undo_stack_index = 0;
 static void print_version(void)
 {
 	printf("nudoku version " VERSION "\n\n\
-Copyright (C) Michael Vetter 2014 - 2020\n\
+Copyright (C) Michael Vetter 2014 - 2024\n\
 License GPLv3+: GNU GPL version 3 or later.\n\
 This is free software, you are free to modify and redistribute it.\n");
 #ifdef DEBUG
