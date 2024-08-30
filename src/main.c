@@ -696,51 +696,64 @@ int main(int argc, char *argv[])
 		{
 			case 'h':
 			case KEY_LEFT:
-				if(x>5)
+				if (x-GRID_NUMBER_START_X <= 0) {
+					x = GRID_NUMBER_START_X + GRID_LINE_DELTA*8;
+				}
+				else if(x>5)
 				{
 					x -= GRID_LINE_DELTA;
-					if(g_playing)
-					{
-						// if we have highlighting enabled, we need to redraw the whole grid
-						// so we can have the new colors in the matching colors.
-						// this should only be done when we are playing, because plain_board
-						// is actually the one being solved and thus displayed.
-						// this is true for all movement keys.
-						fill_grid(user_board, plain_board, x, y);
-					}
+
+				}
+				if(g_playing)
+				{
+					// if we have highlighting enabled, we need to redraw the whole grid
+					// so we can have the new colors in the matching colors.
+					// this should only be done when we are playing, because plain_board
+					// is actually the one being solved and thus displayed.
+					// this is true for all movement keys.
+					fill_grid(user_board, plain_board, x, y);
 				}
 				break;
 			case 'l':
 			case KEY_RIGHT:
-				if(x<34)
+				if ((x-GRID_NUMBER_START_X) / GRID_LINE_DELTA >= 8) {
+					x = GRID_NUMBER_START_X;
+				}
+				else if(x<34)
 				{
 					x += GRID_LINE_DELTA;
-					if(g_playing)
-					{
-						fill_grid(user_board, plain_board, x, y);
-					}
+				}
+				if(g_playing)
+				{
+					fill_grid(user_board, plain_board, x, y);
 				}
 				break;
 			case 'k':
 			case KEY_UP:
-				if(y>2)
+				if (y-GRID_NUMBER_START_Y <= 0) {
+					y = GRID_NUMBER_START_Y + GRID_COL_DELTA*8;
+				}
+				else if(y>2)
 				{
 					y -= GRID_COL_DELTA;
-					if(g_playing)
-					{
-						fill_grid(user_board, plain_board, x, y);
-					}
+				}
+				if(g_playing)
+				{
+					fill_grid(user_board, plain_board, x, y);
 				}
 				break;
 			case 'j':
 			case KEY_DOWN:
-				if(y<17)
+				if ((y-GRID_NUMBER_START_Y) / GRID_COL_DELTA >= 8) {
+					y = GRID_NUMBER_START_Y;
+				}
+				else if(y<17)
 				{
 					y += GRID_COL_DELTA;
-					if(g_playing)
-					{
-						fill_grid(user_board, plain_board, x, y);
-					}
+				}
+				if(g_playing)
+				{
+					fill_grid(user_board, plain_board, x, y);
 				}
 				break;
 			case 'Q':
