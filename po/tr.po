@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: nudoku 1.0.0\n"
 "Report-Msgid-Bugs-To: jubalh@iodoru.org\n"
 "POT-Creation-Date: 2024-08-24 09:59+0300\n"
-"PO-Revision-Date: 2024-03-29 19:50+0300\n"
+"PO-Revision-Date: 2024-09-08 18:46+0300\n"
 "Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
 "Language-Team: Turkish <tr>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 45.3\n"
+"X-Generator: Gtranslator 46.1\n"
 
 #: src/main.c:107
 #, c-format
@@ -59,22 +59,22 @@ msgstr "-s tahta:\t\tBelirtilen sudoku tahtasını kullan\n"
 #: src/main.c:114
 #, c-format
 msgid "-r resume:\t\tResume the last saved game\n"
-msgstr ""
+msgstr "-r resume:\t\tSon kaydedilen oyuna devam et\n"
 
 #: src/main.c:115
 #, c-format
 msgid "-p filename:\t\tOutput PDF\n"
-msgstr ""
+msgstr "-p dosyaadı:\t\tPDF olarak dışa aktar\n"
 
 #: src/main.c:116
 #, c-format
 msgid "-n filename:\t\tNumber of sudokus to put in PDF\n"
-msgstr ""
+msgstr "-n dosyaadı:\t\tPDF dosyasına yazılacak sudoku sayısı\n"
 
 #: src/main.c:117
 #, c-format
 msgid "-i filename:\t\tOutput PNG image\n"
-msgstr ""
+msgstr "-i dosyaadı:\t\tPNG resmi olarak dışa aktar\n"
 
 #: src/main.c:131
 #, c-format
@@ -94,7 +94,7 @@ msgstr "Tahta geçerli bir sudoku bulmacası değil.\n"
 #: src/main.c:305
 #, c-format
 msgid "Game save is missing or corrupted, try starting new game.\n"
-msgstr ""
+msgstr "Oyun kaydı eksik veya bozuk, yeni oyun başlatmayı deneyin.\n"
 
 #: src/main.c:375
 msgid ""
@@ -159,7 +159,7 @@ msgstr " N - Yeni bulmaca\n"
 
 #: src/main.c:488
 msgid " G - Save\n"
-msgstr ""
+msgstr " G - Kaydet\n"
 
 #: src/main.c:489
 msgid " Q - Quit\n"
@@ -179,17 +179,18 @@ msgstr " x - Sayıyı sil\n"
 
 #: src/main.c:493
 msgid " u - Undo previous action\n"
-msgstr ""
+msgstr " u - Önceki eylemi geri al\n"
 
 #: src/main.c:652
 #, c-format
 msgid "nudoku is compiled without cairo support.\n"
-msgstr ""
+msgstr "nudoku cairo desteği olmadan derlendi.\n"
 
 #: src/main.c:653
 #, c-format
 msgid "To use the output feature, please compile with --enable-cairo.\n"
 msgstr ""
+"Dışa aktarma özelliğini kullanmak için lütfen --enable-cairo ile derleyin.\n"
 
 #: src/main.c:760
 msgid "Solving puzzle..."
@@ -222,11 +223,11 @@ msgstr "İpucu verildi"
 
 #: src/main.c:864
 msgid "Saved!"
-msgstr ""
+msgstr "Kaydedildi!"
 
 #: src/main.c:867
 msgid "Can't save the game!"
-msgstr ""
+msgstr "Oyun kaydedilemiyor!"
 
 #: src/sudoku.c:251
 msgid "hard"
