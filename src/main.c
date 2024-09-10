@@ -76,6 +76,7 @@ typedef struct move
 static bool  g_useColor = true;
 static bool  g_playing = false;
 static bool  g_useHighlights = false;
+static bool  g_output_stream = false;		/* is the -o flag set */
 static char* g_provided_stream = NULL;		/* in case of -s flag the user provides the sudoku stream */
 static bool  g_resume_game = false;         /* in case of -r flag and saved game state */
 static int   g_resume_level;                /* store difficulty of the resume game */
@@ -109,6 +110,7 @@ static void print_usage(void)
 	printf(_("-h help:\t\tPrint this help\n"));
 	printf(_("-v version:\t\tPrint version\n"));
 	printf(_("-c nocolor:\t\tDo not use colors\n"));
+	printf(_("-o output:\t\tOutput stream (inverse of -s)\n"));
 	printf(_("-d difficulty:\t\tChoose between: easy, normal, hard\n"));
 	printf(_("-s stream:\t\tUser provided sudoku stream\n"));
 	printf(_("-r resume:\t\tResume the last saved game\n"));
@@ -273,10 +275,18 @@ bool save_stream(char user_board[], char plain_board[], int n)
 	return true;
 }
 
+void generate_stream_output(int difficulty) {
+	char* stream = generate_puzzle(difficulty);
+
+	printf("%s\n", stream);
+
+	free(stream);
+}
+
 static void parse_arguments(int argc, char *argv[])
 {
 	int opt;
-	while ((opt = getopt(argc, argv, "hvcrs:d:p:i:n:")) != -1)
+	while ((opt = getopt(argc, argv, "hvcors:d:p:i:n:")) != -1)
 	{
 		switch (opt)
 		{
@@ -288,6 +298,9 @@ static void parse_arguments(int argc, char *argv[])
 				exit(EXIT_SUCCESS);
 			case 'c':
 				g_useColor = false;
+				break;
+			case 'o':
+				g_output_stream = true;
 				break;
 			case 's':
 				if (!is_valid_stream(optarg))
@@ -642,6 +655,12 @@ int main(int argc, char *argv[])
 
 	parse_arguments(argc, argv);
 	srand(time(NULL));
+
+	if (g_output_stream)
+	{
+		generate_stream_output(g_level);
+		return EXIT_SUCCESS;
+	}
 
 	if (g_outputFilename)
 	{
