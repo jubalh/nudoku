@@ -4,6 +4,7 @@
 AC_PREREQ([2.69])
 AC_INIT([nudoku], [5.0.0], [jubalh@iodoru.org])
 AC_CONFIG_SRCDIR([src/main.c])
+AC_CONFIG_MACRO_DIRS([m4])
 AM_INIT_AUTOMAKE([foreign])
 
 # Check for pkg-config
