@@ -1,3 +1,9 @@
+5.0.0 to 6.0.0 (2025-08-20)
+  * Wrap around board edges when navigating with arrow keys (pr #68)
+  * Update Turkish translation (pr #69)
+  * Print sudoku stream to stdout (pr #71)
+  * Fix build with gettext 0.24.1+ (pr #73)
+
 4.0.1 to 5.0.0 (2024-08-27)
   * Add Ukrainian translation (pr #62)
   * Don't create ambiguous games (#50, pr #63)
