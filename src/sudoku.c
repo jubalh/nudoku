@@ -98,36 +98,44 @@ static bool is_available(char puzzle[STREAM_LENGTH], int row, int col, int num)
 	return true;
 }
 
-/* solve_recursively function influenced by CMPS: https://stackoverflow.com/questions/24343214/determine-whether-a-sudoku-has-a-unique-solution */
-static int solve_recursively(char puzzle[STREAM_LENGTH], int row, int col, int count)
+static int solve_recursively(char puzzle[STREAM_LENGTH], int row, int col)
 {
-	int i;
-	if (row == 9)
+	if (row < 9 && col < 9)
 	{
-		row = 0;
-		if (++col == 9)
-			return 1+count;
-	}
-	if (puzzle[row * 9 + col] != '.')  // skip filled cells
-		return solve_recursively(puzzle, row + 1, col, count);
-	for (i = 0; i < 9 && count < 2; ++i)
-	{
-		if (is_available(puzzle, row, col, i + 1))
+		if (puzzle[row * 9 + col] != '.')
 		{
-			puzzle[row * 9 + col] = i + 1 + 48;
-			count = solve_recursively(puzzle, row + 1, col, count);
+			if ((col + 1) < 9)
+				return solve_recursively(puzzle, row, col + 1);
+			else if ((row + 1) < 9)
+				return solve_recursively(puzzle, row + 1, 0);
+			else
+				return 1;
 		}
 		else
-			puzzle[row * 9 + col] = '.'; // reset on backtrack
+		{
+			for (int i = 0; i < 9; i++)
+			{
+				if(is_available(puzzle, row, col, i + 1))
+				{
+					puzzle[row * 9 + col] = i + 1 + 48;
+
+					if(solve_recursively(puzzle, row, col))
+						return 1;
+					else
+						puzzle[row * 9 + col] = '.';
+				}
+			}
+		}
+		return 0;
 	}
-	return count;
+	else
+		return 1;
 }
 
 int solve(char puzzle[STREAM_LENGTH])
 {
-	int count = 0;
 	if (is_valid_puzzle(puzzle))
-		return solve_recursively(puzzle, 0, 0, count);
+		return solve_recursively(puzzle, 0, 0);
 	else
 		return 0;
 }
