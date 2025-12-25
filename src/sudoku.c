@@ -77,61 +77,91 @@ bool is_valid_puzzle(char puzzle[STREAM_LENGTH])
 	return true;
 }
 
-/* solver code is influenced by sb0rg: https://codereview.stackexchange.com/questions/37430/sudoku-solver-in-c */
-static bool is_available(char puzzle[STREAM_LENGTH], int row, int col, int num)
-{
-	int i;
-	int rowStart = (row/3) * 3;
-	int colStart = (col/3) * 3;
+static int get_candidates(char puzzle[STREAM_LENGTH], int pos) {
+    int row = pos / 9, col = pos % 9;
+    int box_row = (row / 3) * 3, box_col = (col / 3) * 3;
+    int mask = 0;
 
-	num += 48;
-
-	for (i=0; i<9; i++)
-	{
-		if (puzzle[row * 9 + i] == num)
-			return false;
-		if (puzzle[i * 9 + col] == num)
-			return false;
-		if (puzzle[(rowStart + (i % 3)) * 9 + (colStart + (i / 3))] == num)
-			return false;
-	}
-	return true;
+    for (int i = 0; i < 9; i++) {
+        if (puzzle[row * 9 + i] != '.') mask |= 1 << (puzzle[row * 9 + i] - '1');
+        if (puzzle[i * 9 + col] != '.') mask |= 1 << (puzzle[i * 9 + col] - '1');
+        if (puzzle[(box_row + i / 3) * 9 + box_col + i % 3] != '.')
+            mask |= 1 << (puzzle[(box_row + i / 3) * 9 + box_col + i % 3] - '1');
+    }
+    return 0x1FF & ~mask;
 }
 
-/* solve_recursively function influenced by CMPS: https://stackoverflow.com/questions/24343214/determine-whether-a-sudoku-has-a-unique-solution */
-static int solve_recursively(char puzzle[STREAM_LENGTH], int row, int col, int count)
-{
-	int i;
-	if (row == 9)
-	{
-		row = 0;
-		if (++col == 9)
-			return 1+count;
-	}
-	if (puzzle[row * 9 + col] != '.')  // skip filled cells
-		return solve_recursively(puzzle, row + 1, col, count);
-	for (i = 0; i < 9 && count < 2; ++i)
-	{
-		if (is_available(puzzle, row, col, i + 1))
-		{
-			puzzle[row * 9 + col] = i + 1 + 48;
-			count = solve_recursively(puzzle, row + 1, col, count);
-		}
-		else
-			puzzle[row * 9 + col] = '.'; // reset on backtrack
-	}
-	return count;
+static int find_best_cell(char puzzle[STREAM_LENGTH], int *cand_out) {
+    int best_pos = -1, best_count = 10;
+
+    for (int pos = 0; pos < 81; pos++) {
+        if (puzzle[pos] != '.') continue;
+
+        int candidates = get_candidates(puzzle, pos);
+        int n = __builtin_popcount(candidates); // single CPU instruction
+
+        if (n == 0) { *cand_out = 0; return -2; } // dead end
+        if (n < best_count) {
+            best_count = n;
+            best_pos = pos;
+            *cand_out = candidates;
+            if (n == 1) break;
+        }
+    }
+    return best_pos; // -1 if solved
 }
 
-int solve(char puzzle[STREAM_LENGTH])
-{
-	int count = 0;
-	if (is_valid_puzzle(puzzle))
-		return solve_recursively(puzzle, 0, 0, count);
-	else
-		return 0;
+// counts solutions (always backtracks)
+static int count_solutions(char puzzle[STREAM_LENGTH], int count) {
+    int candidates;
+    int pos = find_best_cell(puzzle, &candidates);
+
+    if (pos == -2) return count;     // dead end
+    if (pos == -1) return count + 1; // solved
+
+    for (int num = 0; num < 9 && count < 2; num++) {
+        if (candidates & (1 << num)) {
+            puzzle[pos] = '1' + num;
+            count = count_solutions(puzzle, count);
+            puzzle[pos] = '.'; // always reset
+        }
+    }
+    return count;
 }
 
+// Fills puzzle with first solution (keeps values)
+static bool fill_puzzle(char puzzle[STREAM_LENGTH]) {
+    int candidates;
+    int pos = find_best_cell(puzzle, &candidates);
+
+    if (pos == -2) return false; // dead end
+    if (pos == -1) return true;  // solved
+
+    for (int num = 0; num < 9; num++) {
+        if (candidates & (1 << num)) {
+            puzzle[pos] = '1' + num;
+            if (fill_puzzle(puzzle)) return true; // keep solution
+            puzzle[pos] = '.';
+        }
+    }
+    return false;
+}
+
+int solve(char puzzle[STREAM_LENGTH]) {
+    if (!is_valid_puzzle(puzzle))
+        return 0;
+
+    // count solutions on a copy
+    char copy[STREAM_LENGTH];
+    strncpy(copy, puzzle, STREAM_LENGTH);
+    int count = count_solutions(copy, 0);
+
+    // fill original if solvable
+    if (count >= 1)
+        fill_puzzle(puzzle);
+
+    return count;
+}
 /* GENERATOR */
 /* Generator code is influenced by: http://rubyquiz.strd6.com/quizzes/182-sudoku-generator */
 static int rand_int(int n)
