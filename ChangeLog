@@ -1,3 +1,6 @@
+6.0.0 to 7.0.0 (2026-01-20)
+  * Implement better sudoku solver (pr #78)
+
 5.0.0 to 6.0.0 (2025-08-20)
   * Wrap around board edges when navigating with arrow keys (pr #68)
   * Update Turkish translation (pr #69)
