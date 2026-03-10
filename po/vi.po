@@ -2,7 +2,6 @@
 # This file is put in the public domain.
 # Benjamin Nguyen <ima.techmoocher@gmail.com>, 2026.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: nudoku 4.0.1\n"
@@ -53,12 +52,12 @@ msgstr "-d difficulty:\t\tChọn độ khó: easy, normal, hard\n"
 #: src/main.c:113
 #, c-format
 msgid "-s stream:\t\tUser provided sudoku stream\n"
-msgstr "-s stream:\t\tCâu đố do người dùng cung cấp\n"
+msgstr "-s stream:\t\tSử dụng câu đố do người dùng cung cấp\n"
 
 #: src/main.c:114
 #, c-format
 msgid "-r resume:\t\tResume the last saved game\n"
-msgstr "-r resume:\t\tTiếp tục ván chơi lưu gần nhất\n"
+msgstr "-r resume:\t\tTiếp tục ván chơi được lưu gần nhất\n"
 
 #: src/main.c:115
 #, c-format
@@ -83,12 +82,12 @@ msgstr "Ký tự %c tại vị trí %d không hợp lệ.\n"
 #: src/main.c:139
 #, c-format
 msgid "Stream has to be %d characters long.\n"
-msgstr "Chuỗi phải có độ dài %d ký tự.\n"
+msgstr "Chuỗi được cung cấp phải có độ dài %d ký tự.\n"
 
 #: src/main.c:145
 #, c-format
 msgid "Stream does not represent a valid sudoku puzzle.\n"
-msgstr "Chuỗi không phải là một câu đố hợp lệ.\n"
+msgstr "Chuỗi được cung cấp không phải là một câu đố hợp lệ.\n"
 
 #: src/main.c:305
 #, c-format
