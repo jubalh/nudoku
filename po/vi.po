@@ -47,7 +47,7 @@ msgstr "-c nocolor:\t\tKhông hiển thị màu\n"
 #: src/main.c:112
 #, c-format
 msgid "-d difficulty:\t\tChoose between: easy, normal, hard\n"
-msgstr "-d difficulty:\t\tChọn độ khó: easy, normal, hard\n"
+msgstr "-d difficulty:\t\tChọn độ khó: easy (dễ), normal (thường), hard (khó)\n"
 
 #: src/main.c:113
 #, c-format
