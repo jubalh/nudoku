@@ -1,0 +1,240 @@
+# Georgian translation for nudoku.
+# This file is put in the public domain.
+# Ekaterine Papava <papava.e@gtu.ge>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: nudoku 4.0.1\n"
+"Report-Msgid-Bugs-To: jubalh@iodoru.org\n"
+"POT-Creation-Date: 2024-08-24 09:59+0300\n"
+"PO-Revision-Date: 2026-02-21 23:20+0100\n"
+"Last-Translator: Ekaterine Papava <papava.e@gtu.ge>\n"
+"Language-Team: Georgian <(nothing)>\n"
+"Language: ka\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.8\n"
+
+#: src/main.c:107
+#, c-format
+msgid ""
+"nudoku [option]\n"
+"\n"
+msgstr ""
+"nudoku [პარამეტრი]\n"
+"\n"
+
+#: src/main.c:108
+#, c-format
+msgid "Options:\n"
+msgstr "პარამეტრები:\n"
+
+#: src/main.c:109
+#, c-format
+msgid "-h help:\t\tPrint this help\n"
+msgstr "-h help:\t\tამ დახმარების გამოტანა\n"
+
+#: src/main.c:110
+#, c-format
+msgid "-v version:\t\tPrint version\n"
+msgstr "-v version:\t\tვერსიის გამოტანა\n"
+
+#: src/main.c:111
+#, c-format
+msgid "-c nocolor:\t\tDo not use colors\n"
+msgstr "-c nocolor:\t\tფერების გამოტანა არ მოხდება\n"
+
+#: src/main.c:112
+#, c-format
+msgid "-d difficulty:\t\tChoose between: easy, normal, hard\n"
+msgstr "-d difficulty:\t\tაირჩიეთ: იოლი, ნორმალური, რთული\n"
+
+#: src/main.c:113
+#, c-format
+msgid "-s stream:\t\tUser provided sudoku stream\n"
+msgstr "-s stream:\t\tმომხმარებლის მოწოდებული სუდოკუს ნაკადი\n"
+
+#: src/main.c:114
+#, c-format
+msgid "-r resume:\t\tResume the last saved game\n"
+msgstr "-r resume:\t\tბოლო შენახული თამაშის გაგრძელება\n"
+
+#: src/main.c:115
+#, c-format
+msgid "-p filename:\t\tOutput PDF\n"
+msgstr "-p filename:\t\tგატანა PDF-ში\n"
+
+#: src/main.c:116
+#, c-format
+msgid "-n filename:\t\tNumber of sudokus to put in PDF\n"
+msgstr "-n filename:\t\tPDF-ში ჩასალაგებელი სუდოკუების რაოდენობა\n"
+
+#: src/main.c:117
+#, c-format
+msgid "-i filename:\t\tOutput PNG image\n"
+msgstr "-i filename:\t\tPNG გამოსახულების გამოტანა\n"
+
+#: src/main.c:131
+#, c-format
+msgid "Character %c at position %d is not allowed.\n"
+msgstr "სიმბოლო %c მდებარეობაზე %d დაშვებული არაა.\n"
+
+#: src/main.c:139
+#, c-format
+msgid "Stream has to be %d characters long.\n"
+msgstr "ნაკადი %d სიმბოლოს უნდა შეიცავდეს.\n"
+
+#: src/main.c:145
+#, c-format
+msgid "Stream does not represent a valid sudoku puzzle.\n"
+msgstr "ნაკადი სწორი სუდოკუს პაზლი არაა.\n"
+
+#: src/main.c:305
+#, c-format
+msgid "Game save is missing or corrupted, try starting new game.\n"
+msgstr "თამაშის შენახული არ არსებობს, ან დაზიანებულია. სცადეთ, თამაში თავიდან დაიწყოთ.\n"
+
+#: src/main.c:375
+msgid ""
+"Your terminal doesn't support colors.\n"
+"Try the nocolor (-c) option.\n"
+msgstr ""
+"თქვენს ტერმინალს ფერების მხარდაჭერა არ აქვს.\n"
+"სცადეთ პარამეტრი ფერების გარეშე (-c).\n"
+
+#: src/main.c:466
+#, c-format
+msgid ""
+"level: %s\n"
+"\n"
+msgstr ""
+"დონე: %s\n"
+"\n"
+
+#: src/main.c:475
+msgid "Movement\n"
+msgstr "გადაადგილება\n"
+
+#: src/main.c:476
+msgid " h - Move left\n"
+msgstr " h - გადაადგილება მარცხნივ\n"
+
+#: src/main.c:477
+msgid " j - Move down\n"
+msgstr " j - ჩამოწევა\n"
+
+#: src/main.c:478
+msgid " k - Move up\n"
+msgstr " k - აწევა\n"
+
+#: src/main.c:479
+msgid ""
+" l - Move right\n"
+"\n"
+msgstr ""
+" l - გადაადგილება მარჯვნივ\n"
+"\n"
+
+#: src/main.c:480
+msgid "Commands\n"
+msgstr "ბრძანებები\n"
+
+#: src/main.c:481
+msgid " c - Check solution\n"
+msgstr " c - გადაწყვეტილების შემოწმება\n"
+
+#: src/main.c:482
+msgid " H - Give a hint\n"
+msgstr " H - მინიშნებების მიცემა\n"
+
+#: src/main.c:485
+msgid " m - Toggle marks\n"
+msgstr " m - ნიშნების გადართვა\n"
+
+#: src/main.c:487
+msgid " N - New puzzle\n"
+msgstr " N - ახალი პაზლი\n"
+
+#: src/main.c:488
+msgid " G - Save\n"
+msgstr " G - შენახვა\n"
+
+#: src/main.c:489
+msgid " Q - Quit\n"
+msgstr " Q - გასვლა\n"
+
+#: src/main.c:490
+msgid " r - Redraw\n"
+msgstr " r - თავიდან დახატვა\n"
+
+#: src/main.c:491
+msgid " S - Solve puzzle\n"
+msgstr " S - პაზლის ამოხსნა\n"
+
+#: src/main.c:492
+msgid " x - Delete number\n"
+msgstr " x - რიცხვის წაშლა\n"
+
+#: src/main.c:493
+msgid " u - Undo previous action\n"
+msgstr " u - წინა ქმედების გაუქმება\n"
+
+#: src/main.c:652
+#, c-format
+msgid "nudoku is compiled without cairo support.\n"
+msgstr "nudoku-ს აგებისას cairo-ის მხარდაჭერა ჩართული არ იყო.\n"
+
+#: src/main.c:653
+#, c-format
+msgid "To use the output feature, please compile with --enable-cairo.\n"
+msgstr "გამოტანის ფუნქციის გამოსაყენებლად აგებისას ჩართეთ პარამეტრი --enable-cairo.\n"
+
+#: src/main.c:760
+msgid "Solving puzzle..."
+msgstr "პაზლის ამოხსნა..."
+
+#: src/main.c:766 src/main.c:808
+msgid "Solved"
+msgstr "ამოხსნილი"
+
+#: src/main.c:776
+msgid "Generating puzzle..."
+msgstr "პაზლის გენერაცია..."
+
+#: src/main.c:802
+msgid "Not correct"
+msgstr "არასწორია"
+
+#: src/main.c:813
+#, c-format
+msgid " with the help of %d hints"
+msgstr " %d მინიშნების დახმარებით"
+
+#: src/main.c:821
+msgid "Correct so far"
+msgstr "ჯერჯერობით სწორია"
+
+#: src/main.c:851
+msgid "Provided hint"
+msgstr "მოწოდებული მინიშნება"
+
+#: src/main.c:864
+msgid "Saved!"
+msgstr "შენახულია!"
+
+#: src/main.c:867
+msgid "Can't save the game!"
+msgstr "თამაშის შენახვა შეუძლებელია!"
+
+#: src/sudoku.c:251
+msgid "hard"
+msgstr "მაგარი"
+
+#: src/sudoku.c:253
+msgid "normal"
+msgstr "ნორმალური"
+
+#: src/sudoku.c:256
+msgid "easy"
+msgstr "მარტივი"
