@@ -212,7 +212,7 @@ msgstr " với sự trợ giúp của %d gợi ý"
 
 #: src/main.c:821
 msgid "Correct so far"
-msgstr "Số ô đúng hiện tại"
+msgstr "Tất cả các ô hiện tại đều đúng"
 
 #: src/main.c:851
 msgid "Provided hint"
