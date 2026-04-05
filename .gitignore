@@ -16,3 +16,14 @@ src/.deps/
 src/Makefile
 src/Makefile.in
 src/nudoku
+m4/
+config.*
+ABOUT-NLS
+
+# Restrict translation files uploaded to repo
+po/
+!po/LINGUAS
+!po/Makevars
+!po/POTFILES.in
+!po/nudoku.pot
+!po/*.po
