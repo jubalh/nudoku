@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nudoku 4.0.1\n"
 "Report-Msgid-Bugs-To: jubalh@iodoru.org\n"
-"POT-Creation-Date: 2024-08-24 09:59+0300\n"
+"POT-Creation-Date: 2026-04-04 23:30-0700\n"
 "PO-Revision-Date: 2026-03-10 11:51+0700\n"
 "Last-Translator: Benjamin Nguyen <ima.techmoocher@gmail.com>\n"
 "Language-Team: Vietnamese\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/main.c:107
+#: src/main.c:110
 #, c-format
 msgid ""
 "nudoku [option]\n"
@@ -24,77 +24,88 @@ msgstr ""
 "nudoku [tùy_chọn]\n"
 "\n"
 
-#: src/main.c:108
+#: src/main.c:111
 #, c-format
 msgid "Options:\n"
 msgstr "Tùy chọn:\n"
 
-#: src/main.c:109
+#: src/main.c:112
 #, c-format
 msgid "-h help:\t\tPrint this help\n"
 msgstr "-h help:\t\tHiển thị trợ giúp\n"
 
-#: src/main.c:110
+#: src/main.c:113
 #, c-format
 msgid "-v version:\t\tPrint version\n"
 msgstr "-v version:\t\tHiển thị phiên bản\n"
 
-#: src/main.c:111
+#: src/main.c:114
 #, c-format
 msgid "-c nocolor:\t\tDo not use colors\n"
 msgstr "-c nocolor:\t\tKhông hiển thị màu\n"
 
-#: src/main.c:112
+#: src/main.c:115
+#, c-format
+msgid "-o output:\t\tOutput stream (inverse of -s)\n"
+msgstr ""
+
+#: src/main.c:116
 #, c-format
 msgid "-d difficulty:\t\tChoose between: easy, normal, hard\n"
-msgstr "-d difficulty:\t\tChọn độ khó: easy (dễ), normal (thường), hard (khó)\n"
+msgstr ""
+"-d difficulty:\t\tChọn độ khó: easy (dễ), normal (thường), hard (khó)\n"
 
-#: src/main.c:113
+#: src/main.c:117
 #, c-format
 msgid "-s stream:\t\tUser provided sudoku stream\n"
 msgstr "-s stream:\t\tSử dụng câu đố do người dùng cung cấp\n"
 
-#: src/main.c:114
+#: src/main.c:118
 #, c-format
 msgid "-r resume:\t\tResume the last saved game\n"
 msgstr "-r resume:\t\tTiếp tục ván chơi được lưu gần nhất\n"
 
-#: src/main.c:115
+#: src/main.c:119
 #, c-format
 msgid "-p filename:\t\tOutput PDF\n"
 msgstr "-p filename:\t\tXuất file dưới dạng PDF\n"
 
-#: src/main.c:116
+#: src/main.c:120
 #, c-format
 msgid "-n filename:\t\tNumber of sudokus to put in PDF\n"
 msgstr "-n filename:\t\tSố lượng câu đố sudoku trong file PDF\n"
 
-#: src/main.c:117
+#: src/main.c:121
 #, c-format
 msgid "-i filename:\t\tOutput PNG image\n"
 msgstr "-i filename:\t\tXuất file dưới dạng PNG\n"
 
-#: src/main.c:131
+#: src/main.c:122
+#, c-format
+msgid "-S papername:\t\tPDF paper size ('a4' or 'letter'; default 'a4')\n"
+msgstr ""
+
+#: src/main.c:136
 #, c-format
 msgid "Character %c at position %d is not allowed.\n"
 msgstr "Ký tự %c tại vị trí %d không hợp lệ.\n"
 
-#: src/main.c:139
+#: src/main.c:144
 #, c-format
 msgid "Stream has to be %d characters long.\n"
 msgstr "Chuỗi được cung cấp phải có độ dài %d ký tự.\n"
 
-#: src/main.c:145
+#: src/main.c:150
 #, c-format
 msgid "Stream does not represent a valid sudoku puzzle.\n"
 msgstr "Chuỗi được cung cấp không phải là một câu đố hợp lệ.\n"
 
-#: src/main.c:305
+#: src/main.c:321
 #, c-format
 msgid "Game save is missing or corrupted, try starting new game.\n"
 msgstr "Bản lưu bị thất lạc hoặc hư hỏng, vui lòng bắt đầu ván chơi khác.\n"
 
-#: src/main.c:375
+#: src/main.c:403
 msgid ""
 "Your terminal doesn't support colors.\n"
 "Try the nocolor (-c) option.\n"
@@ -102,7 +113,7 @@ msgstr ""
 "Terminal của bạn không hỗ trợ hiển thị màu.\n"
 "Hãy thử sử dụng tùy chọn nocolor (-c).\n"
 
-#: src/main.c:466
+#: src/main.c:494
 #, c-format
 msgid ""
 "level: %s\n"
@@ -111,23 +122,23 @@ msgstr ""
 "độ khó: %s\n"
 "\n"
 
-#: src/main.c:475
+#: src/main.c:503
 msgid "Movement\n"
 msgstr "Di chuyển\n"
 
-#: src/main.c:476
+#: src/main.c:504
 msgid " h - Move left\n"
 msgstr " h - Trái\n"
 
-#: src/main.c:477
+#: src/main.c:505
 msgid " j - Move down\n"
 msgstr " j - Xuống\n"
 
-#: src/main.c:478
+#: src/main.c:506
 msgid " k - Move up\n"
 msgstr " k - Lên\n"
 
-#: src/main.c:479
+#: src/main.c:507
 msgid ""
 " l - Move right\n"
 "\n"
@@ -135,105 +146,107 @@ msgstr ""
 " l - Phải\n"
 "\n"
 
-#: src/main.c:480
+#: src/main.c:508
 msgid "Commands\n"
 msgstr "Lệnh\n"
 
-#: src/main.c:481
+#: src/main.c:509
 msgid " c - Check solution\n"
 msgstr " c - Kiểm tra lời giải\n"
 
-#: src/main.c:482
+#: src/main.c:510
 msgid " H - Give a hint\n"
 msgstr " H - Gợi ý\n"
 
-#: src/main.c:485
+#: src/main.c:513
 msgid " m - Toggle marks\n"
 msgstr " m - Bật/Tắt đánh dấu\n"
 
-#: src/main.c:487
+#: src/main.c:515
 msgid " N - New puzzle\n"
 msgstr " N - Câu đố mới\n"
 
-#: src/main.c:488
+#: src/main.c:516
 msgid " G - Save\n"
 msgstr " G - Lưu\n"
 
-#: src/main.c:489
+#: src/main.c:517
 msgid " Q - Quit\n"
 msgstr " Q - Thoát\n"
 
-#: src/main.c:490
+#: src/main.c:518
 msgid " r - Redraw\n"
 msgstr " r - Vẽ lại màn hình\n"
 
-#: src/main.c:491
+#: src/main.c:519
 msgid " S - Solve puzzle\n"
 msgstr " S - Giải\n"
 
-#: src/main.c:492
+#: src/main.c:520
 msgid " x - Delete number\n"
 msgstr " x - Xóa số trong ô\n"
 
-#: src/main.c:493
+#: src/main.c:521
 msgid " u - Undo previous action\n"
 msgstr " u - Hoàn tác\n"
 
-#: src/main.c:652
+#: src/main.c:686
 #, c-format
 msgid "nudoku is compiled without cairo support.\n"
 msgstr "nudoku được biên dịch mà không hỗ trợ cairo.\n"
 
-#: src/main.c:653
+#: src/main.c:687
 #, c-format
 msgid "To use the output feature, please compile with --enable-cairo.\n"
-msgstr "Để sử dụng tính năng xuất file, vui lòng biên dịch với tùy chọn --enable-cairo.\n"
+msgstr ""
+"Để sử dụng tính năng xuất file, vui lòng biên dịch với tùy chọn --enable-"
+"cairo.\n"
 
-#: src/main.c:760
+#: src/main.c:807
 msgid "Solving puzzle..."
 msgstr "Đang giải..."
 
-#: src/main.c:766 src/main.c:808
+#: src/main.c:813 src/main.c:855
 msgid "Solved"
 msgstr "Giải hoàn tất"
 
-#: src/main.c:776
+#: src/main.c:823
 msgid "Generating puzzle..."
 msgstr "Đang tạo câu đố..."
 
-#: src/main.c:802
+#: src/main.c:849
 msgid "Not correct"
 msgstr "Không chính xác"
 
-#: src/main.c:813
+#: src/main.c:860
 #, c-format
 msgid " with the help of %d hints"
 msgstr " với sự trợ giúp của %d gợi ý"
 
-#: src/main.c:821
+#: src/main.c:868
 msgid "Correct so far"
 msgstr "Tất cả các ô hiện tại đều đúng"
 
-#: src/main.c:851
+#: src/main.c:898
 msgid "Provided hint"
 msgstr "Đã cung cấp gợi ý"
 
-#: src/main.c:864
+#: src/main.c:911
 msgid "Saved!"
 msgstr "Lưu thành công!"
 
-#: src/main.c:867
+#: src/main.c:914
 msgid "Can't save the game!"
 msgstr "Lưu không thành công!"
 
-#: src/sudoku.c:251
+#: src/sudoku.c:281
 msgid "hard"
 msgstr "khó"
 
-#: src/sudoku.c:253
+#: src/sudoku.c:283
 msgid "normal"
 msgstr "thường"
 
-#: src/sudoku.c:256
+#: src/sudoku.c:286
 msgid "easy"
 msgstr "dễ"
