@@ -3,6 +3,6 @@
 #ifndef OUTP_H
 #define OUTP_H
 
-void generate_output(int difficulty, char* filename, int sudokuCount, bool isPDF);
+void generate_output(int difficulty, char* filename, int sudokuCount, bool isPDF, PAPER_SIZE paperSize);
 
 #endif // OUTP_H

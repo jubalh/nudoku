@@ -28,6 +28,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <time.h>				/* time */
 #include <string.h>				/* strcmp, strlen */
 #include <locale.h>				/* setlocale */
+#include "types.h"				/* general definitions */
 #include "sudoku.h"				/* sudoku functions */
 #ifdef ENABLE_CAIRO
 #include "outp.h"				/* output functions */
@@ -85,6 +86,7 @@ static char  plain_board[STREAM_LENGTH];
 static char  user_board[STREAM_LENGTH];
 static char* g_outputFilename = NULL;		/* in case -p/-i flag we get a filename passed for outputting */
 static int   g_sudokuCount = 1;				/* in case of -n we can the numbers of sudoku that should end up in the PDf (-p) */
+static PAPER_SIZE g_pdfSize = PS_A4;		/* in case of -S we get the PDF paper size from its name (a4/letter) */
 static bool  g_outIsPDF;
 static DIFFICULTY g_level = D_EASY;
 static WINDOW *grid, *infobox, *status;
@@ -117,6 +119,7 @@ static void print_usage(void)
 	printf(_("-p filename:\t\tOutput PDF\n"));
 	printf(_("-n filename:\t\tNumber of sudokus to put in PDF\n"));
 	printf(_("-i filename:\t\tOutput PNG image\n"));
+	printf(_("-S papername:\t\tPDF paper size ('a4' or 'letter'; default 'a4')\n"));
 }
 
 static bool is_valid_stream(char *s)
@@ -286,7 +289,7 @@ void generate_stream_output(int difficulty) {
 static void parse_arguments(int argc, char *argv[])
 {
 	int opt;
-	while ((opt = getopt(argc, argv, "hvcors:d:p:i:n:")) != -1)
+	while ((opt = getopt(argc, argv, "hvcors:d:p:i:n:S:")) != -1)
 	{
 		switch (opt)
 		{
@@ -345,6 +348,18 @@ static void parse_arguments(int argc, char *argv[])
 			// numbers of sudoku for output pdf
 			case 'n':
 				g_sudokuCount = atoi(optarg);
+				break;
+			// PDF paper size
+			case 'S':
+				if (strcmp(optarg, "letter") == 0)
+					g_pdfSize = PS_LETTER;
+				else if (strcmp(optarg, "a4") == 0)
+					g_pdfSize = PS_A4;
+				else
+				{
+					print_usage();
+					exit(EXIT_FAILURE);
+				}
 				break;
 			default:
 				print_usage();
@@ -665,7 +680,7 @@ int main(int argc, char *argv[])
 	if (g_outputFilename)
 	{
 #ifdef ENABLE_CAIRO
-		generate_output(g_level, g_outputFilename, g_sudokuCount, g_outIsPDF);
+		generate_output(g_level, g_outputFilename, g_sudokuCount, g_outIsPDF, g_pdfSize);
 		return 0;
 #else
 		printf(_("nudoku is compiled without cairo support.\n"));

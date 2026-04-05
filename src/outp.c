@@ -24,6 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <stdio.h>				/* snprintf() */
 #include <stdlib.h>				/* free() */
 #include "sudoku.h"				/* sudoku functions */
+#include "types.h"				/* general definitions */
 
 /* FUNCTIONS */
 
@@ -73,12 +74,23 @@ void draw_grid(const char* stream, cairo_t *cr)
 	}
 }
 
-void generate_pdf(int difficulty, int sudokus_count, const char* filename)
+// 1 point = 1/72 inch
+PAPER_SIZE convert_in_to_pt(PAPER_SIZE size) {
+	PAPER_SIZE ps_converted;
+
+	ps_converted.width = (size.width * 72) / 100;
+	ps_converted.height = (size.height * 72) / 100;
+
+	return ps_converted;
+}
+
+void generate_pdf(int difficulty, int sudokus_count, PAPER_SIZE paperSize, const char* filename)
 {
 	cairo_surface_t *surface;
 	cairo_t *cr;
 
-	surface = cairo_pdf_surface_create(filename, 595, 842);
+	PAPER_SIZE ps_points = convert_in_to_pt(paperSize);
+	surface = cairo_pdf_surface_create(filename, ps_points.width, ps_points.height);
 	cr = cairo_create(surface);
 
 	cairo_set_source_rgb(cr, 0, 0, 0);
@@ -183,11 +195,11 @@ void generate_png(int difficulty, char* filename)
 	free(stream);
 }
 
-void generate_output(int difficulty, char* filename, int sudokuCount, bool isPDF)
+void generate_output(int difficulty, char* filename, int sudokuCount, bool isPDF, PAPER_SIZE paperSize)
 {
 	if (isPDF)
 	{
-		generate_pdf(difficulty, sudokuCount, filename);
+		generate_pdf(difficulty, sudokuCount, paperSize, filename);
 	} else {
 		generate_png(difficulty, filename);
 	}

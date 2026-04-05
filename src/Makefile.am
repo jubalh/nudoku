@@ -7,7 +7,7 @@ else
 nudoku_LDADD = ${ncurses_LIBS}
 endif
 bin_PROGRAMS = nudoku
-nudoku_SOURCES = main.c sudoku.c sudoku.h
+nudoku_SOURCES = main.c types.h sudoku.c sudoku.h
 
 if BUILD_CAIRO
 nudoku_SOURCES += outp.c outp.h
