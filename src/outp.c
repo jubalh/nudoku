@@ -75,7 +75,7 @@ void draw_grid(const char* stream, cairo_t *cr)
 }
 
 // 1 point = 1/72 inch
-PAPER_SIZE convert_in_to_pt(PAPER_SIZE size) {
+static PAPER_SIZE convert_in_to_pt(PAPER_SIZE size) {
 	PAPER_SIZE ps_converted;
 
 	ps_converted.width = (size.width * 72) / 100;
