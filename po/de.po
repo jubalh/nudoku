@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nudoku\n"
 "Report-Msgid-Bugs-To: jubalh@iodoru.org\n"
-"POT-Creation-Date: 2024-08-24 09:59+0300\n"
+"POT-Creation-Date: 2026-04-04 23:30-0700\n"
 "PO-Revision-Date: 2018-05-03 10:12-0300\n"
 "Last-Translator: Emanuel Dubor <emanueldubor@gmail.com>\n"
 "Language-Team: German\n"
@@ -17,84 +17,94 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/main.c:107
+#: src/main.c:110
 #, c-format
 msgid ""
 "nudoku [option]\n"
 "\n"
 msgstr ""
 
-#: src/main.c:108
+#: src/main.c:111
 #, c-format
 msgid "Options:\n"
 msgstr ""
 
-#: src/main.c:109
+#: src/main.c:112
 #, c-format
 msgid "-h help:\t\tPrint this help\n"
 msgstr ""
 
-#: src/main.c:110
+#: src/main.c:113
 #, c-format
 msgid "-v version:\t\tPrint version\n"
 msgstr ""
 
-#: src/main.c:111
+#: src/main.c:114
 #, c-format
 msgid "-c nocolor:\t\tDo not use colors\n"
 msgstr ""
 
-#: src/main.c:112
-#, c-format
-msgid "-d difficulty:\t\tChoose between: easy, normal, hard\n"
-msgstr ""
-
-#: src/main.c:113
-#, c-format
-msgid "-s stream:\t\tUser provided sudoku stream\n"
-msgstr ""
-
-#: src/main.c:114
-#, c-format
-msgid "-r resume:\t\tResume the last saved game\n"
-msgstr ""
-
 #: src/main.c:115
 #, c-format
-msgid "-p filename:\t\tOutput PDF\n"
+msgid "-o output:\t\tOutput stream (inverse of -s)\n"
 msgstr ""
 
 #: src/main.c:116
 #, c-format
-msgid "-n filename:\t\tNumber of sudokus to put in PDF\n"
+msgid "-d difficulty:\t\tChoose between: easy, normal, hard\n"
 msgstr ""
 
 #: src/main.c:117
 #, c-format
+msgid "-s stream:\t\tUser provided sudoku stream\n"
+msgstr ""
+
+#: src/main.c:118
+#, c-format
+msgid "-r resume:\t\tResume the last saved game\n"
+msgstr ""
+
+#: src/main.c:119
+#, c-format
+msgid "-p filename:\t\tOutput PDF\n"
+msgstr ""
+
+#: src/main.c:120
+#, c-format
+msgid "-n filename:\t\tNumber of sudokus to put in PDF\n"
+msgstr ""
+
+#: src/main.c:121
+#, c-format
 msgid "-i filename:\t\tOutput PNG image\n"
 msgstr ""
 
-#: src/main.c:131
+#: src/main.c:122
+#, c-format
+msgid "-S papername:\t\tPDF paper size ('a4' or 'letter'; default 'a4')\n"
+msgstr ""
+
+#: src/main.c:136
 #, c-format
 msgid "Character %c at position %d is not allowed.\n"
 msgstr "Zeichen %c an Position %d ist nicht erlaubt.\n"
 
-#: src/main.c:139
+#: src/main.c:144
 #, c-format
 msgid "Stream has to be %d characters long.\n"
 msgstr "Der Stream muss %d Zeichen lang sein.\n"
 
-#: src/main.c:145
+#: src/main.c:150
 #, c-format
 msgid "Stream does not represent a valid sudoku puzzle.\n"
 msgstr "Stream stellt kein gültiges Sudoku-Puzzle dar.\n"
 
-#: src/main.c:305
+#: src/main.c:321
 #, c-format
 msgid "Game save is missing or corrupted, try starting new game.\n"
 msgstr ""
 
-#: src/main.c:375
+#: src/main.c:403
 msgid ""
 "Your terminal doesn't support colors.\n"
 "Try the nocolor (-c) option.\n"
@@ -102,7 +112,7 @@ msgstr ""
 "Ihr Terminal unterstützt keine Farben.\n"
 "Probieren Sie die Option nocolor (-c) aus.\n"
 
-#: src/main.c:466
+#: src/main.c:494
 #, c-format
 msgid ""
 "level: %s\n"
@@ -111,23 +121,23 @@ msgstr ""
 "Niveau: %s\n"
 "\n"
 
-#: src/main.c:475
+#: src/main.c:503
 msgid "Movement\n"
 msgstr "Bewegung\n"
 
-#: src/main.c:476
+#: src/main.c:504
 msgid " h - Move left\n"
 msgstr " h - Nach links bewegen\n"
 
-#: src/main.c:477
+#: src/main.c:505
 msgid " j - Move down\n"
 msgstr " j - Nach unten gehen\n"
 
-#: src/main.c:478
+#: src/main.c:506
 msgid " k - Move up\n"
 msgstr " k - Nach oben gehen\n"
 
-#: src/main.c:479
+#: src/main.c:507
 msgid ""
 " l - Move right\n"
 "\n"
@@ -135,106 +145,106 @@ msgstr ""
 " l - Nach rechts bewegen\n"
 "\n"
 
-#: src/main.c:480
+#: src/main.c:508
 msgid "Commands\n"
 msgstr "Befehle\n"
 
-#: src/main.c:481
+#: src/main.c:509
 msgid " c - Check solution\n"
 msgstr " c - Überprüfen Sie die Lösung\n"
 
-#: src/main.c:482
+#: src/main.c:510
 msgid " H - Give a hint\n"
 msgstr " H - Gib einen Hinweis\n"
 
-#: src/main.c:485
+#: src/main.c:513
 msgid " m - Toggle marks\n"
 msgstr " m - Umschaltmarken\n"
 
-#: src/main.c:487
+#: src/main.c:515
 msgid " N - New puzzle\n"
 msgstr " N - Neues Puzzle\n"
 
-#: src/main.c:488
+#: src/main.c:516
 msgid " G - Save\n"
 msgstr ""
 
-#: src/main.c:489
+#: src/main.c:517
 msgid " Q - Quit\n"
 msgstr " Q - Verlassen\n"
 
-#: src/main.c:490
+#: src/main.c:518
 msgid " r - Redraw\n"
 msgstr " r - Neu zeichnen\n"
 
-#: src/main.c:491
+#: src/main.c:519
 msgid " S - Solve puzzle\n"
 msgstr " S - Puzzle lösen\n"
 
-#: src/main.c:492
+#: src/main.c:520
 msgid " x - Delete number\n"
 msgstr " x - Nummer löschen\n"
 
-#: src/main.c:493
+#: src/main.c:521
 msgid " u - Undo previous action\n"
 msgstr ""
 
-#: src/main.c:652
+#: src/main.c:686
 #, c-format
 msgid "nudoku is compiled without cairo support.\n"
 msgstr ""
 
-#: src/main.c:653
+#: src/main.c:687
 #, c-format
 msgid "To use the output feature, please compile with --enable-cairo.\n"
 msgstr ""
 
-#: src/main.c:760
+#: src/main.c:807
 msgid "Solving puzzle..."
 msgstr "Puzzle lösen..."
 
-#: src/main.c:766 src/main.c:808
+#: src/main.c:813 src/main.c:855
 msgid "Solved"
 msgstr "Gelöst"
 
-#: src/main.c:776
+#: src/main.c:823
 msgid "Generating puzzle..."
 msgstr "Generiere Sudoku..."
 
-#: src/main.c:802
+#: src/main.c:849
 msgid "Not correct"
 msgstr "Nicht richtig"
 
-#: src/main.c:813
+#: src/main.c:860
 #, c-format
 msgid " with the help of %d hints"
 msgstr " mit Hilfe von %d Tipps"
 
-#: src/main.c:821
+#: src/main.c:868
 msgid "Correct so far"
 msgstr "Soweit richtig"
 
-#: src/main.c:851
+#: src/main.c:898
 msgid "Provided hint"
 msgstr "Tipp gegeben"
 
-#: src/main.c:864
+#: src/main.c:911
 msgid "Saved!"
 msgstr ""
 
-#: src/main.c:867
+#: src/main.c:914
 msgid "Can't save the game!"
 msgstr ""
 
-#: src/sudoku.c:251
+#: src/sudoku.c:281
 msgid "hard"
 msgstr "schwer"
 
-#: src/sudoku.c:253
+#: src/sudoku.c:283
 msgid "normal"
 msgstr "normal"
 
-#: src/sudoku.c:256
+#: src/sudoku.c:286
 msgid "easy"
 msgstr "einfach"
 

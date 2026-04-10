@@ -82,13 +82,18 @@ Example: -p riddle.pdf
 
 .BR \-n
 Number of sudokuks to put in PDF.
-This can only be used with -p
+This can only be used with -p.
 Example: -p riddle.pdf -n 8
 
 .BR \-i
 Output PNG image.
 Puts a single sudoku into an PNG image file. File name needs to follow.
 Example: -i sudoku.png
+
+.BR \-S
+Paper size for PDF output.
+Accepted values are: 'a4' (default) or 'letter'. This can only be used with -p.
+Example: -p riddle.pdf -S letter
 
 .SH BUGS
 No known bugs.
