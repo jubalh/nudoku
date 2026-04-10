@@ -4,12 +4,12 @@
 #define TYPES_H
 
 typedef struct {
-    int width;
-    int height;
+	int width;
+	int height;
 } PAPER_SIZE;
 
 // Size in inches x100, to allow hundredths of an inch.
-static const PAPER_SIZE PS_LETTER = { 850, 1100 };
-static const PAPER_SIZE PS_A4 = { 827, 1169 };
+#define PS_LETTER ((PAPER_SIZE) { 850, 1100 })
+#define PS_A4 ((PAPER_SIZE) { 827, 1169 })
 
 #endif // TYPES_H
