@@ -24,7 +24,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <stdio.h>				/* snprintf() */
 #include <stdlib.h>				/* free() */
 #include "sudoku.h"				/* sudoku functions */
-#include "types.h"				/* general definitions */
+#include "utils.h"				/* utility definitions */
 
 /* FUNCTIONS */
 
@@ -74,22 +74,12 @@ void draw_grid(const char* stream, cairo_t *cr)
 	}
 }
 
-// 1 point = 1/72 inch
-static PAPER_SIZE convert_in_to_pt(PAPER_SIZE size) {
-	PAPER_SIZE ps_converted;
-
-	ps_converted.width = (size.width * 72) / 100;
-	ps_converted.height = (size.height * 72) / 100;
-
-	return ps_converted;
-}
-
 void generate_pdf(int difficulty, int sudokus_count, PAPER_SIZE paperSize, const char* filename)
 {
 	cairo_surface_t *surface;
 	cairo_t *cr;
 
-	PAPER_SIZE ps_points = convert_in_to_pt(paperSize);
+	PAPER_SIZE ps_points = papersize_normalize(paperSize);
 	surface = cairo_pdf_surface_create(filename, ps_points.width, ps_points.height);
 	cr = cairo_create(surface);
 
