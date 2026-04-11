@@ -676,8 +676,7 @@ int main(int argc, char *argv[])
 	if (g_outputFilename)
 	{
 #ifdef ENABLE_CAIRO
-		generate_output(g_level, g_outputFilename, g_sudokuCount, g_outIsPDF, g_pdfSize);
-		return 0;
+		return generate_output(g_level, g_outputFilename, g_sudokuCount, g_outIsPDF, g_pdfSize);
 #else
 		printf(_("nudoku is compiled without cairo support.\n"));
 		printf(_("To use the output feature, please compile with --enable-cairo.\n"));
