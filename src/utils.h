@@ -3,7 +3,10 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include <stdbool.h>
+#include "gettext.h"		/* gettext */
+#include <stdbool.h>		/* bool data type */
+
+#define _(x) gettext(x)
 
 typedef unsigned char PAPER_UNIT_CODE;
 

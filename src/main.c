@@ -19,7 +19,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 /* INCLUDES */
-#include "gettext.h"			/* gettext */
+#include "utils.h"				/* utility definitions */
 #include <stdlib.h>				/* rand, srand */
 #include <unistd.h>				/* getopt */
 #include <sys/types.h>			/* stat type */
@@ -28,13 +28,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 #include <time.h>				/* time */
 #include <string.h>				/* strcmp, strlen */
 #include <locale.h>				/* setlocale */
-#include "utils.h"				/* utility definitions */
 #include "sudoku.h"				/* sudoku functions */
 #ifdef ENABLE_CAIRO
 #include "outp.h"				/* output functions */
 #endif
-
-#define _(x) gettext(x)
 
 /* DEFINES */
 //#define VERSION				"0.1" //gets set via autotools
