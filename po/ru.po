@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: nudoku\n"
 "Report-Msgid-Bugs-To: jubalh@iodoru.org\n"
 "POT-Creation-Date: 2026-04-04 23:30-0700\n"
-"PO-Revision-Date: \n"
-"Last-Translator: Max Vetrov <maxvetrov555@yandex.ru>\n"
+"PO-Revision-Date: 2026-04-12 01:04+0300\n"
+"Last-Translator: Denmoth <denmoth8871top@gmail.com>\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
@@ -23,71 +23,73 @@ msgid ""
 "nudoku [option]\n"
 "\n"
 msgstr ""
+"nudoku [опция]\n"
+"\n"
 
 #: src/main.c:111
 #, c-format
 msgid "Options:\n"
-msgstr ""
+msgstr "Параметры:\n"
 
 #: src/main.c:112
 #, c-format
 msgid "-h help:\t\tPrint this help\n"
-msgstr ""
+msgstr "-h help:\t\tПоказать эту справку\n"
 
 #: src/main.c:113
 #, c-format
 msgid "-v version:\t\tPrint version\n"
-msgstr ""
+msgstr "-v version:\t\tПоказать версию\n"
 
 #: src/main.c:114
 #, c-format
 msgid "-c nocolor:\t\tDo not use colors\n"
-msgstr ""
+msgstr "-c nocolor:\t\tНе использовать цвета\n"
 
 #: src/main.c:115
 #, c-format
 msgid "-o output:\t\tOutput stream (inverse of -s)\n"
-msgstr ""
+msgstr "-o output:\t\tВывод потока (обратно параметру -s)\n"
 
 #: src/main.c:116
 #, c-format
 msgid "-d difficulty:\t\tChoose between: easy, normal, hard\n"
-msgstr ""
+msgstr "-d difficulty:\t\tВыбрать сложность: easy, normal, hard\n"
 
 #: src/main.c:117
 #, c-format
 msgid "-s stream:\t\tUser provided sudoku stream\n"
-msgstr ""
+msgstr "-s stream:\t\tПредоставленный пользователем поток судоку\n"
 
 #: src/main.c:118
 #, c-format
 msgid "-r resume:\t\tResume the last saved game\n"
-msgstr ""
+msgstr "-r resume:\t\tВозобновить последнюю сохраненную игру\n"
 
 #: src/main.c:119
 #, c-format
 msgid "-p filename:\t\tOutput PDF\n"
-msgstr ""
+msgstr "-p filename:\t\tВывод в PDF\n"
 
 #: src/main.c:120
 #, c-format
 msgid "-n filename:\t\tNumber of sudokus to put in PDF\n"
-msgstr ""
+msgstr "-n filename:\t\tКоличество судоку для добавления в PDF\n"
 
 #: src/main.c:121
 #, c-format
 msgid "-i filename:\t\tOutput PNG image\n"
-msgstr ""
+msgstr "-i filename:\t\tВывод в PNG изображение\n"
 
 #: src/main.c:122
 #, c-format
 msgid "-S papername:\t\tPDF paper size ('a4' or 'letter'; default 'a4')\n"
-msgstr ""
+msgstr "-S papername:\t\tРазмер бумаги для PDF ('a4' или 'letter'; по умолчанию 'a4')\n"
 
 #: src/main.c:136
 #, c-format
 msgid "Character %c at position %d is not allowed.\n"
-msgstr "Символ %c на позиции %d не поддерживается.\n"
+msgstr "Символ %c на позиции %d недопустим.\n"
 
 #: src/main.c:144
 #, c-format
@@ -102,7 +104,7 @@ msgstr "Поток не является судоку-головоломкой.\
 #: src/main.c:321
 #, c-format
 msgid "Game save is missing or corrupted, try starting new game.\n"
-msgstr ""
+msgstr "Сохранение игры отсутствует или повреждено, попробуйте начать новую игру.\n"
 
 #: src/main.c:403
 msgid ""
@@ -167,7 +169,7 @@ msgstr " N - Новая головоломка\n"
 
 #: src/main.c:516
 msgid " G - Save\n"
-msgstr ""
+msgstr " G - Сохранить\n"
 
 #: src/main.c:517
 msgid " Q - Quit\n"
@@ -187,17 +189,17 @@ msgstr " x - Удалить число\n"
 
 #: src/main.c:521
 msgid " u - Undo previous action\n"
-msgstr ""
+msgstr " u - Отменить предыдущее действие\n"
 
 #: src/main.c:686
 #, c-format
 msgid "nudoku is compiled without cairo support.\n"
-msgstr ""
+msgstr "nudoku скомпилирован без поддержки cairo.\n"
 
 #: src/main.c:687
 #, c-format
 msgid "To use the output feature, please compile with --enable-cairo.\n"
-msgstr ""
+msgstr "Чтобы использовать функцию вывода, скомпилируйте с параметром --enable-cairo.\n"
 
 #: src/main.c:807
 msgid "Solving puzzle..."
@@ -213,7 +215,7 @@ msgstr "Генерация головоломки..."
 
 #: src/main.c:849
 msgid "Not correct"
-msgstr "Не правильно"
+msgstr "Неправильно"
 
 #: src/main.c:860
 #, c-format
@@ -222,7 +224,7 @@ msgstr " с помощью %d подсказок"
 
 #: src/main.c:868
 msgid "Correct so far"
-msgstr ""
+msgstr "Пока верно"
 
 #: src/main.c:898
 msgid "Provided hint"
@@ -230,11 +232,11 @@ msgstr "Предоставлена подсказка"
 
 #: src/main.c:911
 msgid "Saved!"
-msgstr ""
+msgstr "Сохранено!"
 
 #: src/main.c:914
 msgid "Can't save the game!"
-msgstr ""
+msgstr "Не удалось сохранить игру!"
 
 #: src/sudoku.c:281
 msgid "hard"
