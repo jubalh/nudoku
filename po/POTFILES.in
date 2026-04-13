@@ -1,2 +1,3 @@
 src/main.c
 src/sudoku.c
+src/outp.c

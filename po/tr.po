@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nudoku 1.0.0\n"
 "Report-Msgid-Bugs-To: jubalh@iodoru.org\n"
-"POT-Creation-Date: 2026-04-04 23:30-0700\n"
+"POT-Creation-Date: 2026-04-12 11:44-0700\n"
 "PO-Revision-Date: 2024-09-08 18:46+0300\n"
 "Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
 "Language-Team: Turkish <tr>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Gtranslator 46.1\n"
 
-#: src/main.c:110
+#: src/main.c:107
 #, c-format
 msgid ""
 "nudoku [option]\n"
@@ -26,87 +26,89 @@ msgstr ""
 "nudoku [seçenek]\n"
 "\n"
 
-#: src/main.c:111
+#: src/main.c:108
 #, c-format
 msgid "Options:\n"
 msgstr "Seçenekler:\n"
 
-#: src/main.c:112
+#: src/main.c:109
 #, c-format
 msgid "-h help:\t\tPrint this help\n"
 msgstr "-h:\t\tYardım metnini yazdır\n"
 
-#: src/main.c:113
+#: src/main.c:110
 #, c-format
 msgid "-v version:\t\tPrint version\n"
 msgstr "-v:\t\tSürüm numarasını yazdır\n"
 
-#: src/main.c:114
+#: src/main.c:111
 #, c-format
 msgid "-c nocolor:\t\tDo not use colors\n"
 msgstr "-c:\t\tRenkler kullanılmasın\n"
 
-#: src/main.c:115
+#: src/main.c:112
 #, c-format
 msgid "-o output:\t\tOutput stream (inverse of -s)\n"
 msgstr ""
 
-#: src/main.c:116
+#: src/main.c:113
 #, c-format
 msgid "-d difficulty:\t\tChoose between: easy, normal, hard\n"
 msgstr "-d zorluk:\t\tZorluk derecesini seç: easy, normal, hard\n"
 
-#: src/main.c:117
+#: src/main.c:114
 #, c-format
 msgid "-s stream:\t\tUser provided sudoku stream\n"
 msgstr "-s tahta:\t\tBelirtilen sudoku tahtasını kullan\n"
 
-#: src/main.c:118
+#: src/main.c:115
 #, c-format
 msgid "-r resume:\t\tResume the last saved game\n"
 msgstr "-r resume:\t\tSon kaydedilen oyuna devam et\n"
 
-#: src/main.c:119
+#: src/main.c:116
 #, c-format
 msgid "-p filename:\t\tOutput PDF\n"
 msgstr "-p dosyaadı:\t\tPDF olarak dışa aktar\n"
 
-#: src/main.c:120
+#: src/main.c:117
 #, c-format
 msgid "-n filename:\t\tNumber of sudokus to put in PDF\n"
 msgstr "-n dosyaadı:\t\tPDF dosyasına yazılacak sudoku sayısı\n"
 
-#: src/main.c:121
+#: src/main.c:118
 #, c-format
 msgid "-i filename:\t\tOutput PNG image\n"
 msgstr "-i dosyaadı:\t\tPNG resmi olarak dışa aktar\n"
 
-#: src/main.c:122
+#: src/main.c:119
 #, c-format
-msgid "-S papername:\t\tPDF paper size ('a4' or 'letter'; default 'a4')\n"
+msgid ""
+"-S papername:\t\tPDF paper size (e.g., 'a4', 'letter', 'legal'; default "
+"'a4') or 'WIDTHxHEIGHT[unit]'\n"
 msgstr ""
 
-#: src/main.c:136
+#: src/main.c:133
 #, c-format
 msgid "Character %c at position %d is not allowed.\n"
 msgstr "%c karakterine %d konumunda izin verilmiyor.\n"
 
-#: src/main.c:144
+#: src/main.c:141
 #, c-format
 msgid "Stream has to be %d characters long.\n"
 msgstr "Tahta %d karakter uzunluğunda olmalıdır.\n"
 
-#: src/main.c:150
+#: src/main.c:147
 #, c-format
 msgid "Stream does not represent a valid sudoku puzzle.\n"
 msgstr "Tahta geçerli bir sudoku bulmacası değil.\n"
 
-#: src/main.c:321
+#: src/main.c:318
 #, c-format
 msgid "Game save is missing or corrupted, try starting new game.\n"
 msgstr "Oyun kaydı eksik veya bozuk, yeni oyun başlatmayı deneyin.\n"
 
-#: src/main.c:403
+#: src/main.c:396
 msgid ""
 "Your terminal doesn't support colors.\n"
 "Try the nocolor (-c) option.\n"
@@ -114,7 +116,7 @@ msgstr ""
 "Terminaliniz renkleri desteklemiyor.\n"
 "Renksiz (-c) seçeneğini deneyin.\n"
 
-#: src/main.c:494
+#: src/main.c:487
 #, c-format
 msgid ""
 "level: %s\n"
@@ -123,23 +125,23 @@ msgstr ""
 "seviye: %s\n"
 "\n"
 
-#: src/main.c:503
+#: src/main.c:496
 msgid "Movement\n"
 msgstr "Hareket\n"
 
-#: src/main.c:504
+#: src/main.c:497
 msgid " h - Move left\n"
 msgstr " h - Sola git\n"
 
-#: src/main.c:505
+#: src/main.c:498
 msgid " j - Move down\n"
 msgstr " j - Aşağı git\n"
 
-#: src/main.c:506
+#: src/main.c:499
 msgid " k - Move up\n"
 msgstr " k - Yukarı git\n"
 
-#: src/main.c:507
+#: src/main.c:500
 msgid ""
 " l - Move right\n"
 "\n"
@@ -147,106 +149,116 @@ msgstr ""
 " l - Sağa git\n"
 "\n"
 
-#: src/main.c:508
+#: src/main.c:501
 msgid "Commands\n"
 msgstr "Komutlar\n"
 
-#: src/main.c:509
+#: src/main.c:502
 msgid " c - Check solution\n"
 msgstr " c - Çözümü denetle\n"
 
-#: src/main.c:510
+#: src/main.c:503
 msgid " H - Give a hint\n"
 msgstr " H - İpucu ver\n"
 
-#: src/main.c:513
+#: src/main.c:506
 msgid " m - Toggle marks\n"
 msgstr " m - İşaretleri aç/kapat\n"
 
-#: src/main.c:515
+#: src/main.c:508
 msgid " N - New puzzle\n"
 msgstr " N - Yeni bulmaca\n"
 
-#: src/main.c:516
+#: src/main.c:509
 msgid " G - Save\n"
 msgstr " G - Kaydet\n"
 
-#: src/main.c:517
+#: src/main.c:510
 msgid " Q - Quit\n"
 msgstr " Q - Çıkış\n"
 
-#: src/main.c:518
+#: src/main.c:511
 msgid " r - Redraw\n"
 msgstr " r - Yeniden çiz\n"
 
-#: src/main.c:519
+#: src/main.c:512
 msgid " S - Solve puzzle\n"
 msgstr " S - Bulmacayı çöz\n"
 
-#: src/main.c:520
+#: src/main.c:513
 msgid " x - Delete number\n"
 msgstr " x - Sayıyı sil\n"
 
-#: src/main.c:521
+#: src/main.c:514
 msgid " u - Undo previous action\n"
 msgstr " u - Önceki eylemi geri al\n"
 
-#: src/main.c:686
+#: src/main.c:678
 #, c-format
 msgid "nudoku is compiled without cairo support.\n"
 msgstr "nudoku cairo desteği olmadan derlendi.\n"
 
-#: src/main.c:687
+#: src/main.c:679
 #, c-format
 msgid "To use the output feature, please compile with --enable-cairo.\n"
 msgstr ""
 "Dışa aktarma özelliğini kullanmak için lütfen --enable-cairo ile derleyin.\n"
 
-#: src/main.c:807
+#: src/main.c:799
 msgid "Solving puzzle..."
 msgstr "Bulmaca çözülüyor..."
 
-#: src/main.c:813 src/main.c:855
+#: src/main.c:805 src/main.c:847
 msgid "Solved"
 msgstr "Çözüldü"
 
-#: src/main.c:823
+#: src/main.c:815
 msgid "Generating puzzle..."
 msgstr "Bulmaca oluşturuluyor..."
 
-#: src/main.c:849
+#: src/main.c:841
 msgid "Not correct"
 msgstr "Doğru değil"
 
-#: src/main.c:860
+#: src/main.c:852
 #, c-format
 msgid " with the help of %d hints"
 msgstr "%d ipucu yardımıyla"
 
-#: src/main.c:868
+#: src/main.c:860
 msgid "Correct so far"
 msgstr "Şimdiye kadar doğru"
 
-#: src/main.c:898
+#: src/main.c:890
 msgid "Provided hint"
 msgstr "İpucu verildi"
 
-#: src/main.c:911
+#: src/main.c:903
 msgid "Saved!"
 msgstr "Kaydedildi!"
 
-#: src/main.c:914
+#: src/main.c:906
 msgid "Can't save the game!"
 msgstr "Oyun kaydedilemiyor!"
 
-#: src/sudoku.c:281
+#: src/sudoku.c:279
 msgid "hard"
 msgstr "zor"
 
-#: src/sudoku.c:283
+#: src/sudoku.c:281
 msgid "normal"
 msgstr "normal"
 
-#: src/sudoku.c:286
+#: src/sudoku.c:284
 msgid "easy"
 msgstr "kolay"
+
+#: src/outp.c:172
+#, c-format
+msgid "ERROR: Page dimensions are too small for sudokus to fit!\n"
+msgstr ""
+
+#: src/outp.c:173
+#, c-format
+msgid "Please check the dimensions provided in '-S' and try again.\n"
+msgstr ""

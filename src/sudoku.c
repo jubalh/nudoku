@@ -19,14 +19,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 /* INCLUDES */
+#include "utils.h"		/* utility definitions */
 #include <stdlib.h>		/* rand, malloc */
 #include <time.h>		/* time */
 #include <string.h>		/* strdup */
 #include "sudoku.h"		/* enum */
-#include "gettext.h"	/* gettext */
 #include "unistd.h"		/* sleep */
-
-#define _(x) gettext(x)
 
 /* FUNCTIONS */
 

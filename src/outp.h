@@ -3,8 +3,8 @@
 #ifndef OUTP_H
 #define OUTP_H
 
-#include "types.h"
+#include "utils.h"
 
-void generate_output(int difficulty, char* filename, int sudokuCount, bool isPDF, PAPER_SIZE paperSize);
+int generate_output(int difficulty, char* filename, int sudokuCount, bool isPDF, PAPER_SIZE paperSize);
 
 #endif // OUTP_H
