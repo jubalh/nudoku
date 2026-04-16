@@ -1,3 +1,8 @@
+7.0.0 to 8.0.0 (2026-04-16)
+  * Add option -S to customize PDF paper size (pr #85 #87)
+  * Add Georgian and Vietnamese translation (pr #81 #82)
+  * Update Russian translation (pr #88)
+
 6.0.0 to 7.0.0 (2026-01-20)
   * Implement better sudoku solver (pr #78)
 
