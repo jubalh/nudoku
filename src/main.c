@@ -227,7 +227,12 @@ bool get_board_save(char user_board[], char plain_board[])
 
 	while ( (c = fgetc(fp)) != EOF )
 	{
-		board[i++] = c;
+		board[i] = c;
+		if (i >= sizeof(board) - 1) {
+			board[sizeof(board) - 1] = '\0';
+			break;
+		}
+		i++;
 	}
 
 	fclose(fp);
