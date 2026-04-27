@@ -1,13 +1,13 @@
 # Turkish translations for nudoku package.
 # This file is distributed under the same license as the nudoku package.
-# Oğuz Ersen <oguz@ersen.moe>, 2024.
+# Oğuz Ersen <oguz@ersen.moe>, 2024-2026.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: nudoku 1.0.0\n"
 "Report-Msgid-Bugs-To: jubalh@iodoru.org\n"
 "POT-Creation-Date: 2026-04-12 11:44-0700\n"
-"PO-Revision-Date: 2024-09-08 18:46+0300\n"
+"PO-Revision-Date: 2026-04-24 20:58+0300\n"
 "Last-Translator: Oğuz Ersen <oguz@ersen.moe>\n"
 "Language-Team: Turkish <tr>\n"
 "Language: tr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Gtranslator 46.1\n"
+"X-Generator: Gtranslator 49.0\n"
 
 #: src/main.c:107
 #, c-format
@@ -49,7 +49,7 @@ msgstr "-c:\t\tRenkler kullanılmasın\n"
 #: src/main.c:112
 #, c-format
 msgid "-o output:\t\tOutput stream (inverse of -s)\n"
-msgstr ""
+msgstr "-o:\t\tTahtayı dışa aktar (-s seçeneğinin tersi)\n"
 
 #: src/main.c:113
 #, c-format
@@ -64,7 +64,7 @@ msgstr "-s tahta:\t\tBelirtilen sudoku tahtasını kullan\n"
 #: src/main.c:115
 #, c-format
 msgid "-r resume:\t\tResume the last saved game\n"
-msgstr "-r resume:\t\tSon kaydedilen oyuna devam et\n"
+msgstr "-r:\t\tSon kaydedilen oyuna devam et\n"
 
 #: src/main.c:116
 #, c-format
@@ -87,6 +87,8 @@ msgid ""
 "-S papername:\t\tPDF paper size (e.g., 'a4', 'letter', 'legal'; default "
 "'a4') or 'WIDTHxHEIGHT[unit]'\n"
 msgstr ""
+"-S sayfaboyutu:\t\tPDF sayfa boyutu (örn., 'a4', 'letter', 'legal'; "
+"öntanımlı 'a4') veya 'GENİŞLİKxYÜKSEKLİK[birim]'\n"
 
 #: src/main.c:133
 #, c-format
@@ -256,9 +258,11 @@ msgstr "kolay"
 #: src/outp.c:172
 #, c-format
 msgid "ERROR: Page dimensions are too small for sudokus to fit!\n"
-msgstr ""
+msgstr "HATA: Sayfa boyutları sudoku bulmacalarının sığması için çok küçük!\n"
 
 #: src/outp.c:173
 #, c-format
 msgid "Please check the dimensions provided in '-S' and try again.\n"
 msgstr ""
+"Lütfen '-S' seçeneğinde belirtilen boyutları gözden geçirin ve tekrar "
+"deneyin.\n"
