@@ -188,6 +188,7 @@ char* get_saved_file_path(void)
 	struct stat st = {0};
 	if (stat(dir_path, &st) == -1)
 		mkdir(dir_path, 0700);
+	
 	const char* file_name = STATE_FILE_NAME;
 	size_t len_file = strlen(file_name);
 	size_t len_dir_path = strlen(dir_path);
@@ -272,7 +273,7 @@ bool save_stream(char user_board[], char plain_board[], int n)
 	}
 	for ( int i=0; i<n; ++i )
 	{
-		fprintf(fp, "%c", plain_board[i]);	
+		fprintf(fp, "%c", plain_board[i]);
 	}
 	fclose(fp);
 
@@ -944,25 +945,25 @@ int main(int argc, char *argv[])
 				}
 				break;
 			case 'u': // Undo
-			{
-				move_t old_move;
-				if (undo_stack_pop(&old_move))
-					{	// Stack empty
+				{
+					move_t old_move;
+					if (undo_stack_pop(&old_move))
+						{	// Stack empty
+							break;
+						}
+						x = old_move.x;
+						y = old_move.y;
+						posy = (y-GRID_NUMBER_START_Y)/GRID_COL_DELTA;
+						posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
+						user_board[posy*9+posx] = old_move.prev_val;
+						fill_grid(user_board, plain_board, x, y);
+						autosave();
 						break;
 					}
-					x = old_move.x;
-					y = old_move.y;
-					posy = (y-GRID_NUMBER_START_Y)/GRID_COL_DELTA;
-					posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
-					user_board[posy*9+posx] = old_move.prev_val;
-					fill_grid(user_board, plain_board, x, y);
-					autosave();
-					break;
-				}
 
-			default:
-				break;
-		}
+				default:
+					break;
+			}
 		/*if user inputs a number*/
 		if(key >= 49 && key <= 57 && g_playing)
 		{
