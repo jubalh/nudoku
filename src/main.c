@@ -188,7 +188,7 @@ char* get_saved_file_path(void)
 	struct stat st = {0};
 	if (stat(dir_path, &st) == -1)
 		mkdir(dir_path, 0700);
-	
+
 	const char* file_name = STATE_FILE_NAME;
 	size_t len_file = strlen(file_name);
 	size_t len_dir_path = strlen(dir_path);
@@ -961,9 +961,9 @@ int main(int argc, char *argv[])
 					break;
 				}
 
-				default:
-					break;
-			}
+			default:
+				break;
+		}
 		/*if user inputs a number*/
 		if(key >= 49 && key <= 57 && g_playing)
 		{
