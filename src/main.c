@@ -948,18 +948,18 @@ int main(int argc, char *argv[])
 				{
 					move_t old_move;
 					if (undo_stack_pop(&old_move))
-						{	// Stack empty
-							break;
-						}
-						x = old_move.x;
-						y = old_move.y;
-						posy = (y-GRID_NUMBER_START_Y)/GRID_COL_DELTA;
-						posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
-						user_board[posy*9+posx] = old_move.prev_val;
-						fill_grid(user_board, plain_board, x, y);
-						autosave();
+					{	// Stack empty
 						break;
 					}
+					x = old_move.x;
+					y = old_move.y;
+					posy = (y-GRID_NUMBER_START_Y)/GRID_COL_DELTA;
+					posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
+					user_board[posy*9+posx] = old_move.prev_val;
+					fill_grid(user_board, plain_board, x, y);
+					autosave();
+					break;
+				}
 
 				default:
 					break;
