@@ -280,6 +280,11 @@ bool save_stream(char user_board[], char plain_board[], int n)
 	return true;
 }
 
+static void autosave(void) {
+	if (g_playing)
+		save_stream(user_board, plain_board, STREAM_LENGTH);
+}
+
 void generate_stream_output(int difficulty) {
 	char* stream = generate_puzzle(difficulty);
 
@@ -512,6 +517,7 @@ static void init_windows(void)
 	}
 	wprintw(infobox, _(" N - New puzzle\n"));
 	wprintw(infobox, _(" G - Save\n"));
+	wprintw(infobox, _(" R - Resume from save\n"));
 	wprintw(infobox, _(" Q - Quit\n"));
 	wprintw(infobox, _(" r - Redraw\n"));
 	wprintw(infobox, _(" S - Solve puzzle\n"));
@@ -883,6 +889,7 @@ int main(int argc, char *argv[])
 						undo_stack_push((move_t){x, y, user_board[posy*9+posx]});
 						user_board[posy*9+posx] = '.';
 						wprintw(grid, " ");
+						autosave();
 					}
 					break;
 				}
@@ -893,6 +900,7 @@ int main(int argc, char *argv[])
 					fill_grid(user_board, plain_board, x, y);
 					werase(status);
 					mvwprintw(status, 0, 0, _("Provided hint"));
+					autosave();
 				}
 				break;
 			case 'm':
@@ -911,6 +919,31 @@ int main(int argc, char *argv[])
 					mvwprintw(status, 0, 0, _("Can't save the game!"));
 				}
 				break;
+			case 'R':
+				if (get_board_save(user_board, plain_board))
+				{
+					g_useHighlights = false;
+					g_hint_counter = 0;
+					g_undo_stack_index = 0;
+
+					x = GRID_NUMBER_START_X;
+					y = GRID_NUMBER_START_Y;
+					fill_grid(user_board, plain_board, x, y);
+					g_playing = true;
+
+					if (g_provided_stream)
+					{
+						free(g_provided_stream);
+						g_provided_stream = NULL;
+					}
+
+					mvwprintw(status, 0, 0, _("Resumed saved game"));
+				}
+				else
+				{
+					mvwprintw(status, 0, 0, _("No saved game found"));
+				}
+				break;
 			case 'u': // Undo
 				{
 					move_t old_move;
@@ -924,6 +957,7 @@ int main(int argc, char *argv[])
 					posx = (x-GRID_NUMBER_START_X)/GRID_LINE_DELTA;
 					user_board[posy*9+posx] = old_move.prev_val;
 					fill_grid(user_board, plain_board, x, y);
+					autosave();
 					break;
 				}
 
@@ -944,6 +978,7 @@ int main(int argc, char *argv[])
 				user_board[posy*9+posx] = key;
 				// redraw grid to update highlight
 				fill_grid(user_board, plain_board, x, y);
+				autosave();
 			}
 		}
 		wmove(grid, y,x);
